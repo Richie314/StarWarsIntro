@@ -15,6 +15,13 @@ function LogOut()
     }
     RedirectToError('Impossibile effettuare il logout!');
 }
+function LogIn(User $user)
+{
+    $_SESSION['id'] = $user->ID;
+    $_SESSION['admin'] = $user->Admin;
+    
+    RedirectToHome();
+}
 
 function IsLoggedIn()
 {
@@ -34,6 +41,12 @@ function RedirectToError(string $err = "")
         header("Location: /error.php?err=");
     else
         header("Location: /error.php?err=" . urlencode($err));
+    exit;
+}
+
+function RedirectToHome()
+{
+    header('Location: /index.php');
     exit;
 }
 

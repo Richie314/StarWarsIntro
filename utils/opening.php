@@ -1,5 +1,6 @@
 <?php
 include_once "./string.php";
+include_once "./file.php";
 enum OpeningLanguage: string
 {
     case Italian = "it";
@@ -207,17 +208,17 @@ class Opening
         $lang_str = (string)$lang;
 
         $path = ".preload/$lang_str/$episode.json";
-        $file = fopen($path, "r") or throw new RuntimeException('Impossible to open the file!');
-        $content = fread($file, filesize($path));
-        fclose($file);
+        $content = ReadFullFile($path);
 
         $obj = json_decode($content);
+        $path2 = $obj['path'];
+        $body = ReadFullFile($path2);
         return new Opening(
             $obj['id'],
             $obj['intro'],
             $obj['title'],
             $obj['episode'],
-            $obj['content'],
+            $body,
             $obj['lang'],
             null, null, null
         );

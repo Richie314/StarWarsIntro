@@ -87,4 +87,25 @@ class User
         $is_admin = $this->Admin ? 1 : 0;
         return (bool)$stmt->execute();
     }
+    public function Log(mysqli $db) : bool
+    {
+        if (!isset($db) || !($db instanceof mysqli))
+        {
+            throw new InvalidArgumentException("db was not a mysqli object!");
+        }
+        if (isEmpty($this->ID))
+        {
+            throw new BadFunctionCallException("ID was not set!");
+        }
+        $query = "INSERT INTO `login` (`User`, `When`, `Ip`, `Device`) VALUES (?, CURRENT_TIMESTAMP, ?, ?)";
+        $stmt = $db->prepare($query);
+        if (!$stmt || !$stmt->bind_param('ssss', $this->ID, $ip, $user_agent))
+        {
+            return false;
+        }
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $user_agent = $_SERVER['HTTP_USER_AGENT'];
+
+        return $stmt->execute() && $db->affected_rows === 1;
+    }
 }
