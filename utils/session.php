@@ -46,7 +46,7 @@ function RedirectToError(string $err = "")
 
 function RedirectToHome()
 {
-    header('Location: /index.php');
+    header('Location: /me.php');
     exit;
 }
 
