@@ -1,10 +1,10 @@
 <?php
-$DO_NOT_CHECK_LOGIN = true;
-require_once "./utils/session.php";
-if (IsLoggedIn())
-{
-    RedirectToHome();
-}
+    $DO_NOT_CHECK_LOGIN = true;
+    require_once "./utils/session.php";
+    if (IsLoggedIn())
+    {
+        RedirectToHome();
+    }
 ?>
 <!DOCTYPE html>
 <html>

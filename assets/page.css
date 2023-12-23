@@ -1,0 +1,35 @@
+:root {
+    --main-cl: #000000;
+    --main-bg: #000000;
+}
+
+@font-face {
+    font-family: 'Aurebesh';
+    src: url('/assets/aurebesh.ttf');
+}
+
+.h-menu {
+    display: grid;
+    grid-template-rows: 1fr;
+    user-select: none;
+}
+    .h-menu > a {
+        display: block;
+        width: 100%;
+        cursor: pointer;
+    }
+    .h-menu > a > .icon {
+
+    }
+    .h-menu > a > .text {
+
+    }
+    
+
+.link {
+    cursor: pointer;
+    text-decoration: none;
+}
+    .link:hover {
+        text-decoration: underline;
+    }

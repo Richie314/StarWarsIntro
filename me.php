@@ -1,7 +1,7 @@
 <?php
-require_once "./utils/session.php";
-$intros = Opening::LoadBriefOfUser($db, $USER_ID);
-$TITLE = "Le mie intro";
+    require_once "./utils/session.php";
+    $intros = Opening::LoadBriefOfUser($db, $USER_ID);
+    $TITLE = "Le mie intro";
 ?>
 <!DOCTYPE html>
 <html>
