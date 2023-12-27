@@ -1,6 +1,6 @@
 <?php
-include_once "./string.php";
-include_once "./file.php";
+include_once "./utils/string.php";
+include_once "./utils/file.php";
 enum OpeningLanguage: string
 {
     case Italian = "it";

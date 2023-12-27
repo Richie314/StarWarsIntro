@@ -5,9 +5,9 @@
 ?>
 <!DOCTYPE html>
 <html>
-<?php include "./parts/head.php" ?>
+<?php include "./parts/head.php"; ?>
 <body>
-    <?php include "./parts/nav.php" ?>
+    <?php include "./parts/nav.php"; ?>
     <div class="body">
         <h1>
             Le mie intro
@@ -20,9 +20,9 @@
                         <?= htmlspecialchars($intro->Title) ?>
                     </a>
                 </li>
-            <? } ?>
+            <?php } ?>
         </ul>
     </div>
-    <?php include "./parts/footer.php" ?>
+    <?php include "./parts/footer.php"; ?>
 </body>
 </html>

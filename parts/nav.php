@@ -1,16 +1,16 @@
 <?php
-    include_once "../utils/link.php";
+    include_once "./utils/link.php";
     $links = array(
-        new Link("/index.php", "", "Star Wars Intro"),
+        new Link("./index.php", "", "Star Wars Intro"),
     );
     if (IsLoggedIn())
     {
-        $links[] = new Link("/create.php", "", "Crea intro");
-        $links[] = new Link("/me.php", "", $USER_ID);
-        $links[] = new Link("/logout.php", "", "Logout");
+        $links[] = new Link("./create.php", "", "Crea intro");
+        $links[] = new Link("./me.php", "", $USER_ID);
+        $links[] = new Link("./logout.php", "", "Logout");
     } else {
-        $links[] = new Link("/register.php", "", "Registrati");
-        $links[] = new Link("/login.php", "", "Login");
+        $links[] = new Link("./register.php", "", "Registrati");
+        $links[] = new Link("./login.php", "", "Login");
     }
 
 ?>

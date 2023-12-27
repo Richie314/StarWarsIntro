@@ -3,7 +3,16 @@
         $TITLE = "Pagina generica";
     if (isEmpty($DESCRIPTION)) 
         $DESCRIPTION = "Crea le tue intro di Star Wars personalizzate";
-    $URL = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    if (isset($_SERVER['HTTPS']) &&
+        ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1) ||
+        isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
+        $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+        
+            $protocol = 'https://';
+    } else {
+      $protocol = 'http://';
+    }
+    $URL = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 ?>
 <head>
     <meta charset="UTF-8">
@@ -21,15 +30,15 @@
     <meta property="og:url" content="<?= $URL ?>">
     <meta property="og:title" content="<?= $TITLE ?>">
     <meta property="og:description" content="<?= $DESCRIPTION ?>">
-    <meta property="og:image" content="/assets/icon.png">
+    <meta property="og:image" content="./assets/icon.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="<?= $URL ?>">
     <meta property="twitter:title" content="<?= $TITLE ?>">
     <meta property="twitter:description" content="<?= $DESCRIPTION ?>">
-    <meta property="twitter:image" content="/assets/icon.png">
+    <meta property="twitter:image" content="./assets/icon.png">
 
-    <link rel="stylesheet" type="text/css" href="/assets/page.css" media="print" onload="this.media = 'all'">
-    <script src="/assets/page.js" type="text/javascript" defer></script>
+    <link rel="stylesheet" type="text/css" href="./assets/page.css" media="print" onload="this.media = 'all'">
+    <script src="./assets/page.js" type="text/javascript" defer></script>
 </head>

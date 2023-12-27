@@ -1,5 +1,5 @@
 <?php
-include_once "./string.php";
+include_once "./utils/string.php";
 function ReadFullFile(string $path):string
 {
     if (isEmpty($path))
