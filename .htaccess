@@ -1,3 +1,3 @@
-<FilesMatch "\.(save|swp|sql|gitignore)$">
+<FilesMatch "\.(save|swp|sql|gitignore|env)$">
     Require all denied
 </FilesMatch>
