@@ -108,4 +108,49 @@ class User
 
         return $stmt->execute() && $db->affected_rows === 1;
     }
+    
+}
+class Login
+{
+    public User $user;
+    public DateTime $When;
+    public string $Ip;
+    public string $Device;
+    public function __construct(
+        User $user, DateTime|string $datetime, string $ip, string $dev)
+    {
+        if (!isset($user) || !isset($datetime))
+        {
+            throw new InvalidArgumentException("Invalid object");
+        }
+        $this->user = $user;
+        $this->When = $datetime instanceof DateTime ? $datetime : new DateTime($datetime);
+        if (isEmpty($ip) || isEmpty($dev))
+        {
+            throw new InvalidArgumentException("Invalid string");
+        }
+        $this->Ip = $ip;
+        $this->Device = $dev;
+    }
+
+    public static function RecentLogs(mysqli $db): array
+    {
+        if (!isset($db) || !($db instanceof mysqli))
+        {
+            throw new InvalidArgumentException("db was not a mysqli object!");
+        }
+        $query = "SELECT * FROM `RecentLogs`";
+        $result = $db->query($query);
+        if (!$result || $result->num_rows === 0)
+        {
+            return array();
+        }
+        $arr = array();
+        while ($row = $result->fetch_assoc())
+        {
+            $user = new User($row["User"], "?", $row["Email"], (bool)$row["Admin"]);
+            $arr[] = new Login($user, $row["When"], $row["Ip"], $row["Device"]);
+        }
+        return $arr;
+    }
 }
