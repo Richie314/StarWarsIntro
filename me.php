@@ -1,5 +1,6 @@
 <?php
     require_once "./utils/session.php";
+    include_once "./utils/opening.php";
     $intros = Opening::LoadBriefOfUser($db, $USER_ID);
     $TITLE = "Le mie intro";
 ?>

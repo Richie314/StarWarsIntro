@@ -8,6 +8,7 @@ if (!$parts ||
     isEmpty($parts["MYSQL_HOST"]))
 {
     unset($parts); # Prevent credential leaks
+    http_response_code(500);
     die("Could not load db credentials");
 }
 $db = new mysqli(
@@ -19,6 +20,7 @@ $db = new mysqli(
 unset($parts); # Prevent credential leaks
 if (!$db || $db->connect_errno)
 {
+    http_response_code(500);
     die("Could not connect to db");
 }
 $db->set_charset("utf8");

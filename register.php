@@ -40,5 +40,20 @@ if (
     }
 }
 
+$TITLE = "Registrati";
+$DESCRIPTION = "Crea un account";
+$SHOW_EMAIL_FIELD = true;
+$FORM_BUTTON_LABEL = "Registrati";
+
 ?>
-Register
+<!DOCTYPE html>
+<html>
+<?php include "./parts/head.php"; ?>
+<body>
+<?php include "./parts/nav.php"; ?>
+<div class="body center">
+    <?php include "./parts/form.php"; ?>
+</div>
+<?php include "./parts/footer.php"; ?>
+</body>
+</html>

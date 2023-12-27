@@ -99,7 +99,7 @@ class User
         }
         $query = "INSERT INTO `login` (`User`, `When`, `Ip`, `Device`) VALUES (?, CURRENT_TIMESTAMP, ?, ?)";
         $stmt = $db->prepare($query);
-        if (!$stmt || !$stmt->bind_param('ssss', $this->ID, $ip, $user_agent))
+        if (!$stmt || !$stmt->bind_param('sss', $this->ID, $ip, $user_agent))
         {
             return false;
         }

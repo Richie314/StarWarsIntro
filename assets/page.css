@@ -1,35 +1,177 @@
 :root {
-    --main-cl: #000000;
+    --main-cl: yellow;
     --main-bg: #000000;
 }
 
 @font-face {
     font-family: 'Aurebesh';
-    src: url('/assets/aurebesh.ttf');
+    src: url('./assets/aurebesh.ttf');
 }
-
+body {
+    background-color: var(--main-bg);
+    color: var(--main-cl);
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    height: auto;
+}
+.body.center {
+    display: grid;
+    place-items: center;
+}
+footer {
+    margin-bottom: 0;
+    width: 100%;
+    text-align: center;
+    font-size: smaller;
+}
+nav {
+    position: sticky;
+    top: 0;
+    left: 0;
+}
 .h-menu {
     display: grid;
+    width: 100%;
+    height: 3em;
+    margin: 0;
+    padding: 0;
     grid-template-rows: 1fr;
+    grid-template-columns: 3fr;
     user-select: none;
 }
+    .h-menu.items-1 {
+        grid-template-columns: 100%;
+    }
+    .h-menu.items-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .h-menu.items-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .h-menu.items-4 {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    .h-menu.items-5 {
+        grid-template-columns: repeat(5, 1fr);
+    }
+    .h-menu.items-6 {
+        grid-template-columns: repeat(6, 1fr);
+    }
+    .h-menu.items-7 {
+        grid-template-columns: repeat(7, 1fr);
+    }
     .h-menu > a {
         display: block;
         width: 100%;
         cursor: pointer;
+        position: relative;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+        color: var(--main-cl);
     }
-    .h-menu > a > .icon {
-
-    }
-    .h-menu > a > .text {
-
-    }
+        .h-menu > a > div {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            max-height: 100%;
+            overflow: hidden;
+            transition: all .4s ease-in-out; 
+        }
+        .h-menu > a > .icon {
+            left: 35%;
+            width: 30%;
+            z-index: 3;
+            display: block;
+        }
+            .h-menu > a > .icon > img {
+                height: 100%;
+                max-height: 100%;
+                aspect-ratio: 1;
+            }
+            .h-menu > a:hover > .icon {
+                left: 0;
+            }
+        .h-menu > a > .text {
+            right: 0;
+            width: 100%;
+            opacity: 0; 
+            z-index: 2;
+            display: grid;
+            place-items: center; 
+        }
+            .h-menu > a:hover > .text {
+                opacity: 1;
+                width: 70%;
+                right: 0;
+                font-size: 2em;
+            }
     
 
 .link {
     cursor: pointer;
     text-decoration: none;
+    color: var(--main-cl);
 }
+    .link:visited {
+        color: var(--main-cl);
+    }
     .link:hover {
         text-decoration: underline;
     }
+.form {
+    outline: none;
+    display: block;
+    box-shadow: 0 0 2em var(--main-cl);
+    padding: 1.5em;
+}
+    .form .field {
+        padding: 1em;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+        border-radius: 20px;
+        color: var(--main-cl);
+        min-height: 3em;
+    }
+        .form .field input {
+            outline: none;
+            border: none;
+            background-color: transparent;
+            color: var(--main-cl);
+            width: calc(100% - 10px);
+            margin-inline: 5px;
+            transition: all .5s ease-in-out;
+        }
+            .form .field input:active, 
+            .form .field input:focus {
+                border-bottom: 1px solid;
+            }
+            .form .field input::-moz-placeholder, 
+            .form .field input:-ms-input-placeholder,
+            .form .field input::placeholder {
+                color: var(--main-cl);
+                font-size: 0.9em;
+                opacity: .5;
+            }
+        .form .field i {
+            color: var(--main-cl);
+            margin-bottom: -0.2em;
+        }
+    .form button {
+        cursor: pointer;
+        width: 75%;
+        margin-inline: 12.5%;
+        font-size: 1.3em;
+        color: var(--main-cl);
+        background-color: var(--main-bg);
+        border: 1px solid;
+        border-radius: .4em;
+        min-height: 1.4em;
+        transition: all .3s ease-in-out;
+    }
+        .form button:hover {
+            color: var(--main-bg);
+            background-color: var(--main-cl);
+        }

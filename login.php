@@ -32,5 +32,20 @@ if (
     }
 }
 
+$TITLE = "Login";
+$DESCRIPTION = "Fai il login";
+$SHOW_EMAIL_FIELD = false;
+$FORM_BUTTON_LABEL = "Login";
+
 ?>
-Login
+<!DOCTYPE html>
+<html>
+<?php include "./parts/head.php"; ?>
+<body>
+<?php include "./parts/nav.php"; ?>
+<div class="body center">
+    <?php include "./parts/form.php"; ?>
+</div>
+<?php include "./parts/footer.php"; ?>
+</body>
+</html>
