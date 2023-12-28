@@ -1,17 +1,17 @@
 <?php
     include_once "./utils/link.php";
     $links = array(
-        new Link("./index.php", "", "Home"),
+        new Link("./index.php", "./assets/img/home.svg", "Home"),
     );
     
     if (IsLoggedIn())
     {
-        $links[] = new Link("./create.php", "./assets/img/create.svg", "Crea intro");
-        $links[] = new Link("./me.php", "./assets/img/user.svg", $USER_ID);
-        $links[] = new Link("./logout.php", "./assets/img/logout.svg", "Logout");
+        $links[] = new Link("./create.php",     "./assets/img/create.svg",  "Crea intro");
+        $links[] = new Link("./me.php",         "./assets/img/user.svg",    $USER_ID);
+        $links[] = new Link("./logout.php",     "./assets/img/logout.svg",  "Logout");
     } else {
-        $links[] = new Link("./register.php", "./assets/img/signup.svg", "Registrati");
-        $links[] = new Link("./login.php", "./assets/img/login.svg", "Login");
+        $links[] = new Link("./register.php",   "./assets/img/signup.svg",  "Registrati");
+        $links[] = new Link("./login.php",      "./assets/img/login.svg",   "Login");
     }
 
 ?>

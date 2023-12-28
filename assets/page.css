@@ -1,12 +1,9 @@
 :root {
     --main-cl: yellow;
     --main-bg: #000000;
+    --main-font: 'Times New Roman', Times, serif;
 }
 
-@font-face {
-    font-family: 'Aurebesh';
-    src: url('./assets/aurebesh.ttf');
-}
 body {
     background-color: var(--main-bg);
     color: var(--main-cl);
@@ -15,21 +12,35 @@ body {
     padding: 0;
     height: auto;
 }
-.body.center {
-    display: grid;
-    place-items: center;
+.body {
+    padding: 1em;
+    margin-top: 3em;
 }
+    .body.center {
+        display: grid;
+        place-items: center;
+    }
 footer {
     margin-bottom: 0;
     width: 100%;
     text-align: center;
     font-size: smaller;
 }
+::selection {
+    color: var(--main-bg);
+    background-color: var(--main-cl);
+}
+
+/*
+    Horizontal menu
+*/
+
 nav {
     position: sticky;
     top: 0;
     left: 0;
 }
+
 .h-menu {
     display: grid;
     width: 100%;
@@ -91,7 +102,7 @@ nav {
                 aspect-ratio: 1;
             }
             .h-menu > a:hover > .icon {
-                left: 0;
+                left: 10%;
             }
         .h-menu > a > .text {
             right: 0;
@@ -100,14 +111,21 @@ nav {
             z-index: 2;
             display: grid;
             place-items: center; 
+            text-overflow: ellipsis;
+            word-break: break-all;
+            white-space: nowrap;
         }
             .h-menu > a:hover > .text {
                 opacity: 1;
-                width: 70%;
-                right: 0;
-                font-size: 2em;
+                width: 50%;
+                right: 10%;
+                font-size: 1.5em;
             }
     
+
+/*
+    General links
+*/
 
 .link {
     cursor: pointer;
@@ -120,6 +138,11 @@ nav {
     .link:hover {
         text-decoration: underline;
     }
+
+/*
+    Login/register form
+*/
+
 .form {
     outline: none;
     display: block;
@@ -135,13 +158,22 @@ nav {
         color: var(--main-cl);
         min-height: 3em;
     }
+        .form .field > div {
+            display: grid;
+            grid-template-rows: 1fr;
+            grid-template-columns: 1em calc(100% - 1em);
+            gap: 0;
+        }
+        .form .field i {
+            margin-left: 0;
+        }
         .form .field input {
             outline: none;
             border: none;
-            background-color: transparent;
-            color: var(--main-cl);
-            width: calc(100% - 10px);
-            margin-inline: 5px;
+            background-color: transparent !important;
+            color: var(--main-cl) !important;
+            width: 100%;
+            margin-right: 0;
             transition: all .5s ease-in-out;
         }
             .form .field input:active, 
@@ -175,3 +207,80 @@ nav {
             color: var(--main-bg);
             background-color: var(--main-cl);
         }
+
+i {
+    color: var(--main-cl);
+    background-color: transparent;
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    background-size: cover;
+    font-style: normal;
+    user-select: none;
+}
+    i::after {
+        content: ' ';
+        width: 1em;
+        height: 1em;
+        background-color: transparent;
+        background-size: cover;
+    }
+    i.user {
+        background-image: url('../assets/img/user.svg');
+    }
+        i.user::after {
+            background-image: url('../assets/img/user.svg');
+        }
+    i.lock {
+        background-image: url('../assets/img/lock.svg');
+    }
+        i.lock::after {
+            background-image: url('../assets/img/lock.svg');
+        }
+    i.email {
+        background-image: url('../assets/img/email.svg');
+    }
+        i.email::after {
+            background-image: url('../assets/img/email.svg');
+        }
+
+h1, h2, h3, h4, h5, h6 {
+    text-align: center;
+    user-select: none;
+    cursor: auto;
+    font-family: var(--main-font);
+    width: calc(100% - 2em);
+    margin-inline: 1em;
+    min-height: 1em;
+}
+    :is(h1, h2, h3, h4, h5, h6).aurebesh[data-content] {
+        position: relative;
+        content: ' ';
+        height: 1em;
+        cursor: zoom-in;
+    }
+        :is(h1, h2, h3, h4, h5, h6).aurebesh[data-content]::before,
+        :is(h1, h2, h3, h4, h5, h6).aurebesh[data-content]::after {
+            content: attr(data-content);
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 100%;
+            transition: opacity .7s ease-in-out;
+        }
+        :is(h1, h2, h3, h4, h5, h6).aurebesh[data-content]::before {
+            opacity: 1;
+            font-family: 'Aurebesh';
+        }
+        :is(h1, h2, h3, h4, h5, h6).aurebesh[data-content]::after {
+            opacity: 0;
+            font-family: var(--main-font);
+            text-transform: uppercase;
+        }
+            :is(h1, h2, h3, h4, h5, h6).aurebesh[data-content]:hover::before {
+                opacity: 0;
+            }
+            :is(h1, h2, h3, h4, h5, h6).aurebesh[data-content]:hover::after {
+                opacity: 1;
+            }

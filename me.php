@@ -10,9 +10,7 @@
 <body>
     <?php include "./parts/nav.php"; ?>
     <div class="body">
-        <h1>
-            Le mie intro
-        </h1>
+        <h1 class="aurebesh" data-content="Le mie intro"> </h1>
         <ul>
             <?php foreach ($intros as $intro) { ?>
                 <li>

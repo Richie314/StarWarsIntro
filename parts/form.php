@@ -11,7 +11,7 @@ $SHOW_EMAIL_FIELD = isset($SHOW_EMAIL_FIELD) && $SHOW_EMAIL_FIELD;
             Username
         </label>
         <div>
-            <i class="username"></i>
+            <i class="user"></i>
             <input type="text" 
                 name="username" placeholder="username" 
                 pattern="[A-Za-z0-9]+" required
@@ -36,7 +36,7 @@ $SHOW_EMAIL_FIELD = isset($SHOW_EMAIL_FIELD) && $SHOW_EMAIL_FIELD;
             Password
         </label>
         <div>
-            <i class="lock-closed"></i>
+            <i class="lock"></i>
             <input type="password" 
                 name="password" placeholder="············" required
                 minlength="8"

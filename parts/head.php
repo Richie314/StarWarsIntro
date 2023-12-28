@@ -39,6 +39,7 @@
     <meta property="twitter:description" content="<?= $DESCRIPTION ?>">
     <meta property="twitter:image" content="./assets/icon.png">
 
-    <link rel="stylesheet" type="text/css" href="./assets/page.css" media="print" onload="this.media = 'all'">
+    <link rel="stylesheet" type="text/css" href="./assets/page.css" media="all">
+    <link rel="stylesheet" type="text/css" href="./assets/font.css" media="print" onload="this.media = 'all'">
     <script src="./assets/page.js" type="text/javascript" defer></script>
 </head>
