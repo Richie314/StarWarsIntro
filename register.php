@@ -32,11 +32,7 @@ if (
         // Flow ends as "exit" is called
     } catch (Exception $e) {
         // An error happened
-        $error_msg = "Qualcosa è andato storto.\n";
-        if (!isEmpty($e->getMessage()))
-        {
-            $error_msg .= $e->getMessage();
-        }
+        $error_msg = "Impossibile creare l'utente.\nUna possibilità è che ne esista già uno con lo username \"$id\".";
     }
 }
 

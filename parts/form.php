@@ -44,6 +44,11 @@
                 maxlength="24">
         </div>
     </div>
+    <?php if (!isEmpty($error_msg)) { ?>
+        <p style="max-width: 500px;">
+            <?= str_replace("\n", "<br>", htmlspecialchars($error_msg)) ?>
+        </p>
+    <?php } ?>
     <button type="submit">
         <?= $FORM_BUTTON_LABEL ?>
     </button>
