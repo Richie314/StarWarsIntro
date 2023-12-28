@@ -20,12 +20,14 @@
             die("You don't own the opening.");
         }
     }
+
     if (
-        is_int($_POST["id"]) &&
+        !isEmpty($_POST["id"]) && ctype_digit($_POST["id"]) &&
         !isEmpty($_POST["episode"]) && is_string($_POST["episode"]) &&
         !isEmpty($_POST["title"]) && is_string($_POST["title"]) &&
         !isEmpty($_POST["lang"]) && is_string($_POST["lang"])
     ) {
+        
         if ((int)$_POST["id"] !== 0)
         {
             // Update
@@ -44,10 +46,12 @@
             $opening->Episode = $_POST["episode"];
             $opening->Content = isEmpty($_POST["content"]) || !is_string($_POST["content"]) ? null : $_POST["content"];
             $opening->Language = Opening::StringToLanguage($_POST["lang"]);
-            if (!$opening->Upload($db))
+            if ($opening->Upload($db))
             {
-                $error_msg = "Impossibile aggiornare la risorsa.";
+                header("Location: ./view.php?id=$opening->ID");
+                exit;
             }
+            $error_msg = "Impossibile aggiornare la risorsa.";
         } else {
             $opening = new Opening(
                 0,
@@ -58,15 +62,17 @@
                 $USER_ID,
                 null, null
             );
-            if (!$opening->Upload($db))
+            if ($opening->Upload($db))
             {
-                $error_msg = "Impossibile creare la risorsa.";
+                header("Location: ./view.php?id=$opening->ID");
+                exit;
             }
+            $error_msg = "Impossibile creare la risorsa.";
         }
     }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <?php include "./parts/head.php"; ?>
 <body>
     <?php include "./parts/nav.php"; ?>
@@ -121,12 +127,18 @@
                             if (!isEmpty($opening->Content)) 
                                 echo htmlentities($opening->Content);
                         ?></textarea>
+                    <br>
+                    <?php 
+                    if (!isEmpty($error_msg)) {
+                        echo "<span>$error_msg</span>";
+                    }
+                    ?>
                 </div>
 
                 <div class="span-2 grid" style="grid-template-columns: 1fr 1fr">
-                    <button type="reset" title="Cancella" role="button"></button>
+                    <button type="reset" title="Cancella"></button>
                     <button type="submit" 
-                        title="<?= $opening->ID !== 0 ? "Modifica" : "Crea" ?>" role="button"></button>
+                        title="<?= $opening->ID !== 0 ? "Modifica" : "Crea" ?>"></button>
                 </div>
             </div>
         </form>

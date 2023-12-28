@@ -39,7 +39,7 @@ $FORM_BUTTON_LABEL = "Login";
 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <?php include "./parts/head.php"; ?>
 <body>
     <?php include "./parts/nav.php"; ?>

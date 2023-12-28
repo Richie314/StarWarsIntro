@@ -5,7 +5,7 @@
     $TITLE = "Le mie intro";
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <?php include "./parts/head.php"; ?>
 <body>
     <?php include "./parts/nav.php"; ?>
@@ -14,7 +14,7 @@
         <ul>
             <?php foreach ($intros as $intro) { ?>
                 <li>
-                    <a href="/view.php?id=<?= $intro->ID ?>" 
+                    <a href="./view.php?id=<?= $intro->ID ?>" 
                         target="_blank" title="Apri in un'altra scheda" class="link">
                         <?= htmlspecialchars($intro->Title) ?>
                     </a>

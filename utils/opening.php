@@ -93,6 +93,7 @@ class Opening
 
     private function PrepareUploadStatement(mysqli $db): mysqli_stmt
     {
+        $lang = $this->Language->value;
         if ($this->isInDB())
         {
             $stmt = $db->prepare(
@@ -107,7 +108,7 @@ class Opening
                 $this->Title, 
                 $this->Episode, 
                 $this->Content, 
-                $this->Language->value, 
+                $lang, 
                 $this->Author,
                 $this->Creation))
             {
@@ -127,7 +128,7 @@ class Opening
             $this->Title, 
             $this->Episode, 
             $this->Content, 
-            $this->Language->value,
+            $lang,
             $this->Author))
         {
             throw new UnexpectedValueException('Could not bind parameters to the statement!');
