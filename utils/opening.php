@@ -226,11 +226,16 @@ class Opening
         $path = "./preload/$lang_str/Data/$episode.json";
         $content = ReadFullFile($path);
 
-        $obj = json_decode($content);
+        $obj = json_decode(preg_replace('/[[:^print:]]/', '', $content), true);
+        //echo $content;
+        if (!isset($obj))
+        {
+            throw new JsonException(json_last_error_msg(), 500);
+        }
         $path2 = $obj['path'];
         $body = ReadFullFile("./preload/$lang_str/Body/$path2");
         return new Opening(
-            $obj['id'],
+            0,
             $obj['title'],
             $obj['episode'],
             $body,

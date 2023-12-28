@@ -17,7 +17,7 @@
             http_response_code(404);
             throw new Exception("Risorsa non trovata");
         }
-    } elseif (isset($_GET["original"]) && is_int($_GET["original"]))
+    } elseif (isset($_GET["original"]) && ctype_digit($_GET["original"]))
     {
         $original = (int)$_GET["original"];
         if ($original < 1 || $original > 9)
