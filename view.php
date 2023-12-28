@@ -153,60 +153,7 @@
             -ms-transform: translateZ(0);
             transform: translateZ(0);
         }
-        @-webkit-keyframes Loader {
-          0%,
-          100% {
-            box-shadow: 0em -2.6em 0em 0em #f5f906, 1.8em -1.8em 0 0em rgba(245,249,6, 0.2), 2.5em 0em 0 0em rgba(245,249,6, 0.2), 1.75em 1.75em 0 0em rgba(245,249,6, 0.2), 0em 2.5em 0 0em rgba(245,249,6, 0.2), -1.8em 1.8em 0 0em rgba(245,249,6, 0.2), -2.6em 0em 0 0em rgba(245,249,6, 0.5), -1.8em -1.8em 0 0em rgba(245,249,6, 0.7);
-          }
-          12.5% {
-            box-shadow: 0em -2.6em 0em 0em rgba(245,249,6, 0.7), 1.8em -1.8em 0 0em #f5f906, 2.5em 0em 0 0em rgba(245,249,6, 0.2), 1.75em 1.75em 0 0em rgba(245,249,6, 0.2), 0em 2.5em 0 0em rgba(245,249,6, 0.2), -1.8em 1.8em 0 0em rgba(245,249,6, 0.2), -2.6em 0em 0 0em rgba(245,249,6, 0.2), -1.8em -1.8em 0 0em rgba(245,249,6, 0.5);
-          }
-          25% {
-            box-shadow: 0em -2.6em 0em 0em rgba(245,249,6, 0.5), 1.8em -1.8em 0 0em rgba(245,249,6, 0.7), 2.5em 0em 0 0em #f5f906, 1.75em 1.75em 0 0em rgba(245,249,6, 0.2), 0em 2.5em 0 0em rgba(245,249,6, 0.2), -1.8em 1.8em 0 0em rgba(245,249,6, 0.2), -2.6em 0em 0 0em rgba(245,249,6, 0.2), -1.8em -1.8em 0 0em rgba(245,249,6, 0.2);
-          }
-          37.5% {
-            box-shadow: 0em -2.6em 0em 0em rgba(245,249,6, 0.2), 1.8em -1.8em 0 0em rgba(245,249,6, 0.5), 2.5em 0em 0 0em rgba(245,249,6, 0.7), 1.75em 1.75em 0 0em #f5f906, 0em 2.5em 0 0em rgba(245,249,6, 0.2), -1.8em 1.8em 0 0em rgba(245,249,6, 0.2), -2.6em 0em 0 0em rgba(245,249,6, 0.2), -1.8em -1.8em 0 0em rgba(245,249,6, 0.2);
-          }
-          50% {
-            box-shadow: 0em -2.6em 0em 0em rgba(245,249,6, 0.2), 1.8em -1.8em 0 0em rgba(245,249,6, 0.2), 2.5em 0em 0 0em rgba(245,249,6, 0.5), 1.75em 1.75em 0 0em rgba(245,249,6, 0.7), 0em 2.5em 0 0em #f5f906, -1.8em 1.8em 0 0em rgba(245,249,6, 0.2), -2.6em 0em 0 0em rgba(245,249,6, 0.2), -1.8em -1.8em 0 0em rgba(245,249,6, 0.2);
-          }
-          62.5% {
-            box-shadow: 0em -2.6em 0em 0em rgba(245,249,6, 0.2), 1.8em -1.8em 0 0em rgba(245,249,6, 0.2), 2.5em 0em 0 0em rgba(245,249,6, 0.2), 1.75em 1.75em 0 0em rgba(245,249,6, 0.5), 0em 2.5em 0 0em rgba(245,249,6, 0.7), -1.8em 1.8em 0 0em #f5f906, -2.6em 0em 0 0em rgba(245,249,6, 0.2), -1.8em -1.8em 0 0em rgba(245,249,6, 0.2);
-          }
-          75% {
-            box-shadow: 0em -2.6em 0em 0em rgba(245,249,6, 0.2), 1.8em -1.8em 0 0em rgba(245,249,6, 0.2), 2.5em 0em 0 0em rgba(245,249,6, 0.2), 1.75em 1.75em 0 0em rgba(245,249,6, 0.2), 0em 2.5em 0 0em rgba(245,249,6, 0.5), -1.8em 1.8em 0 0em rgba(245,249,6, 0.7), -2.6em 0em 0 0em #f5f906, -1.8em -1.8em 0 0em rgba(245,249,6, 0.2);
-          }
-          87.5% {
-            box-shadow: 0em -2.6em 0em 0em rgba(245,249,6, 0.2), 1.8em -1.8em 0 0em rgba(245,249,6, 0.2), 2.5em 0em 0 0em rgba(245,249,6, 0.2), 1.75em 1.75em 0 0em rgba(245,249,6, 0.2), 0em 2.5em 0 0em rgba(245,249,6, 0.2), -1.8em 1.8em 0 0em rgba(245,249,6, 0.5), -2.6em 0em 0 0em rgba(245,249,6, 0.7), -1.8em -1.8em 0 0em #f5f906;
-          }
-        }
-        @keyframes Loader {
-          0%,
-          100% {
-            box-shadow: 0em -2.6em 0em 0em #f5f906, 1.8em -1.8em 0 0em rgba(245,249,6, 0.2), 2.5em 0em 0 0em rgba(245,249,6, 0.2), 1.75em 1.75em 0 0em rgba(245,249,6, 0.2), 0em 2.5em 0 0em rgba(245,249,6, 0.2), -1.8em 1.8em 0 0em rgba(245,249,6, 0.2), -2.6em 0em 0 0em rgba(245,249,6, 0.5), -1.8em -1.8em 0 0em rgba(245,249,6, 0.7);
-          }
-          12.5% {
-            box-shadow: 0em -2.6em 0em 0em rgba(245,249,6, 0.7), 1.8em -1.8em 0 0em #f5f906, 2.5em 0em 0 0em rgba(245,249,6, 0.2), 1.75em 1.75em 0 0em rgba(245,249,6, 0.2), 0em 2.5em 0 0em rgba(245,249,6, 0.2), -1.8em 1.8em 0 0em rgba(245,249,6, 0.2), -2.6em 0em 0 0em rgba(245,249,6, 0.2), -1.8em -1.8em 0 0em rgba(245,249,6, 0.5);
-          }
-          25% {
-            box-shadow: 0em -2.6em 0em 0em rgba(245,249,6, 0.5), 1.8em -1.8em 0 0em rgba(245,249,6, 0.7), 2.5em 0em 0 0em #f5f906, 1.75em 1.75em 0 0em rgba(245,249,6, 0.2), 0em 2.5em 0 0em rgba(245,249,6, 0.2), -1.8em 1.8em 0 0em rgba(245,249,6, 0.2), -2.6em 0em 0 0em rgba(245,249,6, 0.2), -1.8em -1.8em 0 0em rgba(245,249,6, 0.2);
-          }
-          37.5% {
-            box-shadow: 0em -2.6em 0em 0em rgba(245,249,6, 0.2), 1.8em -1.8em 0 0em rgba(245,249,6, 0.5), 2.5em 0em 0 0em rgba(245,249,6, 0.7), 1.75em 1.75em 0 0em #f5f906, 0em 2.5em 0 0em rgba(245,249,6, 0.2), -1.8em 1.8em 0 0em rgba(245,249,6, 0.2), -2.6em 0em 0 0em rgba(245,249,6, 0.2), -1.8em -1.8em 0 0em rgba(245,249,6, 0.2);
-          }
-          50% {
-            box-shadow: 0em -2.6em 0em 0em rgba(245,249,6, 0.2), 1.8em -1.8em 0 0em rgba(245,249,6, 0.2), 2.5em 0em 0 0em rgba(245,249,6, 0.5), 1.75em 1.75em 0 0em rgba(245,249,6, 0.7), 0em 2.5em 0 0em #f5f906, -1.8em 1.8em 0 0em rgba(245,249,6, 0.2), -2.6em 0em 0 0em rgba(245,249,6, 0.2), -1.8em -1.8em 0 0em rgba(245,249,6, 0.2);
-          }
-          62.5% {
-            box-shadow: 0em -2.6em 0em 0em rgba(245,249,6, 0.2), 1.8em -1.8em 0 0em rgba(245,249,6, 0.2), 2.5em 0em 0 0em rgba(245,249,6, 0.2), 1.75em 1.75em 0 0em rgba(245,249,6, 0.5), 0em 2.5em 0 0em rgba(245,249,6, 0.7), -1.8em 1.8em 0 0em #f5f906, -2.6em 0em 0 0em rgba(245,249,6, 0.2), -1.8em -1.8em 0 0em rgba(245,249,6, 0.2);
-          }
-          75% {
-            box-shadow: 0em -2.6em 0em 0em rgba(245,249,6, 0.2), 1.8em -1.8em 0 0em rgba(245,249,6, 0.2), 2.5em 0em 0 0em rgba(245,249,6, 0.2), 1.75em 1.75em 0 0em rgba(245,249,6, 0.2), 0em 2.5em 0 0em rgba(245,249,6, 0.5), -1.8em 1.8em 0 0em rgba(245,249,6, 0.7), -2.6em 0em 0 0em #f5f906, -1.8em -1.8em 0 0em rgba(245,249,6, 0.2);
-          }
-          87.5% {
-            box-shadow: 0em -2.6em 0em 0em rgba(245,249,6, 0.2), 1.8em -1.8em 0 0em rgba(245,249,6, 0.2), 2.5em 0em 0 0em rgba(245,249,6, 0.2), 1.75em 1.75em 0 0em rgba(245,249,6, 0.2), 0em 2.5em 0 0em rgba(245,249,6, 0.2), -1.8em 1.8em 0 0em rgba(245,249,6, 0.5), -2.6em 0em 0 0em rgba(245,249,6, 0.7), -1.8em -1.8em 0 0em #f5f906;
-          }
-        }
+        
 
         #screen {
             padding: 0;
@@ -251,41 +198,7 @@
             opacity: 0;
         }
 
-        @keyframes intro {
-            0% {
-                opacity: 0;
-            }
-
-            20% {
-                opacity: 1;
-            }
-
-            90% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 0;
-            }
-        }
-
-        @-webkit-keyframes intro {
-            0% {
-                opacity: 0;
-            }
-
-            20% {
-                opacity: 1;
-            }
-
-            90% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 0;
-            }
-        }
+        
         /*
             Dati per logo STARWARS
         */
@@ -315,141 +228,7 @@
                 user-select: none;
             }
 
-        @keyframes logo {
-            0% {
-                transform: scale(1.25);
-                transform-origin: center;
-                opacity: 1;
-            }
-
-            10% {
-                transform: scale(1.1);
-                transform-origin: center;
-                opacity: 1;
-            }
-
-            20% {
-                transform: scale(0.85);
-                transform-origin: center;
-                opacity: 1;
-            }
-
-            30% {
-                transform: scale(0.7);
-                transform-origin: center;
-                opacity: 1;
-            }
-
-            40% {
-                transform: scale(0.6);
-                transform-origin: center;
-                opacity: 1;
-            }
-
-            50% {
-                transform: scale(0.5);
-                transform-origin: center;
-                opacity: 1;
-            }
-
-            60% {
-                transform: scale(0.42);
-                transform-origin: center;
-                opacity: 1;
-            }
-
-            70% {
-                transform: scale(0.34);
-                transform-origin: center;
-                opacity: 1;
-            }
-
-            80% {
-                transform: scale(0.26);
-                transform-origin: center;
-                opacity: 1;
-            }
-
-            90% {
-                transform: scale(0.18);
-                transform-origin: center;
-                opacity: 0.8;
-            }
-
-            100% {
-                transform: scale(0.1);
-                transform-origin: center;
-                opacity: 0;
-            }
-        }
-
-        @-webkit-keyframes logo {
-            0% {
-                transform: scale(1.25);
-                transform-origin: center;
-                opacity: 1;
-            }
-
-            10% {
-                transform: scale(1.1);
-                transform-origin: center;
-                opacity: 1;
-            }
-
-            20% {
-                transform: scale(0.85);
-                transform-origin: center;
-                opacity: 1;
-            }
-
-            30% {
-                transform: scale(0.7);
-                transform-origin: center;
-                opacity: 1;
-            }
-
-            40% {
-                transform: scale(0.6);
-                transform-origin: center;
-                opacity: 1;
-            }
-
-            50% {
-                transform: scale(0.5);
-                transform-origin: center;
-                opacity: 1;
-            }
-
-            60% {
-                transform: scale(0.42);
-                transform-origin: center;
-                opacity: 1;
-            }
-
-            70% {
-                transform: scale(0.34);
-                transform-origin: center;
-                opacity: 1;
-            }
-
-            80% {
-                transform: scale(0.26);
-                transform-origin: center;
-                opacity: 1;
-            }
-
-            90% {
-                transform: scale(0.18);
-                transform-origin: center;
-                opacity: 0.8;
-            }
-
-            100% {
-                transform: scale(0.1);
-                transform-origin: center;
-                opacity: 0;
-            }
-        }
+        
 
         /*
             Dati per il corpo del testo
@@ -519,24 +298,7 @@
                 display: block;
                 font-size: 24%;
             }
-        @keyframes scroll {
-            0% {
-                top: 100%;
-            }
-            100% {
-                top: -200%;
-            }
-        }
-
-        @-webkit-keyframes scroll {
-            0% {
-                top: 100%;
-            }
-
-            100% {
-                top: -200%;
-            }
-        }
+        
         #credits {
             position: absolute;
             top: 0;
@@ -555,6 +317,9 @@
         .star {
             position: absolute;
         }
+
+        
+        <?php include "./assets/view_animations.css" ?>
     </style>
 </head>
 <body>

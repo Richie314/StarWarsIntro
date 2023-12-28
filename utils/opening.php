@@ -219,22 +219,22 @@ class Opening
     {
         if (!is_int($episode) || $episode < 1 || $episode > 9)
         {
-            throw new RangeException('Episode not found!', 500);
+            throw new RangeException('Episode not found!', 404);
         }
-        $lang_str = (string)$lang;
+        $lang_str = $lang->value;
 
-        $path = ".preload/$lang_str/$episode.json";
+        $path = "./preload/$lang_str/Data/$episode.json";
         $content = ReadFullFile($path);
 
         $obj = json_decode($content);
         $path2 = $obj['path'];
-        $body = ReadFullFile($path2);
+        $body = ReadFullFile("./preload/$lang_str/Body/$path2");
         return new Opening(
             $obj['id'],
             $obj['title'],
             $obj['episode'],
             $body,
-            $obj['lang'],
+            $lang,
             null, null, null
         );
     }
