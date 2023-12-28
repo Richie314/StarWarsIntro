@@ -48,6 +48,7 @@ footer {
     .img > :is(svg, img) {
         width: 100%;
         height: fit-content;
+        height: -moz-fit-content;
     }
 .justify {
     text-align: justify;
