@@ -1,3 +1,9 @@
-<FilesMatch "\.(save|swp|sql|gitignore|env)$">
-    Require all denied
-</FilesMatch>
+RewriteEngine On
+DirectorySlash Off
+
+RewriteCond %{REQUEST_URI}  (\.swp|\.sql|\.db|\.json|\.env|\.gitignore|\.hintrc)$
+RewriteRule ^(.*)$ ./error.php?err=$1 [NC,L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f  
+RewriteCond %{REQUEST_FILENAME} !-d  
+RewriteRule .* error.php?code=404 [L] 

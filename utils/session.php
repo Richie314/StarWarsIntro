@@ -39,7 +39,7 @@ function RedirectToLogin()
 function RedirectToError(string $err = "")
 {
     if (isEmpty($err))
-        header("Location: ./error.php?err=");
+        header("Location: ./error.php");
     else
         header("Location: ./error.php?err=" . urlencode($err));
     exit;

@@ -9,13 +9,13 @@
         "Contenuto qui",
         "it",
         null, new DateTime(), null);
-    if (isset($_GET["id"]) && is_int($_GET["id"]))
+    if (isset($_GET["id"]) && ctype_digit($_GET["id"]))
     {
         $opening = Opening::Load($db, (int)$_GET["id"]);
         if (!isset($opening))
         {
             http_response_code(404);
-            die("Risorsa non trovata");
+            throw new Exception("Risorsa non trovata");
         }
     } elseif (isset($_GET["original"]) && is_int($_GET["original"]))
     {
@@ -23,7 +23,7 @@
         if ($original < 1 || $original > 9)
         {
             http_response_code(404);
-            die("Risorsa non trovata");
+            throw new Exception("Risorsa non trovata");
         }
         $lang = OpeningLanguage::Italian;
         if (!isEmpty($_GET["lang"]) && is_string($_GET["lang"]))

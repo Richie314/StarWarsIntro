@@ -6,18 +6,18 @@
     $DESCRIPTION = "Crea nuova o modifica una intro.";
     
     $opening = new Opening(0, 'Titolo qui', 'Episodio X', null, 'it', $USER_ID, null, null);
-    if (isset($_GET["id"]) && is_int($_GET["id"]))
+    if (isset($_GET["id"]) && ctype_digit($_GET["id"]))
     {
         $opening = Opening::Load($db, (int)$_GET["id"]);
         if (!isset($opening))
         {
             http_response_code(404);
-            die("Intro not found.");
+            throw new Exception("Risorsa non trovata");
         }
         if ($opening->Author !== $USER_ID && !$IS_ADMIN)
         {
             http_response_code(401);
-            die("You don't own the opening.");
+            throw new Exception("Non possiedi la risorsa");
         }
     }
 
@@ -35,12 +35,12 @@
             if (!isset($opening))
             {
                 http_response_code(404);
-                die("Intro not found.");
+                throw new Exception("Risorsa non trovata");
             }
             if ($opening->Author !== $USER_ID && !$IS_ADMIN)
             {
                 http_response_code(401);
-                die("You don't own the opening.");
+                throw new Exception("Non possiedi la risorsa");
             }
             $opening->Title = $_POST["title"];
             $opening->Episode = $_POST["episode"];

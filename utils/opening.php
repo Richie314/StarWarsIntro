@@ -27,7 +27,7 @@ class Opening
             case OpeningLanguage::Italian->value:
                 return OpeningLanguage::Italian;
             default:
-                throw new InvalidArgumentException("Invalid language");
+                throw new InvalidArgumentException("Invalid language", 500);
         } 
     }
     function __construct(
@@ -42,7 +42,7 @@ class Opening
     {
         if (isEmpty($title) || isEmpty($episode))
         {
-            throw new InvalidArgumentException();
+            throw new InvalidArgumentException("Invalid params", 500);
         }
 
         if (is_int($id) && $id !== 0)
@@ -58,7 +58,7 @@ class Opening
         } elseif (is_string($lang)) {
             $this->Language = $this::StringToLanguage($lang);
         } else {
-            throw new InvalidArgumentException("lang was invalid!");
+            throw new InvalidArgumentException("lang was invalid!", 500);
         }
 
 
@@ -100,7 +100,7 @@ class Opening
                 'REPLACE INTO `openings` (`ID`, `Title`, `Episode`, `Content`, `Language`, `Author`, `Creation`, `LastEdit`) VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_DATETIME)');
             if (!$stmt)
             {
-                throw new UnexpectedValueException('Could not prepare the statement!');
+                throw new UnexpectedValueException('Could not prepare the statement!', 500);
             }
             if (!$stmt->bind_param(
                 'issssss', 
@@ -112,7 +112,7 @@ class Opening
                 $this->Author,
                 $this->Creation))
             {
-                throw new UnexpectedValueException('Could not bind parameters to the statement!');
+                throw new UnexpectedValueException('Could not bind parameters to the statement!', 500);
             }
             return $stmt;
         } 
@@ -121,7 +121,7 @@ class Opening
             'INSERT INTO `openings` (`Title`, `Episode`, `Content`, `Language`, `Author`) VALUES (?, ?, ?, ?, ?)');
         if (!$stmt)
         {
-            throw new UnexpectedValueException('Could not prepare the statement!');
+            throw new UnexpectedValueException('Could not prepare the statement!', 500);
         }
         if (!$stmt->bind_param(
             'sssss', 
@@ -131,7 +131,7 @@ class Opening
             $lang,
             $this->Author))
         {
-            throw new UnexpectedValueException('Could not bind parameters to the statement!');
+            throw new UnexpectedValueException('Could not bind parameters to the statement!', 500);
         }
         return $stmt;
     }
@@ -140,7 +140,7 @@ class Opening
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
-            throw new InvalidArgumentException("db was not a mysqli object!");
+            throw new InvalidArgumentException("db was not a mysqli object!", 500);
         }
         $stmt = $this->PrepareUploadStatement($db);
         if (!$stmt->execute() || $db->affected_rows !== 1)
@@ -161,7 +161,7 @@ class Opening
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
-            throw new InvalidArgumentException("db was not a mysqli object!");
+            throw new InvalidArgumentException("db was not a mysqli object!", 500);
         }
         $query = "SELECT * FROM `openings` WHERE `ID` = $id";
         $result = $db->query($query);
@@ -171,7 +171,7 @@ class Opening
         }
         $row = $result->fetch_assoc();
         return new Opening(
-            $row['ID'],
+            (int)$row['ID'],
             $row['Title'],
             $row['Episode'],
             $row['Content'],
@@ -185,11 +185,11 @@ class Opening
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
-            throw new InvalidArgumentException("db was not a mysqli object!");
+            throw new InvalidArgumentException("db was not a mysqli object!", 500);
         }
         if (isEmpty($user))
         {
-            throw new InvalidArgumentException("Invalid user!");
+            throw new InvalidArgumentException("Invalid user!", 500);
         }
         $query = "SELECT `ID`, `Title`, `Language` FROM `RecentOpenings` WHERE `Author` = ?";
         $result = $db->execute_query($query, array($user));
@@ -219,7 +219,7 @@ class Opening
     {
         if (!is_int($episode) || $episode < 1 || $episode > 9)
         {
-            throw new RangeException('Episode not found!');
+            throw new RangeException('Episode not found!', 500);
         }
         $lang_str = (string)$lang;
 

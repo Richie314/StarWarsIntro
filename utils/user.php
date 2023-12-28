@@ -38,7 +38,7 @@ class User
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
-            throw new InvalidArgumentException("db was not a mysqli object!");
+            throw new InvalidArgumentException("db was not a mysqli object!", 500);
         }
         if (isEmpty($id))
         {
@@ -66,11 +66,11 @@ class User
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
-            throw new InvalidArgumentException("db was not a mysqli object!");
+            throw new InvalidArgumentException("db was not a mysqli object!", 500);
         }
         if (isEmpty($plain_text_password))
         {
-            throw new InvalidArgumentException("password can't be null!");
+            throw new InvalidArgumentException("password can't be null!", 500);
         }
         $hash = password_hash($plain_text_password, PASSWORD_BCRYPT);
         $user = new User($id, $hash, $email, $is_admin);
@@ -91,11 +91,11 @@ class User
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
-            throw new InvalidArgumentException("db was not a mysqli object!");
+            throw new InvalidArgumentException("db was not a mysqli object!", 500);
         }
         if (isEmpty($this->ID))
         {
-            throw new BadFunctionCallException("ID was not set!");
+            throw new BadFunctionCallException("ID was not set!", 500);
         }
         $query = "INSERT INTO `login` (`User`, `When`, `Ip`, `Device`) VALUES (?, CURRENT_TIMESTAMP, ?, ?)";
         $stmt = $db->prepare($query);
@@ -121,13 +121,13 @@ class Login
     {
         if (!isset($user) || !isset($datetime))
         {
-            throw new InvalidArgumentException("Invalid object");
+            throw new InvalidArgumentException("Invalid object", 500);
         }
         $this->user = $user;
         $this->When = $datetime instanceof DateTime ? $datetime : new DateTime($datetime);
         if (isEmpty($ip) || isEmpty($dev))
         {
-            throw new InvalidArgumentException("Invalid string");
+            throw new InvalidArgumentException("Invalid string", 500);
         }
         $this->Ip = $ip;
         $this->Device = $dev;
@@ -137,7 +137,7 @@ class Login
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
-            throw new InvalidArgumentException("db was not a mysqli object!");
+            throw new InvalidArgumentException("db was not a mysqli object!", 500);
         }
         $query = "SELECT * FROM `RecentLogs`";
         $result = $db->query($query);
