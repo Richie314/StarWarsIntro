@@ -95,24 +95,40 @@ class Opening
     {
         if ($this->isInDB())
         {
-            $stmt = $db->prepare('REPLACE INTO `openings` (`ID`, `Title`, `Episode`, `Content`, `Language`, `Author`) VALUES (?, ?, ?, ?, ?, CURRENT_DATETIME)');
+            $stmt = $db->prepare(
+                'REPLACE INTO `openings` (`ID`, `Title`, `Episode`, `Content`, `Language`, `Author`, `Creation`, `LastEdit`) VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_DATETIME)');
             if (!$stmt)
             {
                 throw new UnexpectedValueException('Could not prepare the statement!');
             }
-            if (!$stmt->bind_param('isssss', $this->ID, $this->Title, $this->Episode, $this->Content, $this->Author))
+            if (!$stmt->bind_param(
+                'issssss', 
+                $this->ID, 
+                $this->Title, 
+                $this->Episode, 
+                $this->Content, 
+                $this->Language->value, 
+                $this->Author,
+                $this->Creation))
             {
                 throw new UnexpectedValueException('Could not bind parameters to the statement!');
             }
             return $stmt;
         } 
 
-        $stmt = $db->prepare('INSERT INTO `openings` (`Title`, `Episode`, `Content`, `Language`, `Author`) VALUES (?, ?, ?, ?, ?)');
+        $stmt = $db->prepare(
+            'INSERT INTO `openings` (`Title`, `Episode`, `Content`, `Language`, `Author`) VALUES (?, ?, ?, ?, ?)');
         if (!$stmt)
         {
             throw new UnexpectedValueException('Could not prepare the statement!');
         }
-        if (!$stmt->bind_param('sssss', $this->Title, $this->Episode, $this->Content, $this->Author))
+        if (!$stmt->bind_param(
+            'sssss', 
+            $this->Title, 
+            $this->Episode, 
+            $this->Content, 
+            $this->Language->value,
+            $this->Author))
         {
             throw new UnexpectedValueException('Could not bind parameters to the statement!');
         }

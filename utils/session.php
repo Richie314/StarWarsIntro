@@ -56,3 +56,4 @@ if (!IsLoggedIn() && !isset($DO_NOT_CHECK_LOGIN))
 }
 
 $USER_ID = $_SESSION['user_id'];
+$IS_ADMIN = $_SESSION['admin'];

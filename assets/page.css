@@ -52,12 +52,18 @@ footer {
 .justify {
     text-align: justify;
 }
+label.center {
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+}
 /*
     Horizontal menu
 */
 
 nav {
     position: fixed;
+    z-index: 100;
     top: 0;
     left: 0;
     background-color: transparent;
@@ -150,7 +156,26 @@ nav {
                 right: 10%;
                 font-size: 1.5em;
             }
-    
+
+.grid {
+    display: grid;
+    width: calc(100% - 2em);
+    row-gap: 10px;
+    column-gap: 4px;
+    padding: 1em;
+}
+    .grid > .span-2 {
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
+    .grid > .span-3 {
+        grid-column-start: 1;
+        grid-column-end: 4;
+    }
+    .grid > .span-4 {
+        grid-column-start: 1;
+        grid-column-end: 5;
+    }
 
 /*
     General links
@@ -311,5 +336,116 @@ h1, h2, h3, h4, h5, h6 {
                 opacity: 0;
             }
             :is(h1, h2, h3, h4, h5, h6).aurebesh[data-content]:hover::after {
+                opacity: 1;
+            }
+
+.intro-form {
+    margin: 3em 1em 1em 1em;
+    width: calc(100% - 2em);
+    height: auto;
+    overflow: hidden;
+}
+    .intro-form label {
+        user-select: none;
+    }
+    
+    .intro-form :is(textarea, input[type="text"], select, option) {
+        color: var(--main-cl);
+        font-family: var(--main-font);
+        border: .2px solid;
+        transition: border-width .4s linear;
+        max-width: 100%;
+    }
+        .intro-form :is(textarea, input[type="text"], select):is(:active, :focus) {
+            border-width: 2px;
+        }
+    .intro-form input[type="text"] {
+        background-color: transparent;
+        height: 1.3em;
+        padding: .15em 1em .15em .2em;
+    }
+    .intro-form textarea {
+        width: 100%;
+        color: var(--main-cl);
+        background-color: transparent;
+    }
+        .intro-form textarea::selection {
+            color: var(--main-bg);
+            background-color: var(--main-cl);
+        }
+    .intro-form select {
+        height: 2em;
+        background-color: transparent;
+        padding: .15em 1em .15em .2em;
+    }
+    .intro-form option {
+        background-color: var(--main-bg);
+    }
+    .intro-form button {
+        appearance: none;
+        background-color: transparent;
+        color: var(--main-cl);
+        display: inline-block;
+        line-height: normal;
+        font-size: larger;
+
+        border: 2px solid;
+        border-radius: 15px;
+        box-sizing: border-box;
+        
+        cursor: pointer;
+
+        outline: none;
+        text-align: center;
+        text-decoration: none;
+        transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+        touch-action: manipulation;
+        will-change: transform;
+
+        width: 100%;
+        margin-inline: 0;
+
+        margin-block: .3em;
+        min-height: 2.1em;
+        
+        position: relative;
+        content: ' ';
+    }
+    
+        .intro-form button:disabled {
+            pointer-events: none;
+        }
+    
+        .intro-form button:hover {
+            box-shadow: var(--main-cl) 0 6px 12px;
+            transform: translateY(-3px);
+        }
+    
+        .intro-form button:active {
+            box-shadow: none;
+            transform: translateY(0);
+        }
+        .intro-form button::before,
+        .intro-form button::after {
+            content: attr(title);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            transition: opacity .7s ease-in-out;
+        }
+        .intro-form button::before {
+            opacity: 1;
+            font-family: 'Aurebesh';
+        }
+        .intro-form button::after {
+            opacity: 0;
+            font-family: var(--main-font);
+            text-transform: uppercase;
+        }
+            .intro-form button:hover::before {
+                opacity: 0;
+            }
+            .intro-form button:hover::after {
                 opacity: 1;
             }
