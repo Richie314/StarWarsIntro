@@ -11,13 +11,11 @@
         $opening = Opening::Load($db, (int)$_GET["id"]);
         if (!isset($opening))
         {
-            http_response_code(404);
-            throw new Exception("Risorsa non trovata");
+            throw new Exception("Risorsa non trovata", 404);
         }
         if ($opening->Author !== $USER_ID && !$IS_ADMIN)
         {
-            http_response_code(401);
-            throw new Exception("Non possiedi la risorsa");
+            throw new Exception("Non possiedi la risorsa", 401);
         }
     }
 
@@ -35,12 +33,12 @@
             if (!isset($opening))
             {
                 http_response_code(404);
-                throw new Exception("Risorsa non trovata");
+                throw new Exception("Risorsa non trovata", 500);
             }
             if ($opening->Author !== $USER_ID && !$IS_ADMIN)
             {
                 http_response_code(401);
-                throw new Exception("Non possiedi la risorsa");
+                throw new Exception("Non possiedi la risorsa", 500);
             }
             $opening->Title = $_POST["title"];
             $opening->Episode = $_POST["episode"];
