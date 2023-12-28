@@ -24,20 +24,22 @@
     <meta name="description" content="<?= $DESCRIPTION ?>">
     <meta name="author"content="Riccardo Ciucci">
     <meta name="robots" content="index,follow">
+    <link rel="icon" href="./assets/sitelogo.svg">
+    <link rel="shortcut icon" href="./assets/sitelogo.svg">
 
     <!-- Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="<?= $URL ?>">
     <meta property="og:title" content="<?= $TITLE ?>">
     <meta property="og:description" content="<?= $DESCRIPTION ?>">
-    <meta property="og:image" content="./assets/icon.png">
+    <meta property="og:image" content="./assets/sitelogo.svg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="<?= $URL ?>">
     <meta property="twitter:title" content="<?= $TITLE ?>">
     <meta property="twitter:description" content="<?= $DESCRIPTION ?>">
-    <meta property="twitter:image" content="./assets/icon.png">
+    <meta property="twitter:image" content="./assets/sitelogo.svg">
 
     <link rel="stylesheet" type="text/css" href="./assets/page.css" media="all">
     <link rel="stylesheet" type="text/css" href="./assets/font.css" media="print" onload="this.media = 'all'">

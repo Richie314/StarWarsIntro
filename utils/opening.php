@@ -9,7 +9,6 @@ enum OpeningLanguage: string
 class Opening
 {
     public int $ID;
-    public string $Intro;
     public string $Title;
     public string $Episode;
     public string|null $Content;
@@ -19,19 +18,29 @@ class Opening
     public string|null $Author;
     public DateTime $Creation;
     public DateTime|null $LastEdit;
-
+    static function StringToLanguage(string $lang) : OpeningLanguage
+    {
+        switch ($lang)
+        {
+            case OpeningLanguage::English->value:
+                return OpeningLanguage::English;
+            case OpeningLanguage::Italian->value:
+                return OpeningLanguage::Italian;
+            default:
+                throw new InvalidArgumentException("Invalid language");
+        } 
+    }
     function __construct(
         int $id, 
-        string $intro, 
         string $title, 
         string $episode, 
         string|null $content, 
-        OpeningLanguage $lang, 
+        OpeningLanguage|string $lang, 
         string|null $author,
         DateTime|string|null $creation,
         DateTime|string|null $lastEdit)
     {
-        if (isEmpty($intro) || isEmpty($title) || isEmpty($episode))
+        if (isEmpty($title) || isEmpty($episode))
         {
             throw new InvalidArgumentException();
         }
@@ -46,19 +55,12 @@ class Opening
         if ($lang instanceof OpeningLanguage)
         {
             $this->Language = $lang;
+        } elseif (is_string($lang)) {
+            $this->Language = $this::StringToLanguage($lang);
         } else {
-            switch ($lang)
-            {
-                case (string)OpeningLanguage::English:
-                    $this->Language = OpeningLanguage::English;
-                    break;
-                case (string)OpeningLanguage::Italian:
-                    $this->Language = OpeningLanguage::Italian;
-                    break;
-                default:
-                    throw new InvalidArgumentException("Invalid language");
-            } 
+            throw new InvalidArgumentException("lang was invalid!");
         }
+
 
         if (!isset($creation))
         {
@@ -78,7 +80,6 @@ class Opening
             $this->LastEdit = new DateTime($lastEdit);
         }
 
-        $this->Intro = $intro;
         $this->Title = $title;
         $this->Episode = $episode;
         $this->Content = $content; // Can be null
@@ -94,24 +95,24 @@ class Opening
     {
         if ($this->isInDB())
         {
-            $stmt = $db->prepare('REPLACE INTO `openings` (`ID`, `Intro`, `Title`, `Episode`, `Content`, `Language`, `Author`) VALUES (?, ?, ?, ?, ?, ?, CURRENT_DATETIME)');
+            $stmt = $db->prepare('REPLACE INTO `openings` (`ID`, `Title`, `Episode`, `Content`, `Language`, `Author`) VALUES (?, ?, ?, ?, ?, CURRENT_DATETIME)');
             if (!$stmt)
             {
                 throw new UnexpectedValueException('Could not prepare the statement!');
             }
-            if (!$stmt->bind_param('issssss', $this->ID, $this->Intro, $this->Title, $this->Episode, $this->Content, $this->Author))
+            if (!$stmt->bind_param('isssss', $this->ID, $this->Title, $this->Episode, $this->Content, $this->Author))
             {
                 throw new UnexpectedValueException('Could not bind parameters to the statement!');
             }
             return $stmt;
         } 
 
-        $stmt = $db->prepare('INSERT INTO `openings` (`Intro`, `Title`, `Episode`, `Content`, `Language`, `Author`) VALUES (?, ?, ?, ?, ?, ?)');
+        $stmt = $db->prepare('INSERT INTO `openings` (`Title`, `Episode`, `Content`, `Language`, `Author`) VALUES (?, ?, ?, ?, ?)');
         if (!$stmt)
         {
             throw new UnexpectedValueException('Could not prepare the statement!');
         }
-        if (!$stmt->bind_param('ssssss', $this->Intro, $this->Title, $this->Episode, $this->Content, $this->Author))
+        if (!$stmt->bind_param('sssss', $this->Title, $this->Episode, $this->Content, $this->Author))
         {
             throw new UnexpectedValueException('Could not bind parameters to the statement!');
         }
@@ -154,7 +155,6 @@ class Opening
         $row = $result->fetch_assoc();
         return new Opening(
             $row['ID'],
-            $row['Intro'],
             $row['Title'],
             $row['Episode'],
             $row['Content'],
@@ -185,7 +185,6 @@ class Opening
         {
             $current_element = new Opening(
                 $row['ID'],
-                '?',
                 $row['Title'],
                 '?',
                 null,
@@ -215,12 +214,29 @@ class Opening
         $body = ReadFullFile($path2);
         return new Opening(
             $obj['id'],
-            $obj['intro'],
             $obj['title'],
             $obj['episode'],
             $body,
             $obj['lang'],
             null, null, null
         );
+    }
+
+    public function Paragraphs():array
+    {
+        if (isEmpty($this->Content))
+        {
+            return array();
+        }
+        $parts = explode("\n", $this->Content);
+        return array_map("htmlspecialchars", $parts);
+    }
+    public function getIntro():string
+    {
+        $DefaultIntros = array(
+            OpeningLanguage::Italian->value => "Tanto tempo fa, in una galassia lontana,<br>lontana...",
+            OpeningLanguage::English->value => "A long time ago, in a galaxy far,<br>far away...",
+        );
+        return $DefaultIntros[$this->Language->value];
     }
 }

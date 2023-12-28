@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ERROR | E_PARSE);
+include_once "./utils/no-warning.php";
 include_once "./utils/string.php";
 include_once "./utils/user.php";
 include_once "./utils/db.php";
