@@ -50,10 +50,11 @@ $FORM_BUTTON_LABEL = "Registrati";
 <html>
 <?php include "./parts/head.php"; ?>
 <body>
-<?php include "./parts/nav.php"; ?>
-<div class="body center">
-    <?php include "./parts/form.php"; ?>
-</div>
-<?php include "./parts/footer.php"; ?>
+    <?php include "./parts/nav.php"; ?>
+    <div class="body center">
+        <?php include "./parts/form.php"; ?>
+    </div>
+    <?php include "./parts/stars.php" ?>
+    <?php include "./parts/footer.php"; ?>
 </body>
 </html>

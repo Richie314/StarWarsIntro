@@ -2,7 +2,6 @@
     include_once "./utils/no-warning.php";
     include_once "./utils/opening.php";
     require_once "./utils/db.php";
-    include_once "./utils/random.php";
     $opening = new Opening(
         0, 
         "Titolo qui",
@@ -230,20 +229,6 @@
                 --percentageOfHeight: 1vh;
             }
         }
-        .star {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background-color: #f9fbf2;
-        }
-
-            .star.star-big {
-                background-color: #f9fbf2;
-                border: none;
-                width: 5px;
-                height: 5px;
-                border-radius: 2.5px;
-            }
         /*
             Dati per "Tanto tempo fa in una galassia lontana lontana..."
         */
@@ -567,11 +552,14 @@
             background-color: transparent;
             z-index: 50;
         }
+        .star {
+            position: absolute;
+        }
     </style>
 </head>
 <body>
     <h1 class="hidden">
-        <?= $opening->Episode ?> - <?= $opening->Title ?>
+        <?= $TITLE ?>
     </h1>
     <div id="loader">
         <div class="loader"></div>
@@ -591,7 +579,7 @@
                 <p id="title">
                     <?= $opening->Title ?>
                 </p>
-                <br />
+                <br>
                 <?php foreach ($opening->Paragraphs() as $part) { ?>
                     <p class="paragraph">
                         <?= $part ?>
@@ -614,22 +602,7 @@
                 del design web, e non pu&ograve; essere utilizzata a fini commerciali.
             </p>
         </div>
-        <?php 
-            for ($i = 0; $i < $MAX_STARS; $i++) { 
-                if (random_float() > 0.94) {
-        ?>
-            <div class="star star-big"
-                     style="top: <?= random_percentage() ?>; left: <?= random_percentage() ?>"></div>
-            
-        <?php 
-                } else {
-        ?>
-            <div class="star"
-                     style="top: <?= random_percentage() ?>; left: <?= random_percentage() ?>"></div>
-        <?php
-                }
-            }
-        ?>
+        <?php include "./parts/stars.php" ?>
     </div>
     <script type="text/javascript">
         'use strict';

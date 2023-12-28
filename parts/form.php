@@ -1,11 +1,12 @@
 <?php
-if (isEmpty($FORM_BUTTON_LABEL))
-{
-    die("Form misconfigured.");
-}
-$SHOW_EMAIL_FIELD = isset($SHOW_EMAIL_FIELD) && $SHOW_EMAIL_FIELD;
+    if (isEmpty($FORM_BUTTON_LABEL))
+    {
+        die("Form misconfigured.");
+    }
+    $SHOW_EMAIL_FIELD = isset($SHOW_EMAIL_FIELD) && $SHOW_EMAIL_FIELD;
 ?>
 <form class="form" method="post">
+    <h2 class="aurebesh" data-content="<?= $FORM_BUTTON_LABEL ?>"></h2>
     <div class="field">
         <label for="email">
             Username

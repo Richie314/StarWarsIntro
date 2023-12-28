@@ -1,16 +1,18 @@
 :root {
-    --main-cl: yellow;
-    --main-bg: #000000;
-    --main-font: 'Times New Roman', Times, serif;
+    --main-cl: #FFE81F;
+    --main-bg: #141313;
+    --main-font: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
 }
 
 body {
     background-color: var(--main-bg);
     color: var(--main-cl);
     width: 100vw;
+    overflow-x: hidden;
     margin: 0;
     padding: 0;
     height: auto;
+    scroll-behavior: smooth;
 }
 .body {
     padding: 1em;
@@ -30,16 +32,43 @@ footer {
     color: var(--main-bg);
     background-color: var(--main-cl);
 }
-
+.star {
+    z-index: -1;
+    position: fixed;
+}
+.img {
+    width: 90%;
+    max-width: 400px;
+    margin-inline: auto;
+    height: auto;
+    overflow: hidden;
+    padding: 0;
+    display: block;
+}
+    .img > :is(svg, img) {
+        width: 100%;
+        height: fit-content;
+    }
+.justify {
+    text-align: justify;
+}
 /*
     Horizontal menu
 */
 
 nav {
-    position: sticky;
+    position: fixed;
     top: 0;
     left: 0;
+    background-color: transparent;
+    border-bottom: 1px solid transparent;
+
+    transition: background-color .5s ease-in-out, border-color .75s ease-in-out;
 }
+    nav.bg {
+        background-color: var(--main-bg);
+        border-color: var(--main-cl);
+    }
 
 .h-menu {
     display: grid;

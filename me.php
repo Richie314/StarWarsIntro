@@ -22,6 +22,7 @@
             <?php } ?>
         </ul>
     </div>
+    <?php include "./parts/stars.php" ?>
     <?php include "./parts/footer.php"; ?>
 </body>
 </html>
