@@ -250,7 +250,7 @@ class Opening
         {
             return array();
         }
-        $parts = explode("\n", $this->Content);
+        $parts = explode("\n\n", str_replace("\r", "", $this->Content));
         return array_map("htmlspecialchars", $parts);
     }
     public function getIntro():string
