@@ -33,7 +33,7 @@ function IsLoggedIn()
             <h1>
                 Questa non &egrave; la pagina che stai cercando!
             </h1>
-            <div class="img" style="max-width: 350px">
+            <div class="img no-ctx" style="max-width: 350px">
                 <img src="./assets/img/benkenobi.svg" alt="Obi wan kenobi" title="Questa non è la pagina che stai cercando">
             </div>
 

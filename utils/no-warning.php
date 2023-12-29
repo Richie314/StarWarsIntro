@@ -13,7 +13,7 @@ function ErrorToErrorPage($errno, $errstr, $errfile, $errline)
     exit;
 }
 set_error_handler("ErrorToErrorPage", E_STRICT);
-function ExceptionToErrorPage(Exception $ex)
+function ExceptionToErrorPage(Error|Exception $ex)
 {
     if (!isset($ex))
     {   

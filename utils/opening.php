@@ -90,14 +90,21 @@ class Opening
     {
         return $this->ID !== 0;
     }
+    public function getCreationDate()
+    {
+        if (!isset($this->Creation))
+            return null;
+        return $this->Creation->format('Y-m-d H:i:s');
+    }
 
     private function PrepareUploadStatement(mysqli $db): mysqli_stmt
     {
         $lang = $this->Language->value;
+        $creation = $this->getCreationDate();
         if ($this->isInDB())
         {
             $stmt = $db->prepare(
-                'REPLACE INTO `openings` (`ID`, `Title`, `Episode`, `Content`, `Language`, `Author`, `Creation`, `LastEdit`) VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_DATETIME)');
+                'REPLACE INTO `openings` (`ID`, `Title`, `Episode`, `Content`, `Language`, `Author`, `Creation`, `LastEdit`) VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)');
             if (!$stmt)
             {
                 throw new UnexpectedValueException('Could not prepare the statement!', 500);
@@ -110,7 +117,7 @@ class Opening
                 $this->Content, 
                 $lang, 
                 $this->Author,
-                $this->Creation))
+                $creation))
             {
                 throw new UnexpectedValueException('Could not bind parameters to the statement!', 500);
             }
@@ -226,7 +233,7 @@ class Opening
         $path = "./preload/$lang_str/Data/$episode.json";
         $content = ReadFullFile($path);
 
-        $obj = json_decode(preg_replace('/[[:^print:]]/', '', $content), true);
+        $obj = json_decode(preg_replace('/[[:^print:]]/', '', $content), true); # unprintable character are removed to prevent parsing errors
         //echo $content;
         if (!isset($obj))
         {

@@ -17,6 +17,8 @@ body {
 .body {
     padding: 1em;
     margin-top: 3em;
+    max-width: 800px;
+    margin-inline: auto;
 }
     .body.center {
         display: grid;
@@ -450,3 +452,33 @@ h1, h2, h3, h4, h5, h6 {
             .intro-form button:hover::after {
                 opacity: 1;
             }
+
+.tv {
+    user-select: none;
+
+    width: 100%;
+    max-width: 600px;
+    margin-inline: auto;
+    margin-block: .5em;
+    height: auto;
+
+    position: relative;
+    display: block;
+    
+    background-image: url(../assets/img/tv.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    aspect-ratio: 555 / 471;
+}
+#tv {
+    position: absolute;
+    top: 41%;
+    left: 6.6%;
+
+    width: 75%;
+    aspect-ratio: 16 / 9 !important;
+    height: auto;
+
+    border: 4px solid #819096;
+    border-radius: 7px;
+}

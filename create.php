@@ -32,13 +32,11 @@
             $opening = Opening::Load($db, (int)$_POST["id"]);
             if (!isset($opening))
             {
-                http_response_code(404);
-                throw new Exception("Risorsa non trovata", 500);
+                throw new Exception("Risorsa non trovata", 404);
             }
             if ($opening->Author !== $USER_ID && !$IS_ADMIN)
             {
-                http_response_code(401);
-                throw new Exception("Non possiedi la risorsa", 500);
+                throw new Exception("Non possiedi la risorsa", 401);
             }
             $opening->Title = $_POST["title"];
             $opening->Episode = $_POST["episode"];
@@ -46,7 +44,7 @@
             $opening->Language = Opening::StringToLanguage($_POST["lang"]);
             if ($opening->Upload($db))
             {
-                header("Location: ./view.php?id=$opening->ID");
+                header("Location: ./create.php?id=$opening->ID&action=edited");
                 exit;
             }
             $error_msg = "Impossibile aggiornare la risorsa.";
@@ -62,7 +60,7 @@
             );
             if ($opening->Upload($db))
             {
-                header("Location: ./view.php?id=$opening->ID");
+                header("Location: ./create.php?id=$opening->ID&action=share");
                 exit;
             }
             $error_msg = "Impossibile creare la risorsa.";
@@ -131,6 +129,17 @@
                         echo "<span>$error_msg</span>";
                     }
                     ?>
+                </div>
+                <div class="span-2">
+                    <h2>
+                        Ecco un'anteprima della intro che stai creando:
+                    </h2>
+                </div>
+                <div class="tv span-2">
+                    <iframe src="./view.php" allowfullscreen id="tv"
+                        width="1600" height="900" scrolling="no"
+                        loading="lazy">
+                    </iframe>
                 </div>
 
                 <div class="span-2 grid" style="grid-template-columns: 1fr 1fr">
