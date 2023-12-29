@@ -156,6 +156,9 @@
             </div>
         </form>
         <dialog id="show-originals-dialog">
+            <h3>
+                Scegli l'intro da emulare e guarda nella tv
+            </h3>
             <select id="dialog-select">
                 <option value="0">Scegli</option>
                 
@@ -179,6 +182,7 @@
                 <option value="8-en">The last Jedi</option>
                 <option value="9-en">The rise of Skywalker</option>
             </select>
+            <br>
             <button role="button" type="button" id="dialog-close">
                 Annulla
             </button>
