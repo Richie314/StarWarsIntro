@@ -143,14 +143,14 @@
                 </div>
                 <div class="span-2">
                     <p>
-                        Vuoi dei suggerimenti?<br>
+                        Vuoi dei suggerimenti?
                         Guarda le <strong><a href="javascript:ShowOriginals()" class="link">Intro originali</a></strong>
                     </p>
                 </div>
 
                 <div class="span-2 grid" style="grid-template-columns: 1fr 1fr">
-                    <button type="reset" title="Cancella"></button>
-                    <button type="submit" 
+                    <button type="reset" title="Cancella" id="clear"></button>
+                    <button type="submit" id="submit"
                         title="<?= $opening->ID !== 0 ? "Modifica" : "Crea" ?>"></button>
                 </div>
             </div>
