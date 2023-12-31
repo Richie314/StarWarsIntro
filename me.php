@@ -18,6 +18,10 @@
                         target="_blank" title="Apri in un'altra scheda" class="link">
                         <?= htmlspecialchars($intro->Title) ?>
                     </a>
+                    - <a href="./create.php?id=<?= $intro->ID ?>"
+                        target="_self" title="Modifica" class="link">
+                        Modifica <i class="edit"></i>
+                    </a>
                 </li>
             <?php } ?>
         </ul>

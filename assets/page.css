@@ -300,6 +300,12 @@ i {
         i.email::after {
             background-image: url('../assets/img/email.svg');
         }
+    .edit {
+        background-image: url('../assets/img/edit.svg');
+    }
+        i.edit::after {
+            background-image: url('../assets/img/edit.svg');
+        }
 
 h1, h2, h3, h4, h5, h6 {
     text-align: center;
