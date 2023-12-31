@@ -11,14 +11,18 @@ body {
     overflow-x: hidden;
     margin: 0;
     padding: 0;
+    min-height: 100vh;
     height: auto;
     scroll-behavior: smooth;
+    display:flex;
+    flex-direction:column;
 }
 .body {
+    flex: 1;
     padding: 1em;
     margin-top: 3em;
     max-width: 800px;
-    margin-inline: auto;
+    /*margin-inline: auto;*/
 }
     .body.center {
         display: grid;
