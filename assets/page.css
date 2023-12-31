@@ -524,7 +524,7 @@ h1, h2, h3, h4, h5, h6 {
     background-color: var(--main-bg);
     padding: .15em 1em .15em .2em;
 }
-#dialog-close {
+#dialog-close, #accept-cookie-btn {
     appearance: none;
     background-color: transparent;
     color: var(--main-cl);
@@ -590,4 +590,20 @@ h1, h2, h3, h4, h5, h6 {
     to {
         opacity: 0;
     }
+}
+
+#accept-cookie {
+    background-color: rgba(0, 0, 0, .9);
+    color: var(--main-cl);
+    font-family: var(--main-font);
+
+    width: 90%;
+    max-width: 600px;
+    margin-inline: auto;
+    overflow-x: hidden;
+
+    height: -moz-fit-content;
+    height: fit-content;
+    max-height: 75vh;
+    overflow-y: auto;
 }
