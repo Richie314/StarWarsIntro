@@ -106,237 +106,41 @@
     <meta property="twitter:description" content="<?= $DESCRIPTION ?>">
     <meta property="twitter:image" content="./assets/sitelogo.svg">
 
+    <!-- Styling is inline to reduce load latency to zero -->
     <style type="text/css">
-        * {
-            speak: none;
-        }
-        body {
-            margin: 0;
-            background-color: black;
-            padding: 0;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            min-width: 400px;
-            min-height: 225px;
-        }
-        .hidden {
-            display: none !important;
-        }
-        #loader {
-            display: none;
-        }
-            body.wait #loader {
-                display: flex;
-                width: 100%;
-                height: 100%;
-                position: absolute;
-                top: 0;
-                left: 0;
-                justify-content: center;
-                align-items: center;
-            }
-            body.wait *:not(#loader) {
-                animation-name: none !important;
-                animation-delay: unset !important;
-            }
-        .loader {
-            font-size: 25px;
-            width: 1em;
-            height: 1em;
-            border-radius: 50%;
-            position: relative;
-            text-indent: -9999em;
-            -webkit-animation: Loader 1.1s infinite ease;
-            animation: Loader 1.1s infinite ease;
-            -webkit-transform: translateZ(0);
-            -ms-transform: translateZ(0);
-            transform: translateZ(0);
-        }
+        <?php include "./assets/view/view.css" ?>
         
-
-        #screen {
-            padding: 0;
-            overflow: hidden;
-            aspect-ratio: 16 / 9 !important;
-            position: relative;
-            width: 100vw;
-            height: auto;
-            font-size: 1.15vw;
-            background-color: transparent;
-            --percentageOfHeight: calc(100vw / 1600 * 9);
-            margin: calc(50vh - 50 * var(--percentageOfHeight)) 0 auto 0;
-        }
-        @media screen and (min-aspect-ratio: 16 / 9) {
-            #screen {
-                width: auto;
-                height: 100vh;
-                margin: 0 auto 0 auto;
-                font-size: 2.3vh;
-                --percentageOfHeight: 1vh;
-            }
-        }
-        /*
-            Dati per "Tanto tempo fa in una galassia lontana lontana..."
-        */
-        .intro {
-            font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
-            position: absolute;
-            top: 40%;
-            left: 15%;
-            width: 70%;
-            height: 20%;
-            z-index: 1;
-            text-align: left;
-            animation: intro 5s ease-out 1s;
-            -webkit-animation: intro 5s ease-out 1s;
-            -moz-animation: intro 5s ease-out 1s;
-            -o-animation: intro 5s ease-out 1s;
-            color: rgb(75, 213, 238);
-            font-weight: 400;
-            font-size: 2.6em;
-            opacity: 0;
-        }
-
-        
-        /*
-            Dati per logo STARWARS
-        */
-
-        .logo {
-            margin: 0;
-            padding: 0;
-            position: absolute;
-            top: 2.5%;
-            left: 2.5%;
-            width: 95%;
-            height: fit-content;
-            z-index: 1;
-            overflow: hidden;
-            animation: logo 13s linear 7s;
-            -webkit-animation: logo 13s linear 7s;
-            -moz-animation: logo 13s linear 7s;
-            -o-animation: logo 13s linear 7s;
-            opacity: 0;
-            user-select: none;
-        }
-
-            .logo svg {
-                width: 100%;
-                height: auto;
-                margin: 0;
-                user-select: none;
-            }
-
-        
-
-        /*
-            Dati per il corpo del testo
-        */
-        #board {
-            color: #E2C64E;
-            font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
-            transform: perspective(calc(var(--percentageOfHeight) * 100)) rotateX(35deg);
-            transform-origin: 50% 100%;
-            position: absolute;
-            margin: auto 2.5% 0 2.5%;
-            font-weight: bold;
-            overflow: hidden;
-            height: calc(350 * var(--percentageOfHeight));
-            width: 95%;
-            bottom: 0;
-            left: 0;
-            user-select: none;
-        }
-
-        .break {
-            font-size: 3.2em;
-        }
-
-        #board::after {
-            position: absolute;
-            content: ' ';
-            bottom: 60%;
-            left: 0;
-            right: 0;
-            top: 0;
-        }
-
-        #content {
-            color: inherit;
-            animation: scroll 140s linear 18s;
-            -webkit-animation: scroll 140s linear 18s;
-            -moz-animation: scroll 140s linear 18s;
-            -o-animation: scroll 140s linear 18s;
-            position: absolute;
-            top: 100%;
-            width: 100%;
-        }
-
-        #episode, #title {
-            color: inherit;
-            text-align: center;
-            font-size: 6.2em;
-            overflow-x: visible;
-            overflow-y: hidden;
-            word-break: keep-all;
-        }
-        #title {
-            text-transform: uppercase;
-        }
-        .paragraph {
-            color: inherit;
-            font-size: 5.333em;
-            /*white-space: pre-line;*/
-            word-break: keep-all;
-            text-align: justify;
-            user-select: none;
-        }
-            .paragraph br {
-                content: "";
-                margin: 2em;
-                display: block;
-                font-size: 24%;
-            }
-        
-        #credits {
-            position: absolute;
-            top: 0;
-            left: 0;
-            display: none;
-            width: 100%;
-            height: 100%;
-            overflow-x: hidden;
-            overflow-y: auto;
-            text-align: center;
-            word-break:break-word;
-            user-select: text;
-            background-color: transparent;
-            z-index: 50;
-        }
-        .star {
-            position: absolute;
-        }
-
-        
-        <?php include "./assets/view_animations.css" ?>
+        <?php include "./assets/view/animations.css" ?>
     </style>
 </head>
-<body>
+<body class="wait">
+    <!--
+        Included an h1 for better search ranking
+    -->
     <h1 class="hidden">
         <?= $TITLE ?>
     </h1>
+
+    <!-- Loader shown on start -->
     <div id="loader">
         <div class="loader"></div>
     </div>
-    <div id="screen">
+
+    <!-- Most important element -->
+    <main id="screen">
+
+        <!-- Intro part -->
         <section class="intro">
             <?= $opening->getIntro() ?>
         </section>
+
+        <!-- Star wars logo svg. Do not copy -->
         <section class="logo">
             <?php include "./assets/img/starwarslogo.svg"; ?>
         </section>
-        <div id="board">
+
+        <!-- Text parts -->
+        <article id="board">
             <div id="content">
                 <p id="episode">
                     <?= $opening->Episode ?>
@@ -351,8 +155,10 @@
                     </p>
                 <?php } ?>
             </div>
-        </div>
-        <div id="credits">
+        </article>
+
+        <!-- Who created the opening -->
+        <article id="credits">
             <?php if (!isEmpty($opening->Author)) { ?>
                 <h3>
                     Creato da utente
@@ -366,65 +172,85 @@
                 simulazione &egrave; a solo scopo dimostrativo delle capacit&agrave;
                 del design web, e non pu&ograve; essere utilizzata a fini commerciali.
             </p>
-        </div>
+        </article>
+
+        <!-- Stars for the background -->
         <?php include "./parts/stars.php" ?>
-    </div>
+    </main>
     <script type="text/javascript">
         'use strict';
+        // Prevent contextmenu from getting in the way
         document.oncontextmenu = evt => evt.preventDefault();
+
+        // Shorthand
         const Now = () => performance.now();
-        const offSetAudio = 7500;
-        var start = Now();
-        const CreateAudio = () => {
+
+        // Delay for audio start after the start of the animations
+        const AUDIO_START_DELAY = 7300;
+
+        // Delay for credits to be shown
+        const CREDITS_SHOW_DELAY = 70 * 1000;
+
+        // When animations start
+        var start = 0;
+
+        // Generate the audio as we want it
+        function CreateAudio() {
             const audio = new Audio('./assets/intro.mp3');
             audio.autoplay = false;
             audio.muted = false;
             return audio;
         };
         const audio = CreateAudio();
-        var loaded = false;//if the audio is loaded and the page running
-        var clicked = false;//if the user has interacted
-        var started = false;//if audio is started or scheduled
-        //Page starts to animate
-        const StartPage = () => {
+        
+        // Function that starts the animations
+        function StartPage() {
             start = Now();
-            document.body.classList.remove('wait');
+            document.body.classList.remove('wait'); // Start animations
+            StartAudio();
+            const credits = document.getElementById('credits');
+            if (credits) {
+                setTimeout(() => {
+                    credits.style.opacity = 1;
+                    credits.style.userSelect = 'text';
+                }, CREDITS_SHOW_DELAY);
+            }
         }
 
-        // The audio is loaded
-        const StartAudio = () => {
-            function StartAudioRaw() {
-                const t = Now() - start - offSetAudio;
-                if (t >= 0) {
-                    if (t < audio.duration * 1000)
-                        audio.currentTime = t / 1000;
-                    if (audio.paused)
-                        audio.play();
-                } else {
-                    setTimeout(() => {
-                        StartAudioRaw();
-                    }, -t);
-                }
-                return t;
+        // Starts the audio.
+        // automatically detects offsets
+        function StartAudio() {
+            if (!audio.paused)
+                return; // Do nothing if the audio is playing
+
+            // Time passed since animation start - the offset: put as currentTime of the audio
+            const deltaT = Now() - start - AUDIO_START_DELAY;
+            if (deltaT < 0) {
+                // Schedule the start
+                setTimeout(StartAudio, -deltaT);
+                return;
             }
-            if (!started) {
-                StartAudioRaw();
+            // Audio should already been playing. Sync it to the desired currentTime
+
+            // If the audio should have ended don't start it
+            if (deltaT >= audio.duration * 1000)
+            {
+                return;
             }
-            started = true;
+            
+            // Set the current time and play it
+            audio.currentTime = deltaT / 1000;
+            if (!audio.paused) {
+                // Already playing
+                return;
+            }
+            audio.play().then(
+                () => console.log('Audio started')).catch(
+                () => console.warn('Audio will start when the user clicks on the page'));
         }
-        audio.addEventListener('loadeddata', () => {
-            loaded = true;
-            StartPage();
-            if (clicked) {//The user has already interacted
-                StartAudio();
-            }
-        });
-        document.addEventListener('click', () => {
-            clicked = true;
-            if (loaded) {//The user interacts, if the page is already running it starts from the proper time
-                StartAudio();
-            }
-        });
+
+        audio.addEventListener('loadeddata', () => StartPage());
+        document.addEventListener('click', () => StartAudio());
     </script>
 </body>
 </html>
