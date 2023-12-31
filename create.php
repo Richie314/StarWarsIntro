@@ -190,5 +190,6 @@
     </div>
     <?php include "./parts/stars.php" ?>
     <?php include "./parts/footer.php"; ?>
+    <script src="./assets/create.js" defer type="text/javascript"></script>
 </body>
 </html>
