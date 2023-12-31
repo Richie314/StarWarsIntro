@@ -8,6 +8,10 @@
     {
         $links[] = new Link("./create.php",     "./assets/img/create.svg",  "Crea intro");
         $links[] = new Link("./me.php",         "./assets/img/user.svg",    $USER_ID);
+        if (isset($IS_ADMIN) && $IS_ADMIN)
+        {
+            $links[] = new Link("./admin.php",     "./assets/img/admin.svg",  "Admin");
+        }
         $links[] = new Link("./logout.php",     "./assets/img/logout.svg",  "Logout");
     } else {
         $links[] = new Link("./register.php",   "./assets/img/signup.svg",  "Registrati");
@@ -20,7 +24,7 @@
     <?php foreach ($links as $link) { ?>
         <a href="<?= $link->Url ?>" target="_self" title=" Vai a <?= $link->Text ?>">
             <div class="icon">
-                <img src="<?= $link->Img ?>" alt="<?= $link->Text ?>">
+                <img src="<?= $link->Img ?>" alt="<?= $link->Text ?>" loading="eager">
             </div>
             <div class="text">
                 <span>
