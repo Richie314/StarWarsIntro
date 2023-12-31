@@ -177,7 +177,7 @@ h1, h2, h3, h4, h5, h6 {
     :is(h1, h2, h3, h4, h5, h6).aurebesh[data-content] {
         position: relative;
         content: ' ';
-        height: 1em;
+        display: inline-block;
         cursor: zoom-in;
     }
         :is(h1, h2, h3, h4, h5, h6).aurebesh[data-content]::before,
