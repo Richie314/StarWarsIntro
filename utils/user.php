@@ -103,7 +103,7 @@ class User
         {
             return false;
         }
-        $ip = $_SERVER['REMOTE_ADDR'];
+        $ip = getUserIP();
         $user_agent = $_SERVER['HTTP_USER_AGENT'];
 
         return $stmt->execute() && $db->affected_rows === 1;

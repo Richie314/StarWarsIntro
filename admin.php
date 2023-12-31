@@ -20,9 +20,9 @@
         <ul>
             <?php foreach ($logins as $login) { ?>
                 <li>
-                    <a href="" class="link"><?= $login->User->ID ?></a>@<a href="<?= $login->Ip ?>" class="link" traget="_blank"><?= $login->Ip ?></a>
+                    <a href="" class="link"><?= $login->User->ID ?></a>@<a href="http://<?= $login->Ip ?>" class="link" traget="_blank"><?= $login->Ip ?></a>
                     <br>
-                    il <?= $login->When->format('Y-m-d alle H:i:s') ?>
+                    il <?= $login->When->format('Y-m-d H:i:s') ?>
                 </li>
             <?php } ?>
         </ul>

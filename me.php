@@ -13,7 +13,7 @@
         <h1 class="aurebesh" data-content="Le mie intro"> </h1>
         <ul>
             <?php foreach ($intros as $intro) { ?>
-                <li>
+                <li id="intro-row-<?= $intro->ID ?>">
                     <a href="./view.php?id=<?= $intro->ID ?>" 
                         target="_blank" title="Apri in un'altra scheda" class="link">
                         <?= htmlspecialchars($intro->Title) ?>
@@ -22,11 +22,42 @@
                         target="_self" title="Modifica" class="link">
                         Modifica <i class="edit"></i>
                     </a>
+                    - <a href="javascript:Delete(<?= $intro->ID ?>)"
+                        title="Elimina" class="link">
+                        Elimina <i class="delete"></i>
+                    </a>
                 </li>
             <?php } ?>
         </ul>
     </div>
     <?php include "./parts/stars.php" ?>
     <?php include "./parts/footer.php"; ?>
+    <script type="text/javascript">
+        async function Delete(id)
+        {
+            if (!id)
+                return;
+            const res = await post('./delete.php', {
+                'id': id
+            });
+            if (!('esit' in res))
+            {
+                console.log(`Delete of #${id}: Unknown esit`);
+                return;
+            }
+            console.log(`Delete of #${id}: ${res.esit}`);
+            if (res.esit !== 'ok')
+            {
+                return;
+            }
+            const li = document.getElementById('intro-row-' + id);
+            if (li) {
+                li.classList.add('fade-out');
+                setTimeout(() => {
+                    li.parentElement.removeChild(li);
+                }, 1000);
+            }
+        }
+    </script>
 </body>
 </html>

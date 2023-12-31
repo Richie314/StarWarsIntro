@@ -300,11 +300,17 @@ i {
         i.email::after {
             background-image: url('../assets/img/email.svg');
         }
-    .edit {
+    i.edit {
         background-image: url('../assets/img/edit.svg');
     }
         i.edit::after {
             background-image: url('../assets/img/edit.svg');
+        }
+    i.delete {
+        background-image: url('../assets/img/delete.svg');
+    }
+        i.delete::after {
+            background-image: url('../assets/img/delete.svg');
         }
 
 h1, h2, h3, h4, h5, h6 {
@@ -554,3 +560,34 @@ h1, h2, h3, h4, h5, h6 {
         box-shadow: none;
         transform: translateY(0);
     }
+
+.fade-out {
+    opacity: 1;
+    -webkit-animation: fade-out 1s ease-in;
+    -moz-animation: fade-out 1s ease-in;
+    animation: fade-out 1s ease-in;
+}
+@keyframes fade-out {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+@-webkit-keyframes fade-out {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+@-moz-keyframes fade-out {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}

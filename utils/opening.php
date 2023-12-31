@@ -268,4 +268,23 @@ class Opening
         );
         return $DefaultIntros[$this->Language->value];
     }
+    public static function Delete(mysqli $db, int $id, string $user, bool $is_admin):bool
+    {
+        if (!isset($db) || !($db instanceof mysqli))
+        {
+            throw new InvalidArgumentException("db was not a mysqli object!", 500);
+        }
+        if ($id === 0)
+        {
+            return false;
+        }
+        $query = "DELETE FROM `openings` WHERE `ID` = ? AND (`Author` IS NULL OR `Author` = ? OR ?)";
+        $stmt = $db->prepare($query);
+        $int_bool = $is_admin ? 1 : 0;
+        if (!$stmt || !$stmt->bind_param("isi", $id, $user, $int_bool))
+        {
+            return false;
+        }
+        return $stmt->execute() && $db->affected_rows === 1;
+    }
 }

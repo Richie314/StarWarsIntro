@@ -1,5 +1,7 @@
 <?php
 
+setlocale(LC_TIME, 'ita', 'it_IT.utf8');
+
 error_reporting(E_ERROR | E_PARSE);
 function ErrorToErrorPage($errno, $errstr, $errfile, $errline)
 {

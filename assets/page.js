@@ -50,7 +50,7 @@ ScrollFragment();
 //  Handle in-page links (# links)
 //
 
-const inPageAnchors = document.querySelectorAll('a[href*=#]');
+const inPageAnchors = document.querySelectorAll('a[href*=\'#\']');
 inPageAnchors.forEach(a => {
     const url = new URL(a.href);
     if (!url.hash || url.hash.length <= 1)
@@ -61,3 +61,45 @@ inPageAnchors.forEach(a => {
         target.scrollIntoView();
     }
 });
+
+//
+//  Simple POST fetch wrapper
+//
+/**
+ * @param {string} path the path to send the post request to
+ * @param {object} params the parameters to add to the url
+ * @returns {object}
+ */
+async function post(path, params = null)
+{
+    async function post_async(path, params)
+    {
+
+        if (params)
+        {
+            const form_data = new FormData();
+            for (const [name, value] of Object.entries(params))
+            {
+                form_data.append(name, value);
+            }
+            return await fetch(path, {
+                method: 'POST',
+                body: form_data
+            });
+        }
+        return await fetch(path, {
+            method: 'POST'
+        });
+    }
+    try {
+		const response = await post_async(path, params);
+		if (!response.ok)
+		{
+			return {};
+		}
+		return await response.json();
+	} catch (err) {
+		console.warn(err);
+		return {};
+	}
+}
