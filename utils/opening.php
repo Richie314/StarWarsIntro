@@ -263,8 +263,8 @@ class Opening
     public function getIntro():string
     {
         $DefaultIntros = array(
-            OpeningLanguage::Italian->value => "Tanto tempo fa, in una galassia lontana,<br>lontana...",
-            OpeningLanguage::English->value => "A long time ago, in a galaxy far,<br>far away...",
+            OpeningLanguage::Italian->value => "Tanto tempo fa in una galassia lontana,<br>lontana...",
+            OpeningLanguage::English->value => "A long time ago in a galaxy far,<br>far away...",
         );
         return $DefaultIntros[$this->Language->value];
     }
