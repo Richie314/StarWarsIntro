@@ -28,3 +28,36 @@ if (navigator.share && navigator.canShare({
 
 document.body.classList.add('can-share');
 
+//
+//  Handle automatic scroll on page load
+//
+
+function ScrollFragment()
+{
+    const frag = location.hash;
+    if (!frag || frag.length <= 1)
+        return;
+    const elem = document.getElementById(frag.substring(1));
+    if (!elem)
+        return;
+    elem.scrollIntoView({
+        behavior: 'smooth'
+    });
+}
+ScrollFragment();
+
+//
+//  Handle in-page links (# links)
+//
+
+const inPageAnchors = document.querySelectorAll('a[href*=#]');
+inPageAnchors.forEach(a => {
+    const url = new URL(a.href);
+    if (!url.hash || url.hash.length <= 1)
+        return;
+    a.onclick = e => {
+        e.preventDefault();
+        const target = document.getElementById(url.hash.substring(1));
+        target.scrollIntoView();
+    }
+});

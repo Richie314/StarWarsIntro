@@ -129,3 +129,54 @@ if (dialogSelect) {
 if (dialogCloseBtn) {
     dialogCloseBtn.onclick = CloseDialog;
 }
+
+//
+//  Handle share dialog 
+//
+
+function ShowShareDialog()
+{
+    if (!document.body.classList.contains('can-share'))
+        return;
+    const url = new URL(location.href);
+    if (!url.searchParams.has('action', 'search'))
+    {
+        return;
+    }
+    const id = url.searchParams.get('id');
+    if (!id)
+    {
+        return;
+    }
+    const dialog = document.getElementById('share-dialog');
+    const share_btn = document.getElementById('share-btn');
+    const close_btn = document.getElementById('share-close-btn');
+    if (!dialog || !share_btn || !close_btn)
+        return;
+    share_btn.onclick = () => {
+        navigator.share({
+            title: 'Intro di Star Wars personalizzata',
+            text: 'Guarda la mia intro di Star Wars personalizzata!',
+            url: `${current_folder}view.php?original=${id}`
+        });
+        dialog.close();
+    }
+    close_btn.onclick = dialog.close;
+    dialog.showModal();
+}
+ShowShareDialog();
+
+//
+//  Handle edited prompt 
+//
+
+function ShowEditedPrompt()
+{
+    const url = new URL(location.href);
+    if (!url.searchParams.has('action', 'edited'))
+    {
+        return;
+    }
+    alert('Modifiche effettuate con successo!');
+}
+ShowEditedPrompt();
