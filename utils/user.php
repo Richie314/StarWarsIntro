@@ -112,7 +112,7 @@ class User
 }
 class Login
 {
-    public User $user;
+    public User $User;
     public DateTime $When;
     public string $Ip;
     public string $Device;
@@ -123,7 +123,7 @@ class Login
         {
             throw new InvalidArgumentException("Invalid object", 500);
         }
-        $this->user = $user;
+        $this->User = $user;
         $this->When = $datetime instanceof DateTime ? $datetime : new DateTime($datetime);
         if (isEmpty($ip) || isEmpty($dev))
         {
