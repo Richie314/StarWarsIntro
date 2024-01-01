@@ -1,5 +1,5 @@
 RewriteEngine On
-DirectorySlash Off
+# DirectorySlash Off
 
 RewriteCond %{REQUEST_URI}  (\.swp|\.sql|\.db|\.json|\.env|\.gitignore|\.hintrc)$
 RewriteRule ^(.*)$ ./error.php?err=File%20$1%20non%20concesso [NC,L,QSA]
