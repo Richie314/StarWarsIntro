@@ -41,7 +41,10 @@ CREATE TABLE `openings`
     `Episode` VARCHAR(64) NOT NULL,
     `Content` VARCHAR(1024) DEFAULT NULL,
     `Language` ENUM ('it', 'en') NOT NULL,
-    `Author` VARCHAR(32) DEFAULT NULL REFERENCES `users` (`ID`),
+    `Author` VARCHAR(32) DEFAULT NULL 
+        REFERENCES `users` (`ID`)
+            ON UPDATE CASCADE
+            ON DELETE SET NULL,
     `Creation` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `LastEdit` DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP CHECK (`LastEdit` >= `Creation`)
 ) Engine=InnoDB;
