@@ -158,20 +158,30 @@
         </article>
 
         <!-- Who created the opening -->
-        <article id="credits">
+        <article id="credits" class="hidden">
             <?php if (!isEmpty($opening->Author)) { ?>
-                <h3>
-                    Creato da utente
-                </h3>
                 <h2>
-                    <?= htmlspecialchars($opening->Author) ?>
+                    Creato da utente <?= htmlspecialchars($opening->Author) ?>
                 </h2>
             <?php } ?>
+            
             <p>
-                La musica &egrave; di propriet&agrave; di LucasFilm e Disney, questa
-                simulazione &egrave; a solo scopo dimostrativo delle capacit&agrave;
-                del design web, e non pu&ograve; essere utilizzata a fini commerciali.
+                La musica &egrave; di propriet&agrave; di LucasFilm e Disney.
+                <br>
+                Questa simulazione &egrave; a solo scopo dimostrativo delle capacit&agrave;
+                del design web; &egrave; pubblica e non pu&ograve; essere utilizzata per fini commerciali.
+                <br>
+                Per maggiori informazioni vai alla <a href="./index.php">Pagina principale</a>
             </p>
+
+            <div class="row">
+                <button type="button" id="restart">
+                    Riavvia
+                </button>
+                <button type="button" id="share">
+                    Condividi
+                </button>
+            </div>
         </article>
 
         <!-- Stars for the background -->
@@ -186,10 +196,10 @@
         const Now = () => performance.now();
 
         // Delay for audio start after the start of the animations
-        const AUDIO_START_DELAY = 7300;
+        const AUDIO_START_DELAY = 6300;
 
         // Delay for credits to be shown
-        const CREDITS_SHOW_DELAY = 70 * 1000;
+        const CREDITS_SHOW_DELAY = 103 * 1000;
 
         // When animations start
         var start = 0;
@@ -211,8 +221,9 @@
             const credits = document.getElementById('credits');
             if (credits) {
                 setTimeout(() => {
-                    credits.style.opacity = 1;
+                    credits.classList.remove('hidden');
                     credits.style.userSelect = 'text';
+                    setTimeout(() => credits.style.opacity = 1, 1000);
                 }, CREDITS_SHOW_DELAY);
             }
         }
@@ -251,6 +262,44 @@
 
         audio.addEventListener('loadeddata', () => StartPage());
         document.addEventListener('click', () => StartAudio());
+
+        // Hide cursor when it does not move for more than 2s
+        document.body.addEventListener('mousemove', () => {
+            document.body.classList.remove('no-cursor');
+            if (hideMouseTimeout !== 0) {
+                clearTimeout(hideMouseTimeout);
+            }
+            hideMouseTimeout = setTimeout(() => {
+                document.body.classList.add('no-cursor');
+                hideMouseTimeout = 0;
+            }, 2000);
+        });
+        var hideMouseTimeout = setTimeout(() => {
+            document.body.classList.add('no-cursor');
+            hideMouseTimeout = 0;
+        }, 3000);
+
+        // Restart the page (reload) and share
+        const reloadBtn = document.getElementById('restart');
+        if (reloadBtn) {
+            reloadBtn.addEventListener('click', () => window.location.reload());
+        }
+        const shareBtn =document.getElementById('share');
+        if (!navigator.share || ! navigator.canShare({
+            title: document.title,
+            text: 'Guarda anche tu la mia intro di Star Wars',
+            url: window.location.href
+        })) {
+            shareBtn.classList.add('hidden');
+        } else {
+            shareBtn.addEventListener('click', () => {
+                navigator.share({
+                    title: document.title,
+                    text: 'Guarda anche tu la mia intro di Star Wars',
+                    url: window.location.href
+                })
+            });
+        }
     </script>
 </body>
 </html>

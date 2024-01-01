@@ -3,6 +3,7 @@
         width: 2px;
         height: 2px;
         background-color: #f9fbf2;
+        z-index: -1;
     }
 
         .star.star-big {
