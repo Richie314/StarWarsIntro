@@ -53,12 +53,15 @@ nav {
     }
 footer {
     margin-bottom: 0;
+    padding-bottom: 10px;
     width: 100%;
     text-align: center;
     font-size: smaller;
 }
 
-
+/*
+    Where the stars must be positioned (fixed or absolute)
+*/
 .star {
     position: fixed;
 }
