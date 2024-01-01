@@ -5,12 +5,21 @@ $code = 0;
 if (isset($_GET["code"]) && ctype_digit($_GET["code"]))
 {
     $code = (int)$_GET["code"];
-    http_response_code($code);
+    if ($code >= 400 && $code < 600)
+        http_response_code($code);
 }
 $str = "";
 if (isset($_GET["err"]) && is_string($_GET["err"]))
 {
     $str = htmlspecialchars($_GET["err"]);
+}
+if (isset($_GET["file"]) && is_string($_GET["file"]))
+{
+    $file = htmlspecialchars($_GET["file"]);
+}
+if (isset($_GET["trace"]) && is_string($_GET["trace"]))
+{
+    $trace = htmlspecialchars($_GET["trace"]);
 }
 $TITLE = "Errore";
 if ($code !== 0)
@@ -46,6 +55,23 @@ function IsLoggedIn()
             </p>
         <?php } ?>
         <pre><?= trim($str) ?></pre>
+        <?php if (isset($file)) { ?>
+            <!-- <?= $file ?> -->
+        <?php } ?>
+        <?php if (isset($trace)) { ?>
+            <!-- <?= $trace ?> -->
+        <?php } ?>
+        <script type="text/javascript">
+            (() => {
+                const url = new URL(location.href);
+                if (url.searchParams.size === 0)
+                    return;
+                url.searchParams.delete('file');
+                url.searchParams.delete('trace');
+                url.searchParams.delete('err');
+                history.replaceState({ canonical: window.location.href }, '', url.pathname + url.search);
+            })();
+        </script>
     </div>
     <?php include "./parts/stars.php" ?>
     <?php include "./parts/footer.php"; ?>

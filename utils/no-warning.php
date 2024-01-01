@@ -5,12 +5,13 @@ setlocale(LC_TIME, 'ita', 'it_IT.utf8');
 error_reporting(E_ERROR | E_PARSE);
 function ErrorToErrorPage($errno, $errstr, $errfile, $errline)
 {
+    $file = urlencode($errfile);
     if (isset($errstr) && isset($errno))
     {
-        $str = urldecode($errstr);
-        header("Location: ./error.php?err=$str&code=$errno");
+        $str = urlencode($errstr);
+        header("Location: ./error.php?err=$str&code=$errno&file=$file");
     } else {
-        header("Location: ./error.php");
+        header("Location: ./error.php?file=$file");
     }
     exit;
 }
@@ -22,13 +23,15 @@ function ExceptionToErrorPage(Error|Exception $ex)
         header("Location: ./error.php");
         exit;
     }
-    $err = urldecode($ex->getMessage());
+    $err = urlencode($ex->getMessage());
     $code = $ex->getCode();
+    $file = urlencode($ex->getFile());
+    $trace = urlencode($ex->getTraceAsString());
     if (is_int($code))
     {
-        header("Location: ./error.php?err=$err&code=$code");
+        header("Location: ./error.php?err=$err&code=$code&file=$file&trace=$trace");
     } else {
-        header("Location: ./error.php?err=$err");
+        header("Location: ./error.php?err=$err&file=$file&trace=$trace");
     }
     exit;
 }
