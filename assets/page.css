@@ -330,9 +330,6 @@ h1, h2, h3, h4, h5, h6 {
                 .h-menu > .hamburger > input[type="checkbox"]:checked + label > img.close {  
                     display: block;
                 }
-                .h-menu > .hamburger:has(input[type="checkbox"]:not(:checked)) ~ a {  
-                    height: 0 !important;
-                }
 @media only screen and (max-width: 768px) {
     /*
         Behaviour on mobile: becomes a vertical menu
@@ -358,6 +355,9 @@ h1, h2, h3, h4, h5, h6 {
         .h-menu > .hamburger {
             display: block;
         }
+            .h-menu > .hamburger:has(input[type="checkbox"]:not(:checked)) ~ a {  
+                height: 0 !important;
+            }
 }
 /*
     Generic grid
