@@ -278,6 +278,7 @@ class Opening
         {
             return false;
         }
+        // The intro can be deleted if the user owns it, if the user is an admin or if the intro is not owned
         $query = "DELETE FROM `openings` WHERE `ID` = ? AND (`Author` IS NULL OR `Author` = ? OR ?)";
         $stmt = $db->prepare($query);
         $int_bool = $is_admin ? 1 : 0;
