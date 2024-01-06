@@ -43,31 +43,47 @@ body {
         width: 100%;
         height: 100%;
         position: absolute;
+        z-index: 100;
         top: 0;
         left: 0;
         justify-content: center;
         align-items: center;
         filter: none;
     }
-    body.wait *:not(#loader) {
+    body.wait *:not(#loader, .loader) {
         filter: blur(1.5px);
         /* Halt all animations until the loader is visible */
         animation-name: none !important;
         animation-delay: unset !important;
     }
+
 .loader {
-    font-size: 25px;
-    width: 1em;
-    height: 1em;
-    border-radius: 50%;
-    position: relative;
-    text-indent: -9999em;
-    -webkit-animation: Loader 1.1s infinite ease;
-    animation: Loader 1.1s infinite ease;
-    -webkit-transform: translateZ(0);
-    -ms-transform: translateZ(0);
-    transform: translateZ(0);
+    width: 200px;
+    aspect-ratio: 1;
+    display: grid;
+    
+    -webkit-mask: conic-gradient(from 22deg, rgba(224, 191, 2, 0.2),yellow);
+    mask: conic-gradient(from 22deg, rgba(224, 191, 2, 0.2),yellow);
+    
+    -o-animation: Loader 1s steps(8) infinite;
+    -moz-animation: Loader 1s steps(8) infinite;
+    -webkit-animation: Loader 1s steps(8) infinite;
+    animation: Loader 1s steps(8) infinite;
 }
+    .loader,
+    .loader::before {
+        --bar-w: 9.5%; /* Width of bars */
+        --bar-h: 35%; /* Height of bars */
+        background: 
+            linear-gradient(#d7d361 0 0) 50%/var(--bar-h) var(--bar-w) space no-repeat, /* More bright ones */
+            linear-gradient(#d7d361 0 0) 50%/var(--bar-w)  var(--bar-h) no-repeat space; /* Less bright ones */
+        
+    }
+    .loader::before {
+        content: "";
+        transform: rotate(45deg);
+        /* .loader has 4 bars, .loader::before has the other 4 */
+    }
 
 /*
     Main element
