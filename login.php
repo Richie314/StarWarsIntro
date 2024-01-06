@@ -43,9 +43,9 @@ $FORM_BUTTON_LABEL = "Login";
 <?php include "./parts/head.php"; ?>
 <body>
     <?php include "./parts/nav.php"; ?>
-    <div class="body center">
+    <main class="body center">
         <?php include "./parts/form.php"; ?>
-    </div>
+    </main>
     <?php include "./parts/stars.php" ?>
     <?php include "./parts/footer.php"; ?>
 </body>

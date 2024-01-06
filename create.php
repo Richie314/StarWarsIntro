@@ -72,7 +72,7 @@
 <?php include "./parts/head.php"; ?>
 <body>
     <?php include "./parts/nav.php"; ?>
-    <div class="body">
+    <main class="body">
         <h1 class="aurebesh" data-content="Crea nuova intro"> </h1>
         <form class="intro-form" method="post">
             <input type="hidden" name="id" value="<?= $opening->ID ?>" required>
@@ -187,7 +187,7 @@
                 Annulla
             </button>
         </dialog>
-    </div>
+    </main>
     <?php include "./parts/stars.php" ?>
     <?php include "./parts/footer.php"; ?>
     <script src="./assets/create.js" defer type="text/javascript"></script>

@@ -37,7 +37,7 @@ function IsLoggedIn()
 <?php include "./parts/head.php"; ?>
 <body>
     <?php include "./parts/nav.php"; ?>
-    <div class="body">
+    <main class="body">
         <?php if ($code === 404) { ?>
             <h1>
                 Questa non &egrave; la pagina che stai cercando!
@@ -54,6 +54,7 @@ function IsLoggedIn()
                 Ci scusiamo per il disagio.
             </p>
         <?php } ?>
+
         <pre><?= trim($str) ?></pre>
         <?php if (isset($file)) { ?>
             <!-- <?= $file ?> -->
@@ -61,6 +62,7 @@ function IsLoggedIn()
         <?php if (isset($trace)) { ?>
             <!-- <?= $trace ?> -->
         <?php } ?>
+        
         <script type="text/javascript">
             (() => {
                 const url = new URL(location.href);
@@ -72,7 +74,7 @@ function IsLoggedIn()
                 history.replaceState({ canonical: window.location.href }, '', url.pathname + url.search);
             })();
         </script>
-    </div>
+    </main>
     <?php include "./parts/stars.php" ?>
     <?php include "./parts/footer.php"; ?>
 </body>

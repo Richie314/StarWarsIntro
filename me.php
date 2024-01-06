@@ -9,7 +9,7 @@
 <?php include "./parts/head.php"; ?>
 <body>
     <?php include "./parts/nav.php"; ?>
-    <div class="body">
+    <main class="body">
         <h1 class="aurebesh" data-content="Le mie intro"> </h1>
         <ul>
             <?php foreach ($intros as $intro) { ?>
@@ -29,9 +29,10 @@
                 </li>
             <?php } ?>
         </ul>
-    </div>
+    </main>
     <?php include "./parts/stars.php" ?>
     <?php include "./parts/footer.php"; ?>
+
     <script type="text/javascript">
         async function Delete(id)
         {

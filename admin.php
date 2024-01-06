@@ -13,7 +13,7 @@
 <?php include "./parts/head.php"; ?>
 <body>
     <?php include "./parts/nav.php"; ?>
-    <div class="body">
+    <main class="body">
         <h1>
             Login recenti
         </h1>
@@ -26,7 +26,7 @@
                 </li>
             <?php } ?>
         </ul>
-    </div>
+    </main>
     <?php include "./parts/stars.php" ?>
     <?php include "./parts/footer.php"; ?>
 </body>
