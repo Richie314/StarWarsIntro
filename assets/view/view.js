@@ -1,4 +1,3 @@
-
 'use strict';
 // Prevent contextmenu from getting in the way
 document.oncontextmenu = evt => evt.preventDefault();
@@ -20,6 +19,7 @@ function CreateAudio() {
     const audio = new Audio('./assets/intro.mp3');
     audio.autoplay = false;
     audio.muted = false;
+    audio.preload = 'auto';
     return audio;
 };
 const audio = CreateAudio();

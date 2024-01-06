@@ -44,8 +44,7 @@ function UpdateTvSrc()
 
     tv.blur(); // Remove focus from the element
     tv.lang = langInput.value;
-    if (tv.src !== url)
-        tv.src = url; // Load the new page if it's different
+    SetTvSrc(url);
 }
 var UpdateTimeoutId = 0;
 function ScheduleTvUpdate()
@@ -67,6 +66,36 @@ if (tv && episodeInput && titleInput && langInput && contentInput) {
     langInput.addEventListener('input', ScheduleTvUpdate);
     contentInput.addEventListener('input', ScheduleTvUpdate);
     ScheduleTvUpdate();
+}
+
+// Observer that monitors when the iframe appears or disappears from screen
+const tvObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry =>{
+        entry.target.classList.toggle('visible', entry.intersectionRatio > 0.5);
+        if (entry.target.hasAttribute('preloaded-src'))
+        {
+            SetTvSrc(entry.target.getAttribute('preloaded-src'));
+        }
+    });
+}, {
+    threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
+});
+tvObserver.observe(tv);
+
+/**
+ * @param {string} src 
+ */
+function SetTvSrc(src) {
+    if (tv.classList.contains('visible'))
+    {
+        tv.removeAttribute('preloaded-src');
+        if (tv.src !== src) {
+            tv.src = src;// Load the new page if it's different
+        }
+        return;
+    } 
+    // Iframe not visible: don't load it yet
+    tv.setAttribute('preloaded-src', src);
 }
 
 /**
@@ -113,8 +142,7 @@ function ShowOriginal(episode, lang)
 
     tv.blur(); // Remove focus from the element
     tv.lang = langInput.value;
-    if (tv.src !== url)
-        tv.src = url; // Load the new page if it's different
+    SetTvSrc(url);
 }
 if (dialogSelect) {
     dialogSelect.addEventListener('change', () => {

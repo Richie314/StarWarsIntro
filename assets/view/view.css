@@ -47,8 +47,10 @@ body {
         left: 0;
         justify-content: center;
         align-items: center;
+        filter: none;
     }
     body.wait *:not(#loader) {
+        filter: blur(1.5px);
         /* Halt all animations until the loader is visible */
         animation-name: none !important;
         animation-delay: unset !important;
