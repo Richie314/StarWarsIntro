@@ -40,7 +40,6 @@ nav {
     }
 .body {
     flex: 1;
-    padding: 1em;
     margin-top: 3em;
     width: calc(100% - 0.7em);
     max-width: 800px;
