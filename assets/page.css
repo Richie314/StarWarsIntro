@@ -175,6 +175,18 @@ i {
         i.delete::after {
             background-image: url('../assets/img/delete.svg');
         }
+    i.it {
+        background-image: url('../assets/img/italy.svg');
+    }
+        i.it::after {
+            background-image: url('../assets/img/italy.svg');
+        }
+    i.en {
+        background-image: url('../assets/img/united-kingdom.svg');
+    }
+        i.en::after {
+            background-image: url('../assets/img/united-kingdom.svg');
+        }
 
 /*
     Headers

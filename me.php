@@ -16,13 +16,16 @@
                 <li id="intro-row-<?= $intro->ID ?>">
                     <a href="./view.php?id=<?= $intro->ID ?>" 
                         target="_blank" title="Apri in un'altra scheda" class="link">
+                        <i class="icon <?= $intro->Language->value ?>"></i>
                         <?= htmlspecialchars($intro->Title) ?>
                     </a>
-                    - <a href="./create.php?id=<?= $intro->ID ?>"
+                    &nbsp;-&nbsp;
+                    <a href="./create.php?id=<?= $intro->ID ?>"
                         target="_self" title="Modifica" class="link">
                         Modifica <i class="edit"></i>
                     </a>
-                    - <a href="javascript:Delete(<?= $intro->ID ?>)"
+                    &nbsp;-&nbsp;
+                    <a href="javascript:Delete(<?= $intro->ID ?>)"
                         title="Elimina" class="link">
                         Elimina <i class="delete"></i>
                     </a>
