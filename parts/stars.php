@@ -1,7 +1,7 @@
 <style type="text/css">  
     .star {
-        width: 2px;
-        height: 2px;
+        width: 1.5px;
+        height: 1.5px;
         background-color: rgba(249, 251, 242, 0.8);
         z-index: -1;
     }
@@ -9,9 +9,9 @@
         .star.star-big {
             background-color: rgba(249, 251, 242, 0.8);
             border: none;
-            width: 5px;
-            height: 5px;
-            border-radius: 2.5px;
+            width: 4px;
+            height: 4px;
+            border-radius: 2px;
         }
 </style>
 <?php 
