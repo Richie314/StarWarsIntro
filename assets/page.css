@@ -145,48 +145,33 @@ i {
         background-color: transparent;
         background-size: cover;
     }
-    i.user {
+    i.user, i.user::after {
         background-image: url('../assets/img/user.svg');
     }
-        i.user::after {
-            background-image: url('../assets/img/user.svg');
-        }
-    i.lock {
+    
+    i.lock, i.lock::after {
         background-image: url('../assets/img/lock.svg');
     }
-        i.lock::after {
-            background-image: url('../assets/img/lock.svg');
-        }
-    i.email {
+    
+    i.email, i.email::after {
         background-image: url('../assets/img/email.svg');
     }
-        i.email::after {
-            background-image: url('../assets/img/email.svg');
-        }
-    i.edit {
+    
+    i.edit, i.edit::after {
         background-image: url('../assets/img/edit.svg');
     }
-        i.edit::after {
-            background-image: url('../assets/img/edit.svg');
-        }
-    i.delete {
+    
+    i.delete, i.delete::after {
         background-image: url('../assets/img/delete.svg');
     }
-        i.delete::after {
-            background-image: url('../assets/img/delete.svg');
-        }
-    i.it {
+    
+    i.it, i.it::after {
         background-image: url('../assets/img/italy.svg');
     }
-        i.it::after {
-            background-image: url('../assets/img/italy.svg');
-        }
-    i.en {
+    
+    i.en, i.en::after {
         background-image: url('../assets/img/united-kingdom.svg');
     }
-        i.en::after {
-            background-image: url('../assets/img/united-kingdom.svg');
-        }
 
 /*
     Headers
