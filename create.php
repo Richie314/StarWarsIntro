@@ -138,7 +138,7 @@
                 <div class="tv span-2">
                     <iframe src="./view.php" allowfullscreen id="tv"
                         width="1600" height="900" scrolling="no"
-                        loading="lazy">
+                        loading="lazy" sandbox="allow-scripts">
                     </iframe>
                 </div>
                 <div class="span-2">
@@ -189,6 +189,17 @@
             <br>
             <button role="button" type="button" id="dialog-close">
                 Annulla
+            </button>
+        </dialog>
+        <dialog id="share-dialog">
+            <h3>
+                Condividi l'intro appena creata!
+            </h3>
+            <button role="button" type="button" id="share-btn">
+                Condividi
+            </button>
+            <button role="button" type="button" id="share-close-btn">
+                Per ora no
             </button>
         </dialog>
     </main>

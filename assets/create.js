@@ -139,20 +139,25 @@ function ShowShareDialog()
     if (!document.body.classList.contains('can-share'))
         return;
     const url = new URL(location.href);
-    if (!url.searchParams.has('action', 'search'))
+    if (!url.searchParams.has('action', 'share'))
     {
         return;
     }
+    url.searchParams.delete('action');
     const id = url.searchParams.get('id');
     if (!id)
     {
         return;
     }
+    history.replaceState({ canonical: window.location.href }, '', url.pathname + url.search);
     const dialog = document.getElementById('share-dialog');
     const share_btn = document.getElementById('share-btn');
     const close_btn = document.getElementById('share-close-btn');
     if (!dialog || !share_btn || !close_btn)
+    {
+        console.warn('Invalid elements of share dialog')
         return;
+    }
     share_btn.onclick = () => {
         navigator.share({
             title: 'Intro di Star Wars personalizzata',
@@ -161,7 +166,7 @@ function ShowShareDialog()
         });
         dialog.close();
     }
-    close_btn.onclick = dialog.close;
+    close_btn.onclick = () => dialog.close();
     dialog.showModal();
 }
 ShowShareDialog();
@@ -177,6 +182,8 @@ function ShowEditedPrompt()
     {
         return;
     }
+    url.searchParams.delete('action');
+    history.replaceState({ canonical: window.location.href }, '', url.pathname + url.search);
     alert('Modifiche effettuate con successo!');
 }
 ShowEditedPrompt();

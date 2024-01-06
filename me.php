@@ -32,6 +32,25 @@
                 </li>
             <?php } ?>
         </ul>
+        <p class="show-if-list-empty">
+            Non hai nessuna intro,
+            <a href="./create.php" class="link" target="_self" title="Vai a pagina creazione">
+                <strong>creane una</strong>
+            </a>
+        </p>
+        <style type="text/css">
+            p.show-if-list-empty {
+                opacity: 0;
+                user-select: none;
+                height: 0;
+                transition: all 1s ease-in-out;
+                transition-delay: .4s;
+            }
+            ul:not(:has(li:not(.fade-out))) + p.show-if-list-empty {
+                opacity: 1;
+                height: auto;
+            }
+        </style>
     </main>
     <?php include "./parts/stars.php" ?>
     <?php include "./parts/footer.php"; ?>

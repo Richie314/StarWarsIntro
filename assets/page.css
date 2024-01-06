@@ -594,7 +594,7 @@ h1, h2, h3, h4, h5, h6 {
 /*
     Dialogs: show original intro, accept cookie
 */
-#show-originals-dialog {
+#show-originals-dialog, #share-dialog {
     background-color: var(--main-bg);
     
     width: -moz-fit-content;
@@ -623,7 +623,7 @@ h1, h2, h3, h4, h5, h6 {
     background-color: var(--main-bg);
     padding: .15em 1em .15em .2em;
 }
-#dialog-close, #accept-cookie-btn {
+#dialog-close, #accept-cookie-btn, #share-btn, #share-close-btn {
     appearance: none;
     background-color: transparent;
     color: var(--main-cl);
