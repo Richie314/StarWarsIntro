@@ -61,6 +61,8 @@ body {
     width: 200px;
     aspect-ratio: 1;
     display: grid;
+    user-select: none;
+    cursor: progress;
     
     -webkit-mask: conic-gradient(from 22deg, rgba(224, 191, 2, 0.2),yellow);
     mask: conic-gradient(from 22deg, rgba(224, 191, 2, 0.2),yellow);
