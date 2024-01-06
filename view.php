@@ -85,7 +85,7 @@
 
     <meta name="title" content="<?= $TITLE ?>">
     <meta name="description" content="<?= $DESCRIPTION ?>">
-    <meta name="robots" content="noindex,nofollow">
+    <meta name="robots" content="index,follow">
     <meta name="google" content="notranslate">
     <link rel="icon" href="./assets/sitelogo.svg">
     <link rel="shortcut icon" href="./assets/sitelogo.svg">
