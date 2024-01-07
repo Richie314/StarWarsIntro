@@ -1,3 +1,8 @@
+DROP DATABASE IF EXISTS `riccardo.ciucci`;
+CREATE DATABASE `riccardo.ciucci`;
+
+USE `riccardo.ciucci`;
+
 
 --
 -- Creation of tables and indexes
@@ -99,3 +104,11 @@ STARTS CURRENT_TIMESTAMP + INTERVAL 1 DAY
 DO 
     DELETE FROM `login`
     WHERE DATEDIFF(CURRENT_TIMESTAMP, `When`) > 150;
+
+
+INSERT INTO `users` (`ID`, `Password`, `Email`, `Admin`) VALUES
+    ('admin', '$2y$10$wCcrukG8tXpfyQb/ISf8XePa2wf6DDVwxD2t6Xr0A/nzSmnoo8nCu', 'admin@test.it', b'1'),
+    ('UtenteInattivo1', '$2y$10$yf.C12bTBZRDId/HDGg6jeN1wtox8IC7QGTNRK./dnHWEbGTmu.lS', 'inattivo@mail.com', b'0'),
+    ('UtenteInattivo2', '$2y$10$yf.C12bTBZRDId/HDGg6jeN1wtox8IC7QGTNRK./dnHWEbGTmu.lS', 'inattivo@mail.com', b'0'),
+    ('UtenteInattivo3', '$2y$10$yf.C12bTBZRDId/HDGg6jeN1wtox8IC7QGTNRK./dnHWEbGTmu.lS', 'inattivo@mail.com', b'0'),
+    ('UtenteInattivo4', '$2y$10$yf.C12bTBZRDId/HDGg6jeN1wtox8IC7QGTNRK./dnHWEbGTmu.lS', 'inattivo@mail.com', b'0');
