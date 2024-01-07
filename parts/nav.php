@@ -6,7 +6,7 @@
     
     if (IsLoggedIn())
     {
-        $links[] = new Link("./create.php",     "./assets/img/create.svg",  "Crea intro");
+        $links[] = new Link("./create.php",     "./assets/img/create.svg",  "Crea");
         $links[] = new Link("./me.php",         "./assets/img/user.svg",    $USER_ID);
         if (isset($IS_ADMIN) && $IS_ADMIN)
         {

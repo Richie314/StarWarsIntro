@@ -43,7 +43,7 @@
                 <a href="./view.php?original=<?= random_int(1, 9)?>" target="_self" class="link">view.php</a>.
                 <br>
                 I titoli delle pagine private sono, talvolta, visualizzati col font
-                <h6 title="Aurebesh" style="height: 1em" class="Aurebesh"></h6>
+                <span data-content="Aurebesh" class="aurebesh"></span>
                 all'interno delle stesse. Andando col cursore sopra tali titoli saranno convertiti in un font pi&ugrave;
                 comune.
                 <br>
@@ -55,10 +55,10 @@
             <p class="justify">
                 Il sito &egrave; stato realizzato da Riccardo Ciucci, come progetto per l'esame
                 di Progettazione Web del corso di laurea triennale in Ingegneria Informatica
-                dell'<a href="https://www.unipi.it/" class="link" target="_self">Universit&agrave; di Pisa</a>.<br>
+                dell'<a href="https://www.unipi.it/" class="link" target="_self">Universit&agrave; di Pisa</a>.<br><br>
                 Professore del corso: Vecchio Alessio.<br>
-                Anno Accademico 2023-24.<br>
-                Non vi sono fini di lucro n&eacute; infrangimenti di copyright intesi.
+                Anno Accademico 2023-24.<br><br>
+                Non vi sono fini di lucro n&eacute; infrangimenti di copyright intesi.<br>
                 Le icone sono state ottenute da
                 <a href="https://svgrepo.com" class="link" 
                     target="_blank" title="Apri in altra scheda">svgrepo.com<i class="icon svgrepo"></i></a> o realizzate tramite
