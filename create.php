@@ -115,11 +115,11 @@
                         Testo qui:
                     </label>
                     <br>
-                    <textarea 
+                    <textarea maxlength="2048"
                         name="content" id="content" 
                         cols="30" rows="17"
                         placeholder="Vai a capo due volte per dividere in paragrafi"
-                        spellcheck="true"><?php 
+                        spellcheck="true" ><?php 
                             if (!isEmpty($opening->Content)) 
                                 echo htmlentities($opening->Content);
                         ?></textarea>

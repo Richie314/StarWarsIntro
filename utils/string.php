@@ -12,10 +12,10 @@ function isEmpty($str) : bool
  */
 function getUserIP() : string
 {
-    if (isset($_SERVER['REMOTE_ADDR']))
+    if (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] !== "::1")
         return $_SERVER['REMOTE_ADDR'];
     
-    if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+    if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && $_SERVER['HTTP_X_FORWARDED_FOR'] !== "::1")
         return $_SERVER['HTTP_X_FORWARDED_FOR'];
 
     return "127.0.0.1";
