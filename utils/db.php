@@ -21,4 +21,4 @@ if (!$db || $db->connect_errno)
 {
     throw new RuntimeException('Could not connect to db', 500);
 }
-$db->set_charset("utf8");
+$db->set_charset("utf8"); # Prevent sql injections by passing a non utf-8 string
