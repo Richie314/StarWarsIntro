@@ -74,7 +74,7 @@ if (tv && episodeInput && titleInput && langInput && contentInput) {
 
 // Observer that monitors when the iframe appears or disappears from screen
 const tvObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry =>{
+    entries.forEach(entry => {
         entry.target.classList.toggle('visible', entry.intersectionRatio > 0.5);
         if (entry.target.hasAttribute('preloaded-src'))
         {
@@ -86,7 +86,7 @@ const tvObserver = new IntersectionObserver((entries, observer) => {
 });
 tvObserver.observe(tv);
 
-// Handle side button clicks
+// Handle tv button clicks
 if (refreshTvBtn) {
     refreshTvBtn.onclick = () => tv.src = tv.src;
     refreshTvBtn.oncontextmenu = evt => evt.preventDefault();
@@ -200,7 +200,7 @@ function ShowShareDialog()
         navigator.share({
             title: 'Intro di Star Wars personalizzata',
             text: 'Guarda la mia intro di Star Wars personalizzata!',
-            url: `${current_folder}view.php?original=${id}`
+            url: `./view.php?original=${id}`
         });
         dialog.close();
     }
