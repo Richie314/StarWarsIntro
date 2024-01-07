@@ -180,7 +180,7 @@ class User
                 "La tua password &egrave; stata cambiata in:<br>" .
                 "<pre>$new_password_encoded</pre>" .
             "</p>" .
-            "<small>Ti preghiamo di non rispondere a questa email</small>";
+            "<small>Ti preghiamo di non rispondere a questa email e di cancellarla appena accedi all'account</small>";
         return $this->SendEmail($subject, $message);
     }
 }
