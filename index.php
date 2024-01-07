@@ -54,11 +54,16 @@
             <p class="justify">
                 Il sito &egrave; stato realizzato da Riccardo Ciucci, come progetto per l'esame
                 di Progettazione Web del corso di laurea triennale in Ingegneria Informatica
-                dell'<a href="https://www.unipi.it/" class="link">Universit&agrave; di Pisa</a>.<br>
+                dell'<a href="https://www.unipi.it/" class="link" target="_self">Universit&agrave; di Pisa</a>.<br>
                 Professore del corso: Vecchio Alessio.<br>
                 Anno Accademico 2023-24.<br>
                 Non vi sono fini di lucro n&eacute; infrangimenti di copyright intesi.
-                Le icone sono state ottenute da <a href="https://svgrepo.com" class="link">svgrepo.com</a>
+                Le icone sono state ottenute da
+                <a href="https://svgrepo.com" class="link" 
+                    target="_blank" title="Apri in altra scheda">svgrepo.com<i class="icon svgrepo"></i></a> o realizzate tramite
+                il software 
+                <a href="https://www.figma.com/" class="link" 
+                    target="_blank" title="Apri in altra scheda">Figma<i class="icon figma"></i></a>
             </p>
         </article>        
     </main>

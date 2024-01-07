@@ -144,6 +144,7 @@ i {
         background-color: transparent;
         background-size: cover;
     }
+    
     i.user, i.user::after {
         background-image: url('../assets/img/user.svg');
     }
@@ -170,6 +171,22 @@ i {
     
     i.en, i.en::after {
         background-image: url('../assets/img/united-kingdom.svg');
+    }
+
+    i.figma, i.figma::after {
+        background-image: url('../assets/img/figma.svg');
+        height: 0.8em;
+        width: 0.8em;
+    }
+
+    i.svgrepo, i.svgrepo::after {
+        background-image: url('../assets/img/svgrepo.svg');
+        height: 0.8em;
+        width: 2.65em;
+    }
+
+    i.github, i.github::after {
+        background-image: url('../assets/img/github.svg');
     }
 
 /*
