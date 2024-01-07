@@ -121,6 +121,8 @@ class User
 
     private function SendEmail($subject, $message) : bool
     {
+        // Will fail on localhost
+
         $domain = $_SERVER['SERVER_NAME'];
         $headers_array = array(
             "From: Star Wars Intro <no-reply@$domain>",
