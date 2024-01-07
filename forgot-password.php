@@ -8,34 +8,29 @@ if (IsLoggedIn())
 
 if (
     isset($_POST["username"]) && is_string($_POST["username"]) &&
-    isset($_POST["password"]) && is_string($_POST["password"]))
+    isset($_POST["email"]) && is_string($_POST["email"]))
 {
     try {
         $user = User::Load($db, $_POST["username"]);
-        if (isset($user) && $user->checkPassword($_POST["password"]))
-        {
-            // Login ok :)
-    
-            // Create a row in the db
-            $user->Log($db);
-    
-            // Update the session
-            LogIn($user);
-    
-            // Flow ends as "exit" is called
+        if (!isset($user) || isEmpty($user->Email) ||
+            $user->Email !== $_POST["email"] || 
+            !$user->ResetPassword($db))
+        {  
+            throw new Exception("Qualcosa non ha funzionato.");
         }
-        // Login not ok :/
-        throw new LogicException("Username o password non valide.");
+        $email = htmlspecialchars($user->Email);
+        $error_msg = "Email inviata a <a href=\"mailto:$email\" class=\"link\">$email</a>";
     } catch (Exception $e)
     {
         $error_msg = $e->getMessage();
     }
 }
 
-$TITLE = "Login";
-$DESCRIPTION = "Fai il login";
-$SHOW_FORGOT_PASSWORD_LINK = true;
-$FORM_BUTTON_LABEL = "Login";
+$TITLE = "Resetta password";
+$DESCRIPTION = "Resetta la tua password";
+$HIDE_PASSWORD_FIELD = true;
+$SHOW_EMAIL_FIELD = true;
+$FORM_BUTTON_LABEL = "Inviami nuova password";
 
 ?>
 <!DOCTYPE html>

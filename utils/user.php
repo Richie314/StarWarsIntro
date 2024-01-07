@@ -118,17 +118,9 @@ class User
 
         return $stmt->execute() && $db->affected_rows === 1;
     }
-    public function SendWelcomeEmail() : bool
+
+    private function SendEmail($subject, $message) : bool
     {
-        $subject = "Benvenuto";
-        $message = 
-            "<h1>Registrazione avvenuta</h1>" .
-            "<br>" .
-            "<p>" .
-                "Benvenuto e grazie per esserti registrato.<br>" .
-                "&nbsp;- Il team di Star Wars Intro" .
-            "</p>" .
-            "<small>Ti preghiamo di non rispondere a questa email</small>";
         $domain = $_SERVER['SERVER_NAME'];
         $headers_array = array(
             "From: Star Wars Intro <no-reply@$domain>",
@@ -142,7 +134,53 @@ class User
             return false;
         }
     }
-    
+    public function SendWelcomeEmail() : bool
+    {
+        $subject = "Benvenuto";
+        $message = 
+            "<h1>Registrazione avvenuta</h1>" .
+            "<br>" .
+            "<p>" .
+                "Benvenuto e grazie per esserti registrato.<br>" .
+                "&nbsp;- Il team di Star Wars Intro" .
+            "</p>" .
+            "<small>Ti preghiamo di non rispondere a questa email</small>";
+        return $this->SendEmail($subject, $message);
+    }
+    public function ResetPassword(mysqli $db) : bool
+    {
+        if (isEmpty($this->ID))
+        {
+            throw new BadFunctionCallException("ID was not set!", 500);
+        }
+        if (isEmpty($this->Email))
+        {
+            throw new BadFunctionCallException("Email mancante nell'account!", 500);
+        }
+        
+        require_once "./utils/random.php";
+
+        $new_password = random_password(12);
+        $new_password_encoded = htmlspecialchars($new_password);
+
+        $this->Password = password_hash($new_password, PASSWORD_BCRYPT);
+
+        if (!$this->Update($db))
+        {
+            return false;
+        }
+
+        $subject = "Cambio password";
+        $message = 
+            "<h1>Cambio password</h1>" .
+            "<br>" .
+            "<p>" .
+                "La tua password &egrave; stata cambiata in:<br>" .
+                "<pre>$new_password_encoded</pre>" .
+            "</p>" .
+            "<small>Ti preghiamo di non rispondere a questa email</small>";
+        return $this->SendEmail($subject, $message);
+    }
 }
 class Login
 {
