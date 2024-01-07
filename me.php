@@ -10,6 +10,18 @@
 <body>
     <?php include "./parts/nav.php"; ?>
     <main class="body">
+        <div>
+            <h2>
+                Link utili:
+            </h2>
+            <ul>
+                <li>
+                    <a href="./change-password.php" class="link" target="_self" title="Cambia la tua password">
+                        Cambia password
+                    </a>
+                </li>
+            </ul>
+        </div>
         <h1 class="aurebesh" data-content="Le mie intro"> </h1>
         <ul>
             <?php foreach ($intros as $intro) { ?>

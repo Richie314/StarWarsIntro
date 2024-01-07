@@ -23,6 +23,8 @@ if (
             throw new LogicException("DB out of sync!");
         }
 
+        $user->SendWelcomeEmail();
+        
         // Create a row in the db
         $user->Log($db);
 

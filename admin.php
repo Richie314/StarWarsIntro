@@ -20,7 +20,7 @@
         <ul>
             <?php foreach ($logins as $login) { ?>
                 <li>
-                    <a href="" class="link"><?= $login->User->ID ?></a>@<a href="http://<?= $login->Ip ?>" class="link" traget="_blank"><?= $login->Ip ?></a>
+                    <?= $login->User->ID ?>@<a href="http://<?= $login->Ip ?>" class="link" traget="_blank"><?= $login->Ip ?></a>
                     <br>
                     il <?= $login->When->format('Y-m-d H:i:s') ?>
                 </li>

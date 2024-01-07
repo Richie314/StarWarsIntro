@@ -76,16 +76,26 @@ class User
         $user = new User($id, $hash, $email, $is_admin);
         return $user->Upload($db);
     }
+
     private function Upload(mysqli $db) : bool
     {
         $query = "INSERT INTO `users` (`ID`, `Password`, `Email`, `Admin`) VALUES (?, ?, ?, ?)";
+        return $this->UploadOrUpdate($db, $query);
+    }
+    public function Update(mysqli $db) : bool
+    {
+        $query = "REPLACE INTO `users` (`ID`, `Password`, `Email`, `Admin`) VALUES (?, ?, ?, ?)";
+        return $this->UploadOrUpdate($db, $query);
+    }
+    private function UploadOrUpdate(mysqli $db, string $query) : bool
+    {
         $stmt = $db->prepare($query);
         if (!$stmt || !$stmt->bind_param('sssi', $this->ID, $this->Password, $this->Email, $is_admin))
         {
             return false;
         }
         $is_admin = $this->Admin ? 1 : 0;
-        return (bool)$stmt->execute();
+        return (bool)$stmt->execute() && $stmt->affected_rows === 1;
     }
     public function Log(mysqli $db) : bool
     {
@@ -107,6 +117,30 @@ class User
         $user_agent = $_SERVER['HTTP_USER_AGENT'];
 
         return $stmt->execute() && $db->affected_rows === 1;
+    }
+    public function SendWelcomeEmail() : bool
+    {
+        $subject = "Benvenuto";
+        $message = 
+            "<h1>Registrazione avvenuta</h1>" .
+            "<br>" .
+            "<p>" .
+                "Benvenuto e grazie per esserti registrato.<br>" .
+                "&nbsp;- Il team di Star Wars Intro" .
+            "</p>" .
+            "<small>Ti preghiamo di non rispondere a questa email</small>";
+        $domain = $_SERVER['SERVER_NAME'];
+        $headers_array = array(
+            "From: Star Wars Intro <no-reply@$domain>",
+            "X-Mailer: PHP/" . phpversion(),
+            "Content-Type: text/html; charset=UTF-8"
+        );
+        $headers = join("\r\n", $headers_array);
+        try {
+            return mail($this->Email, $subject, $message, $headers);
+        } catch (Exception $ex) {
+            return false;
+        }
     }
     
 }
