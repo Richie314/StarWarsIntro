@@ -48,7 +48,7 @@
                         &rarr;
                         <a href="mailto:<?= htmlspecialchars($user->Email) ?>" 
                             class="link" title="Invia un'email">
-                            <?= htmlspecialchars($user->Email) ?> ?>
+                            <?= htmlspecialchars($user->Email) ?>
                         </a>
                     <?php } ?>
                     &rarr;
