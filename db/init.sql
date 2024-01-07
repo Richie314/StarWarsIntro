@@ -80,7 +80,7 @@ LIMIT 100;
 CREATE VIEW `InactiveUsers` AS
 SELECT U.`ID`, U.`Email`
 FROM `users` U
-WHERE NOT U.`Admin` AND NOT EXISTS (
+WHERE U.`Admin` = 0 AND NOT EXISTS (
     SELECT *
     FROM `login` L
     WHERE L.`User` = U.`ID` AND DATEDIFF(CURRENT_TIMESTAMP, L.`When`) <= 366

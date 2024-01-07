@@ -20,6 +20,18 @@
                         Cambia password
                     </a>
                 </li>
+                <?php if ($IS_ADMIN) { ?>
+                    <li>
+                        <a href="./admin.php#login-list" class="link" target="_self" title="Vai alla lista">
+                            Lista dei login di tutti gli utenti
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./admin.php#inactive-list" class="link" target="_self" title="Vai alla lista">
+                            Lista utenti inattivi
+                        </a>
+                    </li>
+                <?php } ?>
             </ul>
         </div>
         <h1 class="aurebesh" data-content="Le mie intro"> </h1>

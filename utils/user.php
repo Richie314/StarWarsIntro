@@ -62,6 +62,27 @@ class User
             (bool)$row['Admin']
         );
     }
+
+    public static function InactiveUsers(mysqli $db):array
+    {
+        if (!isset($db) || !($db instanceof mysqli))
+        {
+            throw new InvalidArgumentException("db was not a mysqli object!", 500);
+        }
+        $query = "SELECT * FROM `InactiveUsers`";
+        $result = $db->query($query);
+        if (!$result || $result->num_rows === 0)
+        {
+            return array();
+        }
+        $user_array = array();
+        while ($row = $result->fetch_assoc())
+        {
+            $user_array[] = new User($row["ID"], '?', isset($row["Email"]) ? $row["Email"] : "");
+        }
+        return $user_array;
+    }
+
     public static function Create(mysqli $db, string $id, string $plain_text_password, string $email, bool $is_admin = false) : bool
     {
         if (!isset($db) || !($db instanceof mysqli))
@@ -182,6 +203,28 @@ class User
             "</p>" .
             "<small>Ti preghiamo di non rispondere a questa email e di cancellarla appena accedi all'account</small>";
         return $this->SendEmail($subject, $message);
+    }
+    public function SafeID():string
+    {
+        return htmlspecialchars(str_replace(array("'", "\"", "\r", "\n", "\t"), "", $this->ID));
+    }
+    public static function Delete(mysqli $db, string $username) : bool
+    {
+        if (!isset($db) || !($db instanceof mysqli))
+        {
+            throw new InvalidArgumentException("db was not a mysqli object!", 500);
+        }
+        if (isEmpty($username))
+        {
+            throw new InvalidArgumentException("username can't be empty!", 500); 
+        }
+        $query = "DELETE FROM `users` WHERE `ID` = ?";
+        $stmt = $db->prepare($query);
+        if (!$stmt || !$stmt->bind_param("s", $username))
+        {
+            return false;
+        }
+        return (bool)$stmt->execute() && $stmt->affected_rows === 1;
     }
 }
 class Login

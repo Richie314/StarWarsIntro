@@ -53,7 +53,7 @@ ScrollFragment();
 const inPageAnchors = document.querySelectorAll('a[href*=\'#\']');
 inPageAnchors.forEach(a => {
     const url = new URL(a.href);
-    if (!url.hash || url.hash.length <= 1)
+    if (!url.hash || url.hash.length <= 1 || url.pathname !== '')
         return;
     a.onclick = e => {
         e.preventDefault();
