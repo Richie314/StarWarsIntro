@@ -140,6 +140,9 @@
                         width="1600" height="900" scrolling="no"
                         loading="lazy" sandbox="allow-scripts">
                     </iframe>
+                    <button type="button" id="reload-tv" title="Riavvia" class="tv-control">
+
+                    </button>
                 </div>
                 <div class="span-2">
                     <p>

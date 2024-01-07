@@ -254,17 +254,21 @@ body {
     left: 0;
 
     width: 100%;
+    max-width: 600vw;
+    margin-inline: auto;
+    overflow-x: hidden;
+
     height: auto;
     max-height: 100%;
-    overflow-x: hidden;
     overflow-y: auto;
+    margin-block-start: 8px;
 
     text-align: center;
     word-break: break-word;
     background-color: transparent;
     color:var(--color);
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: xx-large;
+    font-size: 4vh;
 
     user-select: none;
     opacity: 0;

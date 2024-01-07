@@ -30,6 +30,10 @@ const clearBtn = document.getElementById('clear');
  * @type {HTMLButtonElement}
  */
 const submitBtn = document.getElementById('submit');
+/**
+ * @type {HTMLButtonElement}
+ */
+const refreshTvBtn = document.getElementById('reload-tv');
 
 function UpdateTvSrc()
 {
@@ -81,6 +85,12 @@ const tvObserver = new IntersectionObserver((entries, observer) => {
     threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
 });
 tvObserver.observe(tv);
+
+// Handle side button clicks
+if (refreshTvBtn) {
+    refreshTvBtn.onclick = () => tv.src = tv.src;
+    refreshTvBtn.oncontextmenu = evt => evt.preventDefault();
+}
 
 /**
  * @param {string} src 

@@ -493,7 +493,7 @@ h1, h2, h3, h4, h5, h6 {
     .intro-form option {
         background-color: var(--main-bg);
     }
-    .intro-form button {
+    .intro-form button:not(.tv-control) {
         appearance: none;
         background-color: transparent;
         color: var(--main-cl);
@@ -524,21 +524,21 @@ h1, h2, h3, h4, h5, h6 {
         content: ' ';
     }
     
-        .intro-form button:disabled {
+        .intro-form button:not(.tv-control):disabled {
             pointer-events: none;
         }
     
-        .intro-form button:hover {
+        .intro-form button:not(.tv-control):hover {
             box-shadow: var(--main-cl) 0 6px 12px;
             transform: translateY(-3px);
         }
     
-        .intro-form button:active {
+        .intro-form button:not(.tv-control):active {
             box-shadow: none;
             transform: translateY(0);
         }
-        .intro-form button::before,
-        .intro-form button::after {
+        .intro-form button:not(.tv-control)::before,
+        .intro-form button:not(.tv-control)::after {
             content: attr(title);
             position: absolute;
             top: 50%;
@@ -546,19 +546,19 @@ h1, h2, h3, h4, h5, h6 {
             transform: translateX(-50%) translateY(-50%);
             transition: opacity .7s ease-in-out;
         }
-        .intro-form button::before {
+        .intro-form button:not(.tv-control)::before {
             opacity: 1;
             font-family: 'Aurebesh';
         }
-        .intro-form button::after {
+        .intro-form button:not(.tv-control)::after {
             opacity: 0;
             font-family: var(--main-font);
             text-transform: uppercase;
         }
-            .intro-form button:hover::before {
+            .intro-form button:not(.tv-control):hover::before {
                 opacity: 0;
             }
-            .intro-form button:hover::after {
+            .intro-form button:not(.tv-control):hover::after {
                 opacity: 1;
             }
 .tv {
@@ -590,6 +590,29 @@ h1, h2, h3, h4, h5, h6 {
     border: 4px solid #819096;
     border-radius: 7px;
 }
+#reload-tv {
+    position: absolute;
+    background-color: transparent;
+    appearance: none;
+    cursor: pointer;
+
+    border: none;
+    border-radius: 50%;
+
+    aspect-ratio: 1;
+    width: 9.82%;
+    height: auto;
+    left: 85.6%;
+    top: 38.4%;
+
+    margin: 0;
+    padding: 0;
+
+    transition: background-color ease-in-out .3s;
+}
+    #reload-tv:hover {
+        background-color: rgba(0, 0, 0, .3);
+    }
 
 /*
     Dialogs: show original intro, accept cookie
@@ -646,16 +669,16 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: .5em;
 }
 
-    #dialog-close:disabled {
+    :is(#dialog-close, #accept-cookie-btn, #share-btn, #share-close-btn):disabled {
         pointer-events: none;
     }
 
-    #dialog-close:hover {
+    :is(#dialog-close, #accept-cookie-btn, #share-btn, #share-close-btn):hover {
         box-shadow: var(--main-cl) 0 6px 12px;
         transform: translateY(-3px);
     }
 
-    #dialog-close:active {
+    :is(#dialog-close, #accept-cookie-btn, #share-btn, #share-close-btn):active {
         box-shadow: none;
         transform: translateY(0);
     }
