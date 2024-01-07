@@ -42,7 +42,8 @@
                 di creare/modificare le intro, che possono essere visualizzate all'endpoint
                 <a href="./view.php?original=<?= random_int(1, 9)?>" target="_self" class="link">view.php</a>.
                 <br>
-                I titoli delle pagine private sono, talvolta, visualizzati col font <em>Aurebesh</em>
+                I titoli delle pagine private sono, talvolta, visualizzati col font
+                <h6 title="Aurebesh" style="height: 1em" class="Aurebesh"></h6>
                 all'interno delle stesse. Andando col cursore sopra tali titoli saranno convertiti in un font pi&ugrave;
                 comune.
                 <br>
