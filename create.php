@@ -117,7 +117,7 @@
                     <br>
                     <textarea 
                         name="content" id="content" 
-                        cols="30" rows="15"
+                        cols="30" rows="17"
                         placeholder="Vai a capo due volte per dividere in paragrafi"
                         spellcheck="true"><?php 
                             if (!isEmpty($opening->Content)) 
