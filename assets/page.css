@@ -108,7 +108,9 @@ label.center {
     color: var(--main-bg);
     background-color: var(--main-cl);
 }
-
+p, label, span, em, strong {
+    font-family: var(--main-font);
+}
 /*
     Links
 */
@@ -749,3 +751,38 @@ h1, h2, h3, h4, h5, h6 {
         opacity: 0;
     }
 }
+/*
+    Font change inline
+*/
+span.aurebesh[data-content] {
+    position: relative;
+    content: ' ';
+    height: 1em;
+    width: 7em;
+    cursor: zoom-in;
+    display: inline-block;
+}
+    span.aurebesh[data-content]::before,
+    span.aurebesh[data-content]::after {
+        content: attr(data-content);
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 1em;
+        transition: opacity .7s ease-in-out;
+    }
+    span.aurebesh[data-content]::before {
+        opacity: 1;
+        font-family: 'Aurebesh';
+    }
+    span.aurebesh[data-content]::after {
+        opacity: 0;
+        font-family: var(--main-font);
+    }
+        span.aurebesh[data-content]:hover::before {
+            opacity: 0;
+        }
+        span.aurebesh[data-content]:hover::after {
+            opacity: 1;
+        }
