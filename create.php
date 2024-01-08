@@ -85,7 +85,7 @@
                 <input type="text" id="episode" name="episode" required
                     placeholder="Episodio X" pattern="[A-Za-z0-9\s'\-À-ÿ!\$%\+]+"
                     value="<?= htmlspecialchars($opening->Episode) ?>"
-                    spellcheck="true">
+                    spellcheck="true" tabindex="0">
 
                 <label for="title" class="center">
                     Titolo:
@@ -93,12 +93,12 @@
                 <input type="text" id="title" name="title" required
                     placeholder="Un nuovo titolo" pattern="[A-Za-z0-9\s'\-À-ÿ!\$%\+]+"
                     value="<?= htmlspecialchars($opening->Title) ?>"
-                    spellcheck="true">
+                    spellcheck="true" tabindex="1">
 
                 <label for="lang" class="center">
                     Lingua:
                 </label>
-                <select id="lang" name="lang" required>
+                <select id="lang" name="lang" required tabindex="2">
                     <option value="<?= OpeningLanguage::Italian->value ?>" 
                         <?= $opening->Language === OpeningLanguage::Italian ? "selected" : 0 ?>>
                         Italiano
@@ -119,7 +119,7 @@
                         name="content" id="content" 
                         cols="30" rows="17"
                         placeholder="Vai a capo due volte per dividere in paragrafi"
-                        spellcheck="true" ><?php 
+                        spellcheck="true" tabindex="3"><?php 
                             if (!isEmpty($opening->Content)) 
                                 echo htmlentities($opening->Content);
                         ?></textarea>
@@ -147,13 +147,13 @@
                 <div class="span-2">
                     <p>
                         Vuoi dei suggerimenti?
-                        Guarda le <strong><a href="javascript:ShowOriginals()" class="link">Intro originali</a></strong>
+                        Guarda le <strong><a href="javascript:ShowOriginals()" class="link" tabindex="6">Intro originali</a></strong>
                     </p>
                 </div>
 
                 <div class="span-2 grid" style="grid-template-columns: 1fr 1fr">
-                    <button type="reset" title="Cancella" id="clear"></button>
-                    <button type="submit" id="submit"
+                    <button type="reset" title="Cancella" id="clear" tabindex="4"></button>
+                    <button type="submit" id="submit" tabindex="5"
                         title="<?= $opening->ID !== 0 ? "Modifica" : "Crea" ?>"></button>
                 </div>
             </div>
