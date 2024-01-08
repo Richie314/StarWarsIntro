@@ -1,5 +1,5 @@
 DROP DATABASE IF EXISTS `riccardo.ciucci`;
-CREATE DATABASE `riccardo.ciucci`;
+CREATE DATABASE `riccardo.ciucci` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
 USE `riccardo.ciucci`;
 
@@ -14,7 +14,7 @@ CREATE TABLE `users`
     `Password` CHAR(64) NOT NULL,
     `Email` VARCHAR(128) DEFAULT NULL,
     `Admin` BIT NOT NULL DEFAULT FALSE
-) Engine=InnoDB;
+) Engine=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE INDEX `UsersEmailIndex`
 ON `users` (`Email`);
@@ -31,7 +31,7 @@ CREATE TABLE `login`
         REFERENCES `users` (`ID`)
             ON UPDATE CASCADE
             ON DELETE CASCADE
-) Engine=InnoDB;
+) Engine=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE INDEX `LoginWhenIndex`
 ON `login` (`When`);
@@ -55,7 +55,7 @@ CREATE TABLE `openings`
             ON UPDATE CASCADE
             ON DELETE SET NULL,
     CONSTRAINT `ControlloSuDate` CHECK (`LastEdit` >= `Creation`)
-) Engine=InnoDB;
+) Engine=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE INDEX `OpeningsCreationIndex`
 ON `openings` (`Creation`);
