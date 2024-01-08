@@ -174,8 +174,6 @@ if (dialogCloseBtn) {
 
 function ShowShareDialog()
 {
-    if (!document.body.classList.contains('can-share'))
-        return;
     const url = new URL(location.href);
     if (!url.searchParams.has('action', 'share'))
     {
@@ -196,15 +194,27 @@ function ShowShareDialog()
         console.warn('Invalid elements of share dialog')
         return;
     }
-    share_btn.onclick = () => {
-        navigator.share({
-            title: 'Intro di Star Wars personalizzata',
-            text: 'Guarda la mia intro di Star Wars personalizzata!',
-            url: `./view.php?original=${id}`
-        });
-        dialog.close();
-    }
     close_btn.onclick = () => dialog.close();
+    if (document.body.classList.contains('can-share')) {
+        
+        share_btn.onclick = () => {
+            navigator.share({
+                title: 'Intro di Star Wars personalizzata',
+                text: 'Guarda la mia intro di Star Wars personalizzata!',
+                url: `./view.php?original=${id}`
+            });
+            dialog.close();
+        }
+        dialog.showModal();
+        return;
+    }
+    if (!navigator.clipboard)
+        return;
+    share_btn.onclick = () => {
+        const sitePath = new URL(location.href).pathname.split('/').slice(0, -1).join('/');
+        navigator.clipboard.writeText(`${url.protocol}//${url.host}${sitePath}/view.php?original=${id}`).then(() => dialog.close());
+    }
+    share_btn.innerText = 'Copia URL della Intro';
     dialog.showModal();
 }
 ShowShareDialog();

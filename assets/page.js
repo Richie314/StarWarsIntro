@@ -24,9 +24,8 @@ if (navigator.share && navigator.canShare({
     title: 'Intro di Star Wars personalizzata',
     text: 'Guarda la mia intro di Star Wars personalizzata!',
     url: current_folder + 'view.php?original=' + Math.floor(Math.random() * 9) + 1
-}));
-
-document.body.classList.add('can-share');
+}))
+    document.body.classList.add('can-share');
 
 //
 //  Handle automatic scroll on page load
