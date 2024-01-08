@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS `riccardo.ciucci`;
-CREATE DATABASE `riccardo.ciucci` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+DROP DATABASE IF EXISTS `ciucci_660389`;
+CREATE DATABASE `ciucci_660389` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
-USE `riccardo.ciucci`;
+USE `ciucci_660389`;
 
 
 --
