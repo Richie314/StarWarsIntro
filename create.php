@@ -83,7 +83,7 @@
                     Episodio:
                 </label>
                 <input type="text" id="episode" name="episode" required
-                    placeholder="Episodio X" pattern="[A-Za-z0-9\s]+"
+                    placeholder="Episodio X" pattern="[A-Za-z0-9\s'\-À-ÿ!\$%\+]+"
                     value="<?= htmlspecialchars($opening->Episode) ?>"
                     spellcheck="true">
 
@@ -91,7 +91,7 @@
                     Titolo:
                 </label>
                 <input type="text" id="title" name="title" required
-                    placeholder="Un nuovo titolo" pattern="[A-Za-z0-9\s]+"
+                    placeholder="Un nuovo titolo" pattern="[A-Za-z0-9\s'\-À-ÿ!\$%\+]+"
                     value="<?= htmlspecialchars($opening->Title) ?>"
                     spellcheck="true">
 

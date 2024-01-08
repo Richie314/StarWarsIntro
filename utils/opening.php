@@ -150,7 +150,7 @@ class Opening
             throw new InvalidArgumentException("db was not a mysqli object!", 500);
         }
         $stmt = $this->PrepareUploadStatement($db);
-        if (!$stmt->execute() || $db->affected_rows !== 1)
+        if (!$stmt->execute() || $stmt->affected_rows === 0)
         {
             return false;
         }
@@ -160,7 +160,7 @@ class Opening
         } else {
             $this->Creation = new DateTime();
         }
-        $this->ID = $db->insert_id;
+        $this->ID = (int)$db->insert_id;
         return true;
     }
 

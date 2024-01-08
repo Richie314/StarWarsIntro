@@ -181,7 +181,7 @@ function ShowShareDialog()
     {
         return;
     }
-    url.searchParams.delete('action');
+    url.searchParams.delete('action', 'share');
     const id = url.searchParams.get('id');
     if (!id)
     {
@@ -220,7 +220,7 @@ function ShowEditedPrompt()
     {
         return;
     }
-    url.searchParams.delete('action');
+    url.searchParams.delete('action', 'edited');
     history.replaceState({ canonical: window.location.href }, '', url.pathname + url.search);
     alert('Modifiche effettuate con successo!');
 }

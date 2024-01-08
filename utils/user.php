@@ -116,7 +116,7 @@ class User
             return false;
         }
         $is_admin = $this->Admin ? 1 : 0;
-        return (bool)$stmt->execute() && $stmt->affected_rows === 1;
+        return (bool)$stmt->execute() && $stmt->affected_rows >= 1;
     }
     public function Log(mysqli $db) : bool
     {
