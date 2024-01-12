@@ -289,3 +289,27 @@ class Opening
         return $stmt->execute() && $db->affected_rows === 1;
     }
 }
+class Report
+{
+    public int $ID;
+    public int $Opening;
+    public string $Text;
+    public DateTime $Creation;
+    public bool $WasViewedByAdmin;
+    public bool $IsProblematic;
+    function __construct(
+        int $id, 
+        int $opening, 
+        string $text, 
+        DateTime|string $creation,
+        bool $viewed,
+        bool $problematic)
+    {
+
+    }
+
+    static function MakeNew(mysqli $db, int $opening, string $text) : Report|false
+    {
+
+    }
+}
