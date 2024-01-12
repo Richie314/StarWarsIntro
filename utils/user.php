@@ -64,7 +64,7 @@ class User
         );
     }
 
-    public static function InactiveUsers(mysqli $db):array
+    public static function InactiveUsers(mysqli $db) : array
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
