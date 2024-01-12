@@ -22,7 +22,7 @@
     </title>
     <meta name="title" content="<?= $TITLE ?>">
     <meta name="description" content="<?= $DESCRIPTION ?>">
-    <meta name="author"content="Riccardo Ciucci">
+    <meta name="author" content="Riccardo Ciucci">
     <meta name="robots" content="index,follow">
     <link rel="icon" href="./assets/sitelogo.svg">
     <link rel="shortcut icon" href="./assets/sitelogo.svg">
