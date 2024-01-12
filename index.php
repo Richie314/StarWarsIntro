@@ -1,6 +1,7 @@
 <?php
     $DO_NOT_CHECK_LOGIN = true;
     require_once "./utils/session.php";
+    include './utils/random.php';
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -40,31 +41,38 @@
             <p class="justify">
                 La pagina <a href="./create.php" target="_self" class="link">create.php</a> permette 
                 di creare/modificare le intro, che possono essere visualizzate all'endpoint
-                <a href="./view.php?original=<?= random_int(1, 9)?>" target="_self" class="link">view.php</a>.
+                <a href="./view.php?original=<?= rand_int(1, 9) ?>" target="_self" class="link">view.php</a>.
                 <br>
                 I titoli delle pagine private sono, talvolta, visualizzati col font
                 <span data-content="Aurebesh" class="aurebesh"></span>
                 all'interno delle stesse. Andando col cursore sopra tali titoli saranno convertiti in un font pi&ugrave;
                 comune.
                 <br>
-                Il tema del sito (giallo su nero con stelle) &egrave; anch'esso ispirato ai titoli di testa di Star Wars.
+                Il tema del sito (giallo su nero con stelle) è anch'esso ispirato ai titoli di testa di Star Wars.
             </p>
             <h3>
-                Perch&eacute; questo sito?
+                Perché questo sito?
             </h3>
             <p class="justify">
-                Il sito &egrave; stato realizzato da Riccardo Ciucci, come progetto per l'esame
+                Il sito è stato realizzato da Riccardo Ciucci, come progetto per l'esame
                 di Progettazione Web del corso di laurea triennale in Ingegneria Informatica
-                dell'<a href="https://www.unipi.it/" class="link" target="_self">Universit&agrave; di Pisa</a>.<br><br>
+                dell'<a href="https://www.unipi.it/" class="link" target="_self">Università di Pisa</a>.<br><br>
                 Professore del corso: Vecchio Alessio.<br>
                 Anno Accademico 2023-24.<br><br>
-                Non vi sono fini di lucro n&eacute; infrangimenti di copyright intesi.<br>
+                Non vi sono fini di lucro né infrangimenti di copyright intesi.<br>
                 Le icone sono state ottenute da
                 <a href="https://svgrepo.com" class="link" 
                     target="_blank" title="Apri in altra scheda">svgrepo.com<i class="icon svgrepo"></i></a> o realizzate tramite
                 il software 
                 <a href="https://www.figma.com/" class="link" 
                     target="_blank" title="Apri in altra scheda">Figma<i class="icon figma"></i></a>
+            </p>
+            <p>
+                <a href="http://jigsaw.w3.org/css-validator/check/referer">
+                    <img style="border:0;width:88px;height:31px" 
+                        src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+                        alt="CSS Valido!">
+                </a>
             </p>
         </article>        
     </main>

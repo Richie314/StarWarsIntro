@@ -20,3 +20,15 @@ function getUserIP() : string
 
     return "127.0.0.1";
 }
+
+function getCurrentProtocol()
+{
+    if (
+        isset($_SERVER['HTTPS']) &&
+        ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1) ||
+        isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
+        $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+            return "https://";
+    }
+    return "http://";
+}

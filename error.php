@@ -40,15 +40,14 @@ function IsLoggedIn()
     <main class="body">
         <?php if ($code === 404) { ?>
             <h1>
-                Questa non &egrave; la pagina che stai cercando!
+                Questa non è la pagina che stai cercando!
             </h1>
             <div class="img no-ctx" style="max-width: 350px">
                 <img src="./assets/img/benkenobi.svg" alt="Obi wan kenobi" title="Questa non è la pagina che stai cercando">
             </div>
-
         <?php } else { ?>
             <h1>
-                &Egrave; avvenuto un errore.
+                È avvenuto un errore.
             </h1>
             <p class="justify" style="max-width: 500px; margin-inline: auto;">
                 Ci scusiamo per il disagio.

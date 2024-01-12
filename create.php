@@ -73,9 +73,11 @@
 <body>
     <?php include "./parts/nav.php"; ?>
     <main class="body">
-        <h1 class="aurebesh" data-content="Crea nuova intro"> </h1>
+        <h1 class="aurebesh" data-content="Crea nuova intro">
+            &nbsp;
+        </h1>
         <form class="intro-form" method="post">
-            <input type="hidden" name="id" value="<?= $opening->ID ?>" required>
+            <input type="hidden" name="id" value="<?= $opening->ID ?>">
 
             <div class="grid" style="grid-template-columns: 30% 70%">
 
@@ -98,13 +100,11 @@
                 <label for="lang" class="center">
                     Lingua:
                 </label>
-                <select id="lang" name="lang" required tabindex="2">
-                    <option value="<?= OpeningLanguage::Italian->value ?>" 
-                        <?= $opening->Language === OpeningLanguage::Italian ? "selected" : "" ?>>
+                <select id="lang" name="lang" required tabindex="2" size="2">
+                    <option value="<?= OpeningLanguage::Italian->value ?>" <?= $opening->Language === OpeningLanguage::Italian ? "selected" : "" ?>>
                         Italiano
                     </option>
-                    <option value="<?= OpeningLanguage::English->value ?>"
-                    <?= $opening->Language === OpeningLanguage::English ? "selected" : "" ?>>
+                    <option value="<?= OpeningLanguage::English->value ?>" <?= $opening->Language === OpeningLanguage::English ? "selected" : "" ?>>
                         Inglese
                     </option>
                 </select>
@@ -137,7 +137,7 @@
                 </div>
                 <div class="tv span-2">
                     <iframe src="./view.php" allowfullscreen id="tv"
-                        width="1600" height="900" scrolling="no"
+                        width="1600" height="900"
                         loading="lazy" sandbox="allow-scripts">
                     </iframe>
                     <button type="button" id="reload-tv" title="Riavvia" class="tv-control">
@@ -190,7 +190,7 @@
                 </optgroup>
             </select>
             <br>
-            <button role="button" type="button" id="dialog-close">
+            <button type="button" id="dialog-close">
                 Annulla
             </button>
         </dialog>
@@ -198,16 +198,16 @@
             <h3>
                 Condividi l'intro appena creata!
             </h3>
-            <button role="button" type="button" id="share-btn">
+            <button type="button" id="share-btn">
                 Condividi
             </button>
-            <button role="button" type="button" id="share-close-btn">
+            <button type="button" id="share-close-btn">
                 Per ora no
             </button>
         </dialog>
     </main>
     <?php include "./parts/stars.php" ?>
     <?php include "./parts/footer.php"; ?>
-    <script src="./assets/create.js" defer type="text/javascript"></script>
+    <script src="./assets/create.js" defer></script>
 </body>
 </html>

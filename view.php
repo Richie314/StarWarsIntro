@@ -16,8 +16,7 @@
         {
             throw new Exception("Risorsa non trovata", 404);
         }
-    } elseif (isset($_GET["original"]) && ctype_digit($_GET["original"]))
-    {
+    } elseif (isset($_GET["original"]) && ctype_digit($_GET["original"])) {
         $original = (int)$_GET["original"];
         if ($original < 1 || $original > 9)
         {
@@ -56,15 +55,7 @@
     $TITLE = "$opening->Episode - $opening->Title";
     $DESCRIPTION = "Guarda l'opening personalizzata di Star Wars";
 
-    if (isset($_SERVER['HTTPS']) &&
-        ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1) ||
-        isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
-        $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
-        
-            $protocol = 'https://';
-    } else {
-      $protocol = 'http://';
-    }
+    $protocol = getCurrentProtocol();
     $URL = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 ?>
 
@@ -105,13 +96,11 @@
     <meta property="twitter:image" content="./assets/sitelogo.svg">
 
     <!-- Main script that handles timing: must be loaded before body -->
-    <script type="text/javascript" src="./assets/view/view.js"></script>
+    <script src="./assets/view/view.js"></script>
 
     <!-- Styles -->
-    <link rel="stylesheet" type="text/css" 
-        href="./assets/view/view.css" onload="PageStyleLoaded()">
-    <link rel="stylesheet" type="text/css" 
-        href="./assets/view/animations.css" onload="PageAnimationsLoaded()">
+    <link rel="stylesheet" type="text/css" href="./assets/view/view.css" onload="PageStyleLoaded()">
+    <link rel="stylesheet" type="text/css" href="./assets/view/animations.css" onload="PageAnimationsLoaded()">
 </head>
 <body class="wait">
     <!--
@@ -166,10 +155,10 @@
             <?php } ?>
             
             <p>
-                La musica &egrave; di propriet&agrave; di LucasFilm e Disney.
+                La musica è di proprietà di LucasFilm e Disney.
                 <br>
-                Questa simulazione &egrave; a solo scopo dimostrativo delle capacit&agrave;
-                del design web; &egrave; pubblica e non pu&ograve; essere utilizzata per fini commerciali.
+                Questa simulazione è a solo scopo dimostrativo delle capacità
+                del design web; è pubblica e non può essere utilizzata per fini commerciali.
                 <br>
                 Per maggiori informazioni vai alla <a href="./index.php">Pagina principale</a>
             </p>

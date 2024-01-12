@@ -34,7 +34,9 @@
                 <?php } ?>
             </ul>
         </div>
-        <h1 class="aurebesh" data-content="Le mie intro"> </h1>
+        <h1 class="aurebesh" data-content="Le mie intro">
+            &nbsp;
+        </h1>
         <ul class="check-empty">
             <?php foreach ($intros as $intro) { ?>
                 <li id="intro-row-<?= $intro->ID ?>">
