@@ -100,7 +100,7 @@
                 <label for="lang" class="center">
                     Lingua:
                 </label>
-                <select id="lang" name="lang" required tabindex="2" size="2">
+                <select id="lang" name="lang" tabindex="2" title="Scegli la lingua">
                     <option value="<?= OpeningLanguage::Italian->value ?>" <?= $opening->Language === OpeningLanguage::Italian ? "selected" : "" ?>>
                         Italiano
                     </option>
