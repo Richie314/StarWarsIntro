@@ -306,5 +306,17 @@ body {
     Stars that form the background
 */
 .star {
+    width: 1.5px;
+    height: 1.5px;
+    background-color: rgba(249, 251, 242, 0.8);
+    z-index: -1;
     position: absolute;
 }
+
+    .star.star-big {
+        background-color: rgba(249, 251, 242, 0.8);
+        border: none;
+        width: 4px;
+        height: 4px;
+        border-radius: 2px;
+    }

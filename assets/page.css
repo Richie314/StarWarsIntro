@@ -68,12 +68,6 @@ footer {
     }
 
 }
-/*
-    Where the stars must be positioned (fixed or absolute)
-*/
-.star {
-    position: fixed;
-}
 
 /*
     Img helper style
@@ -786,3 +780,24 @@ span.aurebesh[data-content] {
         span.aurebesh[data-content]:hover::after {
             opacity: 1;
         }
+
+
+/*
+    Stars in the bg of the page
+    Similar style in view.css
+*/
+.star {
+    width: 1.5px;
+    height: 1.5px;
+    background-color: rgba(249, 251, 242, 0.8);
+    z-index: -1;
+    position: fixed;
+}
+
+    .star.star-big {
+        background-color: rgba(249, 251, 242, 0.8);
+        border: none;
+        width: 4px;
+        height: 4px;
+        border-radius: 2px;
+    }
