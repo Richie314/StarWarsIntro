@@ -100,11 +100,11 @@
                 </label>
                 <select id="lang" name="lang" required tabindex="2">
                     <option value="<?= OpeningLanguage::Italian->value ?>" 
-                        <?= $opening->Language === OpeningLanguage::Italian ? "selected" : 0 ?>>
+                        <?= $opening->Language === OpeningLanguage::Italian ? "selected" : "" ?>>
                         Italiano
                     </option>
                     <option value="<?= OpeningLanguage::English->value ?>"
-                    <?= $opening->Language === OpeningLanguage::English ? "selected" : 0 ?>>
+                    <?= $opening->Language === OpeningLanguage::English ? "selected" : "" ?>>
                         Inglese
                     </option>
                 </select>
