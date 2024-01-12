@@ -43,5 +43,5 @@
 
     <link rel="stylesheet" type="text/css" href="./assets/page.css" media="all">
     <link rel="stylesheet" type="text/css" href="./assets/font.css" media="print" onload="this.media = 'all'">
-    <script src="./assets/page.js" type="text/javascript" defer></script>
+    <script src="./assets/page.js" defer></script>
 </head>

@@ -35,7 +35,7 @@
             </ul>
         </div>
         <h1 class="aurebesh" data-content="Le mie intro"> </h1>
-        <ul>
+        <ul class="check-empty">
             <?php foreach ($intros as $intro) { ?>
                 <li id="intro-row-<?= $intro->ID ?>">
                     <a href="./view.php?id=<?= $intro->ID ?>" 
@@ -43,12 +43,12 @@
                         <i class="icon <?= $intro->Language->value ?>"></i>
                         <?= htmlspecialchars($intro->Title) ?>
                     </a>
-                    &nbsp;-&nbsp;
+                    &nbsp; - 
                     <a href="./create.php?id=<?= $intro->ID ?>"
                         target="_self" title="Modifica" class="link">
                         Modifica <i class="edit"></i>
                     </a>
-                    &nbsp;-&nbsp;
+                    &nbsp; -
                     <a href="javascript:Delete(<?= $intro->ID ?>)"
                         title="Elimina" class="link">
                         Elimina <i class="delete"></i>
@@ -62,24 +62,11 @@
                 <strong>creane una</strong>
             </a>
         </p>
-        <style type="text/css">
-            p.show-if-list-empty {
-                opacity: 0;
-                user-select: none;
-                height: 0;
-                transition: all 1s ease-in-out;
-                transition-delay: .4s;
-            }
-            ul:not(:has(li:not(.fade-out))) + p.show-if-list-empty {
-                opacity: 1;
-                height: auto;
-            }
-        </style>
     </main>
     <?php include "./parts/stars.php" ?>
     <?php include "./parts/footer.php"; ?>
 
-    <script type="text/javascript">
+    <script>
         async function Delete(id)
         {
             if (!id)
