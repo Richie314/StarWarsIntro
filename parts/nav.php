@@ -21,13 +21,11 @@
 ?>
 
 <nav class="h-menu items-<?= sizeof($links) ?>">
-    <div class="hamburger">
-        <input type="checkbox" id="hide-show-menu">
-        <label for="hide-show-menu">
-            <img src="./assets/img/hamburger.svg" alt="Hamburger" title="Mostra il menù" class="hamburger">
-            <img src="./assets/img/close.svg" alt="Chiudi" title="Chiudi il menù" class="close">
-        </label>
-    </div>
+    <input type="checkbox" id="hide-show-menu">
+    <label for="hide-show-menu">
+        <img src="./assets/img/hamburger.svg" alt="Hamburger" title="Mostra il menù" class="hamburger">
+        <img src="./assets/img/close.svg" alt="Chiudi" title="Chiudi il menù" class="close">
+    </label>
     <?php foreach ($links as $link) { ?>
         <a href="<?= $link->Url ?>" target="_self" title="Vai a <?= $link->Text ?>">
             <div class="icon">
