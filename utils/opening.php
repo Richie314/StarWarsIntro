@@ -170,7 +170,7 @@ class Opening
         {
             throw new InvalidArgumentException("db was not a mysqli object!", 500);
         }
-        $query = "SELECT * FROM `openings` WHERE `ID` = $id";
+        $query = "SELECT * FROM `openings` WHERE `ID` = $id"; // No risk since $id is an int
         $result = $db->query($query);
         if (!$result || $result->num_rows !== 1)
         {
@@ -278,8 +278,8 @@ class Opening
         {
             return false;
         }
-        // The intro can be deleted if the user owns it, if the user is an admin or if the intro is not owned
-        $query = "DELETE FROM `openings` WHERE `ID` = ? AND (`Author` IS NULL OR `Author` = ? OR ?)";
+        // The intro can be deleted if the user owns it or if the user is an admin
+        $query = "DELETE FROM `openings` WHERE `ID` = ? AND (`Author` = ? OR ?)";
         $stmt = $db->prepare($query);
         $int_bool = $is_admin ? 1 : 0;
         if (!$stmt || !$stmt->bind_param("isi", $id, $user, $int_bool))
