@@ -44,8 +44,9 @@ class User
         {
             return null;
         }
-        $query = "SELECT * FROM `users` WHERE `ID` = ?";
-        $result = $db->execute_query($query, array($id));
+        $id_escaped = $db->real_escape_string($id); // It is secure since both $id and the db use the same charset (utf8)
+        $query = "SELECT * FROM `users` WHERE `ID` = '$id_escaped'";
+        $result = $db->query($query);
         if (!$result || $result->num_rows === 0)
         {
             return null;
