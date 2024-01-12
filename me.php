@@ -55,13 +55,13 @@
                     </a>
                 </li>
             <?php } ?>
+            <li class="show-if-list-empty">
+                Non hai nessuna intro,
+                <a href="./create.php" class="link" target="_self" title="Vai a pagina creazione">
+                    <strong>creane una</strong>
+                </a>
+            </li>
         </ul>
-        <p class="show-if-list-empty">
-            Non hai nessuna intro,
-            <a href="./create.php" class="link" target="_self" title="Vai a pagina creazione">
-                <strong>creane una</strong>
-            </a>
-        </p>
     </main>
     <?php include "./parts/stars.php" ?>
     <?php include "./parts/footer.php"; ?>

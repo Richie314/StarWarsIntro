@@ -799,14 +799,15 @@ span.aurebesh[data-content] {
 /*
     Contitional message in me.php page
 */
-    p.show-if-list-empty {
+    li.show-if-list-empty {
         opacity: 0;
         user-select: none;
         height: 0;
         transition: all 1s ease-in-out;
         transition-delay: .4s;
+        list-style: none;
     }
-        ul.check-empty:not(:has(li:not(.fade-out))) + p.show-if-list-empty {
+        li:first-child.show-if-list-empty {
             opacity: 1;
             height: auto;
         }
