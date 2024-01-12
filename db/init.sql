@@ -63,6 +63,21 @@ ON `openings` (`Creation`);
 CREATE INDEX `OpeningsLastEditIndex`
 ON `openings` (`LastEdit`);
 
+CREATE TABLE `report`
+(
+    `ID` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `Opening` INT NOT NULL,
+    `Text` TEXT DEFAULT NULL,
+    `Creation` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `Viewed` BIT NOT NULL DEFAULT FALSE,
+    `Problematic` BIT NOT NULL DEFAULT FALSE,
+
+    FOREIGN KEY (`Opening`) 
+        REFERENCES `openings` (`ID`)
+            ON UPDATE CASCADE
+            ON DELETE CASCADE
+) Engine=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Creation of views: common queries to store
 --
@@ -91,6 +106,25 @@ WHERE U.`Admin` = 0 AND NOT EXISTS (
     FROM `login` L
     WHERE L.`User` = U.`ID` AND DATEDIFF(CURRENT_TIMESTAMP, L.`When`) <= 366
 );
+
+CREATE VIEW `ProblematicIntros` AS
+SELECT O.`ID` AS "Opening", O.`Title`, O.`Language`, R.`ID`, R.`Text`
+FROM `openings` O
+    INNER JOIN `report` R ON R.`Opening` = O.`ID`
+WHERE R.`Problematic`
+ORDER BY R.`Creation` DESC;
+
+-- Users whose intros have been marked as problematic
+CREATE VIEW `ProblematicUsers` AS
+SELECT U.`ID`, U.`Email`, 
+    COUNT(DISTINCT O.`ID`) AS "RisorseCompromesse", 
+    COUNT(DISTINCT R.`ID`) AS "NumeroSegnalazioni"
+FROM `users` U
+    INNER JOIN `openings` O ON O.`Author` = U.`ID`
+    INNER JOIN `report` R ON R.`Opening` = O.`ID`
+WHERE U.`Admin` = 0 AND R.`Problematic`
+HAVING COUNT(DISTINCT O.`ID`) > 1 OR COUNT(DISTINCT R.`ID`) > 3
+ORDER BY "NumeroSegnalazioni" DESC, "RisorseCompromesse" DESC;
 
 --
 -- Creation of events
