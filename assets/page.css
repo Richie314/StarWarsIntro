@@ -788,18 +788,16 @@ span.aurebesh[data-content] {
 */
 .star {
     width: 1.5px;
-    height: 1.5px;
+    aspect-ratio: 1 / 1;
     background-color: rgba(249, 251, 242, 0.8);
     z-index: -1;
     position: fixed;
+    border-radius: 50%;
+    border: none;
 }
 
     .star.star-big {
-        background-color: rgba(249, 251, 242, 0.8);
-        border: none;
         width: 4px;
-        height: 4px;
-        border-radius: 2px;
     }
 
 /*
