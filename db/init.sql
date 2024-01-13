@@ -85,7 +85,9 @@ CREATE TRIGGER `UpdateReportViewedField`
 BEFORE UPDATE ON `report`
 FOR EACH ROW
 BEGIN
-    SET NEW.`Viewed` = b'1';
+    IF NEW.`Viewed` = OLD.`Viewed` THEN
+        SET NEW.`Viewed` = b'1';
+    END IF;
 END $$
 
 DELIMITER ;
@@ -124,7 +126,8 @@ CREATE VIEW `UnviewedReports` AS
 SELECT R.*
 FROM `report` R
 WHERE NOT R.`Viewed`
-ORDER BY R.`Creation` DESC;
+ORDER BY R.`Creation` DESC
+LIMIT 100;
 
 -- Intros-report pairs that have been marked as problematic
 CREATE VIEW `ProblematicIntros` AS

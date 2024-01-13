@@ -33,7 +33,7 @@
                             <?= htmlspecialchars($login->User->ID) ?>
                         <?php } ?>
                         @
-                        <a href="http://<?= $login->Ip ?>" class="link" traget="_blank">
+                        <a href="http://<?= $login->Ip ?>" class="link" target="_blank">
                             <?= $login->Ip ?>
                         </a>
                         <br>
@@ -53,11 +53,8 @@
                 <?php foreach ($reports as $report) { ?>
                     <li id="report-<?= $report->ID ?>">
                         <details>
-                            <summary>
-                                Report #<?= $report->ID ?> / 
-                                <a href="./view.php?id=<?= $report->Opening ?>" target="_blank">
-                                    <?= $report->Opening ?>
-                                </a>
+                            <summary class="no-marker">
+                                Report N°<?= $report->ID ?>
                             </summary>
                             <p>
                                 <?php if (!$report->IsProblematic) { ?>
@@ -65,12 +62,17 @@
                                         Segna come problematica
                                     </a>
                                 <?php } ?>
+                                &nbsp;
                                 <?php if (!$report->WasViewedByAdmin) { ?>
                                     <a href="javascript:SetViewed(<?= $report->ID ?>)" class="link">
                                         Ignora
                                     </a>
                                 <?php } ?>
-                                <br>
+                                &nbsp;
+                                <a href="./view.php?id=<?= $report->Opening ?>" target="_blank" class="link">
+                                    Ispeziona #<?= $report->Opening ?>
+                                </a>
+                                <hr>
                                 <?= htmlspecialchars($report->Text) ?>
                             </p>
                         </details>
@@ -134,7 +136,7 @@
                 if (!id)
                     return;
                 const esit = await ajax({
-                    'action': 'set-problematic',
+                    'action': 'set-problematic-report',
                     'id': id
                 });
                 console.log(`Set problematic of #${id}: ${esit}`);
@@ -155,7 +157,7 @@
                 if (!id)
                     return;
                 const esit = await ajax({
-                    'action': 'set-viewed',
+                    'action': 'set-viewed-report',
                     'id': id
                 });
                 console.log(`Set viewed of #${id}: ${esit}`);

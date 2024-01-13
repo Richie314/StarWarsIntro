@@ -462,6 +462,10 @@ h1, h2, h3, h4, h5, h6 {
 /*
     Intro creation form
 */
+textarea {
+    resize: none;
+    padding: 5px;
+}
 .intro-form {
     margin: 3em 1em 1em 1em;
     width: calc(100% - 2em);
@@ -477,11 +481,10 @@ h1, h2, h3, h4, h5, h6 {
         color: var(--main-cl);
         font-family: var(--main-font);
         border: .2px solid;
-        transition: border-width .4s linear;
         max-width: 100%;
     }
-        .intro-form :is(textarea, input[type="text"], select):is(:active, :focus) {
-            border-width: 2px;
+        .intro-form :is(textarea, input[type="text"], select):is(:active, :focus, :focus-visible) {
+            outline: none;
         }
     .intro-form input[type="text"] {
         background-color: transparent;
@@ -843,4 +846,11 @@ summary {
 details, details > :not(summary) {
     height: auto;
     transition: height .7s ease-in-out;
+}
+details > p {
+    margin-block-start: 0;
+    margin-inline: 1.3em;
+}
+summary.no-marker::marker {
+    content: "";
 }
