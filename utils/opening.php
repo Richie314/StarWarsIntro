@@ -302,14 +302,115 @@ class Report
         int $opening, 
         string $text, 
         DateTime|string $creation,
-        bool $viewed,
-        bool $problematic)
+        bool $viewed = false,
+        bool $problematic = false)
     {
-
+        $this->ID = $id;
+        $this->Opening = $opening;
+        $this->Text = $text;
+        $this->WasViewedByAdmin = $viewed;
+        $this->IsProblematic = $problematic;
+        if ($creation instanceof DateTime)
+        {
+            $this->Creation = $creation;
+        } else {
+            $this->Creation = new DateTime($creation);
+        }
     }
 
     static function MakeNew(mysqli $db, int $opening, string $text) : Report|false
     {
+        if (!isset($db) || !($db instanceof mysqli))
+        {
+            throw new InvalidArgumentException("db was not a mysqli object!", 500);
+        }
+        $stmt = $db->prepare('INSERT INTO `report` (`Opening`, `Text`) VALUES (?, ?)');
+        if (!$stmt || !$stmt->bind_param('is', $opening, $text))
+        {
+            return false;
+        }
+        if (!$stmt->execute() || $stmt->affected_rows !== 1)
+        {
+            return false;
+        }
+        return new Report((int)$db->insert_id, $opening, $text, new DateTime());
+    }
+    static function Load(mysqli $db, int $id) : Report|null
+    {
+        if (!isset($db) || !($db instanceof mysqli))
+        {
+            throw new InvalidArgumentException("db was not a mysqli object!", 500);
+        }
+        $query = "SELECT * FROM `report` WHERE `ID` = $id";
+        $result = $db->query($query);
+        if (!$result || !$result->num_rows !== 1)
+        {
+            return null;
+        }
+        if (!$row = $result->fetch_assoc())
+        {
+            return null;
+        }
+        return new Report(
+            $id, 
+            (int)$row["Opening"],
+            $row["Text"],
+            $row["Creation"],
+            (bool)$row["Viewed"],
+            (bool)$row["Problematic"]);
+    }
+    static function LoadUnViewed(mysqli $db) : array
+    {
+        if (!isset($db) || !($db instanceof mysqli))
+        {
+            throw new InvalidArgumentException("db was not a mysqli object!", 500);
+        }
+        $query = "SELECT * FROM `UnviewedReports`";
+        $result = $db->query($query);  
+        if (!$result || $result->num_rows === 0)
+        {
+            return array();
+        }
+        $arr = array();
+        while ($row = $result->fetch_assoc())
+        {
+            $arr[] = new Report(
+                (int)$row["ID"],
+                (int)$row["Opening"],
+                $row["Text"],
+                $row["Creation"],
+                (bool)$row["Viewed"],
+                (bool)$row["Problematic"]);
+        }
+        return $arr;
+    }
 
+    static function SetProblematic(mysqli $db, int $id) : bool
+    {
+        if (!isset($db) || !($db instanceof mysqli))
+        {
+            throw new InvalidArgumentException("db was not a mysqli object!", 500);
+        }
+        $query = "UPDATE `report` SET `Problematic` = b'1' WHERE `ID` = ?";
+        $stmt = $db->prepare($query);
+        if (!$stmt || !$stmt->bind_param('i', $id))
+        {
+            return false;
+        }
+        return $stmt->execute() && $stmt->affected_rows === 1;
+    }
+    static function SetViewed(mysqli $db, int $id) : bool
+    {
+        if (!isset($db) || !($db instanceof mysqli))
+        {
+            throw new InvalidArgumentException("db was not a mysqli object!", 500);
+        }
+        $query = "UPDATE `report` SET `Viewed` = b'1' WHERE `ID` = ?";
+        $stmt = $db->prepare($query);
+        if (!$stmt || !$stmt->bind_param('i', $id))
+        {
+            return false;
+        }
+        return $stmt->execute() && $stmt->affected_rows === 1;
     }
 }

@@ -78,6 +78,18 @@ CREATE TABLE `report`
             ON DELETE CASCADE
 ) Engine=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+
+DELIMITER $$
+
+CREATE TRIGGER `UpdateReportViewedField`
+BEFORE UPDATE ON `report`
+FOR EACH ROW
+BEGIN
+    SET NEW.`Viewed` = b'1';
+END $$
+
+DELIMITER ;
+
 --
 -- Creation of views: common queries to store
 --
@@ -107,6 +119,14 @@ WHERE U.`Admin` = 0 AND NOT EXISTS (
     WHERE L.`User` = U.`ID` AND DATEDIFF(CURRENT_TIMESTAMP, L.`When`) <= 366
 );
 
+-- Not yet seen reports
+CREATE VIEW `UnviewedReports` AS
+SELECT R.*
+FROM `report` R
+WHERE NOT R.`Viewed`
+ORDER BY R.`Creation` DESC;
+
+-- Intros-report pairs that have been marked as problematic
 CREATE VIEW `ProblematicIntros` AS
 SELECT O.`ID` AS "Opening", O.`Title`, O.`Language`, R.`ID`, R.`Text`
 FROM `openings` O

@@ -51,7 +51,7 @@
                         Modifica <i class="edit"></i>
                     </a>
                     &nbsp; -
-                    <a href="javascript:Delete(<?= $intro->ID ?>)"
+                    <a href="javascript:DeleteIntro(<?= $intro->ID ?>)"
                         title="Elimina" class="link">
                         Elimina <i class="delete"></i>
                     </a>
@@ -69,20 +69,16 @@
     <?php include "./parts/footer.php"; ?>
 
     <script>
-        async function Delete(id)
+        async function DeleteIntro(id)
         {
             if (!id)
                 return;
-            const res = await post('./delete.php', {
-                'id': id
+            const esit = await ajax({
+                'id': id,
+                'action': 'delete-intro'
             });
-            if (!('esit' in res))
-            {
-                console.log(`Delete of #${id}: Unknown esit`);
-                return;
-            }
-            console.log(`Delete of #${id}: ${res.esit}`);
-            if (res.esit !== 'ok')
+            console.log(`Delete of #${id}: ${esit}`);
+            if (esit !== 'ok')
             {
                 return;
             }

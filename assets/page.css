@@ -131,6 +131,7 @@ i {
     display: inline-block;
     background-size: cover;
     font-style: normal;
+    -webkit-user-select: none;
     user-select: none;
 }
     i::after {
@@ -190,6 +191,7 @@ i {
 */
 h1, h2, h3, h4, h5, h6 {
     text-align: center;
+    -webkit-user-select: none;
     user-select: none;
     cursor: auto;
     font-family: var(--main-font);
@@ -228,7 +230,6 @@ h1, h2, h3, h4, h5, h6 {
             :is(h1, h2, h3, h4, h5, h6).aurebesh[data-content]:hover::after {
                 opacity: 1;
             }
-
 /*
     Horizontal menu class
 */
@@ -240,6 +241,7 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0;
     grid-template-rows: 1fr;
     grid-template-columns: 3fr;
+    -webkit-user-select: none;
     user-select: none;
 }
     .h-menu.items-1 {
@@ -467,6 +469,7 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden;
 }
     .intro-form label {
+        -webkit-user-select: none;
         user-select: none;
     }
     
@@ -571,6 +574,7 @@ h1, h2, h3, h4, h5, h6 {
                 opacity: 1;
             }
 .tv {
+    -webkit-user-select: none;
     user-select: none;
 
     width: 100%;
@@ -801,6 +805,7 @@ span.aurebesh[data-content] {
 */
     li.show-if-list-empty {
         opacity: 0;
+        -webkit-user-select: none;
         user-select: none;
         height: 0;
         transition: all 1s ease-in-out;
@@ -811,3 +816,31 @@ span.aurebesh[data-content] {
             opacity: 1;
             height: auto;
         }
+/*
+    Details and summary elements
+*/
+summary {
+    position: relative;
+    overflow: hidden;
+    height: 3em;
+    cursor: pointer;
+}
+    summary > :first-child {
+        position: absolute;
+        right: 0;
+        top: 0;
+        margin: 0;
+        height: 100%;
+        width: calc(100% - 1em);
+        cursor: pointer;
+    }
+    summary > :not(:first-child) {
+        display: none;
+    }
+    summary::marker {
+        font-size: 2em;
+    }
+details, details > :not(summary) {
+    height: auto;
+    transition: height .7s ease-in-out;
+}

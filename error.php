@@ -62,7 +62,7 @@ function IsLoggedIn()
             <!-- <?= $trace ?> -->
         <?php } ?>
         
-        <script type="text/javascript">
+        <script>
             (() => {
                 const url = new URL(location.href);
                 if (url.searchParams.size === 0)

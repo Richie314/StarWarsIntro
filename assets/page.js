@@ -102,3 +102,18 @@ async function post(path, params = null)
 		return {};
 	}
 }
+/**
+ * Calls post and returns the 'esit' parameter of the response 
+ * @param {string} path 
+ * @param {object} params 
+ * @returns {string} The esit parameter
+ */
+async function ajax(params = null, path = './ajax.php')
+{
+    const res = await post(path, params);
+    if (!res || !('esit' in res))
+    {
+        return 'Unknown';
+    }
+    return res['esit'];
+}
