@@ -1,9 +1,4 @@
 /*
-*    ./assets/view/view.css
-*    included through php
-*/
-
-/*
     Main tags
 */
 * {
@@ -58,34 +53,13 @@ body {
     }
 
 .loader {
-    width: 200px;
+    width: 80px;
     aspect-ratio: 1 / 1;
-    display: grid;
-    user-select: none;
-    cursor: progress;
-    
-    -webkit-mask: conic-gradient(from 22deg, rgba(224, 191, 2, 0.2),yellow);
-    mask: conic-gradient(from 22deg, rgba(224, 191, 2, 0.2),yellow);
-    
-    -o-animation: Loader 1s steps(8) infinite;
-    -moz-animation: Loader 1s steps(8) infinite;
-    -webkit-animation: Loader 1s steps(8) infinite;
-    animation: Loader 1s steps(8) infinite;
+    border-radius: 50%;
+    border: 8px solid;
+    border-color: #ffe478 #ffff2d00;
+    animation: Loader 2s infinite;
 }
-    .loader,
-    .loader::before {
-        --bar-w: 9.5%; /* Width of bars */
-        --bar-h: 35%; /* Height of bars */
-        background: 
-            linear-gradient(#d7d361 0 0) 50%/var(--bar-h) var(--bar-w) space no-repeat, /* More bright ones */
-            linear-gradient(#d7d361 0 0) 50%/var(--bar-w)  var(--bar-h) no-repeat space; /* Less bright ones */
-        
-    }
-    .loader::before {
-        content: "";
-        transform: rotate(45deg);
-        /* .loader has 4 bars, .loader::before has the other 4 */
-    }
 
 /*
     Main element
@@ -100,7 +74,9 @@ body {
     font-size: 1.15vw;
     background-color: transparent;
     --percentageOfHeight: calc(100vw / 1600 * 9);
-    margin: calc(50vh - 50 * var(--percentageOfHeight)) 0 auto 0;
+    margin-inline: 0;
+    /*margin-block: calc(50vh - 50 * var(--percentageOfHeight)) auto;*/
+    margin-block: calc(50vh - 5000vw / 1600 * 9) auto;
 }
 @media screen and (min-aspect-ratio: 16 / 9) {
     /*
