@@ -129,13 +129,14 @@ WHERE NOT R.`Viewed`
 ORDER BY R.`Creation` DESC
 LIMIT 100;
 
--- Intros-report pairs that have been marked as problematic
+-- Intros that have been marked as problematic
 CREATE VIEW `ProblematicIntros` AS
-SELECT O.`ID` AS "Opening", O.`Title`, O.`Language`, R.`ID`, R.`Text`
+SELECT O.`ID`, O.`Title`, O.`Language`, COUNT(DISTINCT R.`ID`) AS "NumeroSegnalazioni"
 FROM `openings` O
     INNER JOIN `report` R ON R.`Opening` = O.`ID`
 WHERE R.`Problematic`
-ORDER BY R.`Creation` DESC;
+GROUP BY O.`ID`
+ORDER BY "NumeroSegnalazioni" DESC;
 
 -- Users whose intros have been marked as problematic
 CREATE VIEW `ProblematicUsers` AS
@@ -146,14 +147,12 @@ FROM `users` U
     INNER JOIN `openings` O ON O.`Author` = U.`ID`
     INNER JOIN `report` R ON R.`Opening` = O.`ID`
 WHERE U.`Admin` = 0 AND R.`Problematic`
-HAVING COUNT(DISTINCT O.`ID`) > 1 OR COUNT(DISTINCT R.`ID`) > 3
+HAVING COUNT(DISTINCT O.`ID`) >= 2 OR COUNT(DISTINCT R.`ID`) >= 3
 ORDER BY "NumeroSegnalazioni" DESC, "RisorseCompromesse" DESC;
 
 --
 -- Creation of events
 --
-
-DROP EVENT IF EXISTS `DeleteOldLoginsEvent`;
 
 -- Deletes logins of more than 150 days ago
 CREATE EVENT `DeleteOldLoginsEvent`
@@ -162,6 +161,37 @@ STARTS CURRENT_TIMESTAMP + INTERVAL 1 DAY
 DO 
     DELETE FROM `login`
     WHERE DATEDIFF(CURRENT_TIMESTAMP, `When`) > 150;
+
+
+-- Deletes automatically users that have more than 5 reports confirmed
+CREATE EVENT `DeleteBadUsers`
+ON SCHEDULE EVERY 1 DAY
+STARTS CURRENT_TIMESTAMP
+DO 
+    DELETE FROM `users`
+    WHERE `users`.`ID` IN (
+        SELECT P.`ID`
+        FROM `ProblematicUsers` P
+    );
+
+-- Deletes automatically intros that have  reports confirmed
+CREATE EVENT `DeleteBadIntros`
+ON SCHEDULE EVERY 10 DAY
+STARTS CURRENT_TIMESTAMP + INTERVAL 3 DAY
+DO 
+    DELETE FROM `openings`
+    WHERE `openings`.`ID` IN (
+        SELECT P.`ID`
+        FROM `ProblematicIntros` P
+    );
+
+-- Delete old reports that have been discarded by an admin
+CREATE EVENT `DeleteOldReports`
+ON SCHEDULE EVERY 1 MONTH
+STARTS CURRENT_TIMESTAMP
+DO 
+    DELETE FROM `report`
+    WHERE `report`.`Viewed` AND NOT `report`.`Problematic`;
 
 
 INSERT INTO `users` (`ID`, `Password`, `Email`, `Admin`) VALUES

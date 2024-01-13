@@ -822,6 +822,18 @@ span.aurebesh[data-content] {
 /*
     Details and summary elements
 */
+
+details {
+    transition: height 1s ease-in-out;
+    overflow: hidden;
+}
+    details:not([open]) {
+        height: 3em;
+    }
+        details > div > p {
+            margin-block-start: 0;
+            margin-inline: 1.3em;
+        }
 summary {
     position: relative;
     overflow: hidden;
@@ -837,20 +849,22 @@ summary {
         width: calc(100% - 1em);
         cursor: pointer;
     }
-    summary > :not(:first-child) {
-        display: none;
-    }
+        summary > :not(:first-child) {
+            display: none;
+        }
     summary::marker {
-        font-size: 2em;
+        content: '';
     }
-details, details > :not(summary) {
-    height: auto;
-    transition: height .7s ease-in-out;
-}
-details > p {
-    margin-block-start: 0;
-    margin-inline: 1.3em;
-}
-summary.no-marker::marker {
-    content: "";
-}
+    summary:not(.no-marker)::before {
+        position: absolute;
+        top: 0;
+        left: .1em;
+        content: '>';
+        font-size: 2em;
+        transform: rotate(0);
+        transform-origin: .2rem 50%;
+        transition: .25s transform ease;
+    }
+    details[open] > summary::before {
+        transform: rotate(90deg);
+    }

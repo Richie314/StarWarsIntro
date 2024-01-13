@@ -56,7 +56,7 @@
                             <summary class="no-marker">
                                 Report N°<?= $report->ID ?>
                             </summary>
-                            <p>
+                            <div>
                                 <?php if (!$report->IsProblematic) { ?>
                                     <a href="javascript:SetProblematic(<?= $report->ID ?>)" class="link">
                                         Segna come problematica
@@ -73,8 +73,10 @@
                                     Ispeziona #<?= $report->Opening ?>
                                 </a>
                                 <hr>
-                                <?= htmlspecialchars($report->Text) ?>
-                            </p>
+                                <p class="justify">
+                                    <?= htmlspecialchars($report->Text) ?>
+                                </p>
+                            </div>
                         </details>
                     </li>
                 <?php } ?>
@@ -106,8 +108,27 @@
                 <?php } ?>
             </ul>
         </details>
-        
-        
+        <hr>
+        <details>
+            <summary>
+                <h2>
+                    Come cancellare le intro dannose
+                </h2>
+            </summary>
+            <div>
+                <p class="justify">
+                    Non è necessario cancellare le intro dannose a mano, e nemmeno
+                    gli utenti che le hanno create.
+                    <br>
+                    Una volta che le segnalazioni vengono confermate da un admin,
+                    il database rimuoverà in automatico il contenuto inappropriato entro 10 gg.
+                    <br>
+                    Gli utenti che sono stati riportati più volte negli ultimi 10 gg
+                    (almeno 3 volte in generale o per almeno due risorse diverse) 
+                    vengono invece cancellati con la frequenza di una volta al giorno.
+                </p>
+            </div>
+        </details>
         
         <script>
             async function DeleteUser(user)

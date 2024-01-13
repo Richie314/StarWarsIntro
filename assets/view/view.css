@@ -59,7 +59,7 @@ body {
 
 .loader {
     width: 200px;
-    aspect-ratio: 1;
+    aspect-ratio: 1 / 1;
     display: grid;
     user-select: none;
     cursor: progress;

@@ -10,7 +10,9 @@
     $SHOW_FORGOT_PASSWORD_LINK = isset($SHOW_FORGOT_PASSWORD_LINK) && $SHOW_FORGOT_PASSWORD_LINK;
 ?>
 <form class="form" method="post">
-    <h2 class="aurebesh" data-content="<?= $FORM_BUTTON_LABEL ?>"></h2>
+    <h2 class="aurebesh" data-content="<?= $FORM_BUTTON_LABEL ?>">
+        &nbsp;
+    </h2>
     <?php if (!$HIDE_USERNAME_FILED) { ?>
         <div class="field">
             <label for="username">
