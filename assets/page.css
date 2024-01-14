@@ -44,7 +44,6 @@ nav {
     width: calc(100% - 0.7em);
     max-width: 800px;
     margin-inline: auto;
-
 }
     .body.center {
         display: grid;
@@ -104,6 +103,13 @@ label.center {
 }
 p, label, span, em, strong {
     font-family: var(--main-font);
+}
+hr {
+    border-color: var(--main-cl);
+    width: 90%;
+    min-width: 200px;
+    max-width: 600px;
+    margin-inline: auto;
 }
 /*
     Links
@@ -861,6 +867,8 @@ summary {
         left: .4em;
         content: '>';
         font-size: 2em;
+        font-weight: bold;
+        font-family: monospace;
         transform: rotate(0);
         transform-origin: .2rem 50%;
         transition: .25s transform ease;

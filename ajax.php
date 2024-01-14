@@ -61,7 +61,7 @@ switch ($_POST["action"])
     }
     default:
     {
-        throw new Exception("Azione richiesta sconosciuta", 401);
+        throw new Exception("Azione richiesta sconosciuta", 400);
     }
 }
 header("Content-Type: application/json");
