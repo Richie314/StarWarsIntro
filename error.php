@@ -27,10 +27,7 @@ if ($code !== 0)
     $TITLE = "$TITLE $code";
 }
 $DESCRIPTION = $str;
-function IsLoggedIn()
-{
-    return false;
-}
+$SHOW_ONLY_HOME_LINK = true;
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -45,13 +42,42 @@ function IsLoggedIn()
             <div class="img no-ctx" style="max-width: 350px">
                 <img src="./assets/img/benkenobi.svg" alt="Obi wan kenobi" title="Questa non è la pagina che stai cercando">
             </div>
+            <p class="justify" style="max-width: 500px; margin-inline: auto;">
+                Prova a controllare l'url digitato. Se stavi cercando un'intro è possibile che questa sia stata cancellata 
+                dopo una segnalazione perché conteneva linguaggio scurrile o altro testo non permesso.
+                <br><br>
+                Non aspettare qui, prova ad <a href="./" class="link" target="_self">andare alla pagina principale</a>
+            </p>
+            <script>
+                /* Automatically reload the page every 15s */
+                setTimeout(() => window.location.reload(), 15 * 1000);
+            </script>
         <?php } else { ?>
             <h1>
                 È avvenuto un errore.
             </h1>
+            <?php if ($code !== 0) { ?>
+                <h3>
+                    Codice errore: <?= $code ?>
+                </h3>
+            <?php } ?>
             <p class="justify" style="max-width: 500px; margin-inline: auto;">
                 Ci scusiamo per il disagio.
+                <br><br>
+                Non aspettare qui, prova ad <a href="./" class="link" target="_self">andare alla pagina principale</a>
             </p>
+            <script>
+                /* Obscure params from the url */
+                (() => {
+                    const url = new URL(location.href);
+                    if (url.searchParams.size === 0)
+                        return;
+                    url.searchParams.delete('file');
+                    url.searchParams.delete('trace');
+                    url.searchParams.delete('err');
+                    history.replaceState({ canonical: window.location.href }, '', url.pathname + url.search);
+                })();
+            </script>
         <?php } ?>
 
         <pre><?= trim($str) ?></pre>
@@ -60,19 +86,7 @@ function IsLoggedIn()
         <?php } ?>
         <?php if (isset($trace)) { ?>
             <!-- <?= $trace ?> -->
-        <?php } ?>
-        
-        <script>
-            (() => {
-                const url = new URL(location.href);
-                if (url.searchParams.size === 0)
-                    return;
-                url.searchParams.delete('file');
-                url.searchParams.delete('trace');
-                url.searchParams.delete('err');
-                history.replaceState({ canonical: window.location.href }, '', url.pathname + url.search);
-            })();
-        </script>
+        <?php } ?>        
     </main>
     <?php include "./parts/stars.php" ?>
     <?php include "./parts/footer.php"; ?>
