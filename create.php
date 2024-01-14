@@ -119,14 +119,11 @@
                         name="content" id="content" 
                         cols="30" rows="17"
                         placeholder="Vai a capo due volte per dividere in paragrafi"
-                        spellcheck="true" tabindex="3"><?php 
-                            if (!isEmpty($opening->Content)) 
-                                echo htmlentities($opening->Content);
-                        ?></textarea>
+                        spellcheck="true" tabindex="3"><?= isEmpty($opening->Content) ? "" : htmlentities($opening->Content) ?></textarea>
                     <br>
                     <?php 
                     if (!isEmpty($error_msg)) {
-                        echo "<span>$error_msg</span>";
+                        echo "<p>$error_msg</p>";
                     }
                     ?>
                 </div>
@@ -137,7 +134,7 @@
                 </div>
                 <div class="tv span-2">
                     <iframe src="./view.php" allowfullscreen id="tv"
-                        width="1600" height="900"
+                        width="1600" height="900" title="Anteprima"
                         loading="lazy" sandbox="allow-scripts">
                     </iframe>
                     <button type="button" id="reload-tv" title="Riavvia" class="tv-control">

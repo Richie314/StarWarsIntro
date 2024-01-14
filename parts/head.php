@@ -3,15 +3,7 @@
         $TITLE = "Pagina generica";
     if (isEmpty($DESCRIPTION)) 
         $DESCRIPTION = "Crea le tue intro di Star Wars personalizzate";
-    if (isset($_SERVER['HTTPS']) &&
-        ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1) ||
-        isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
-        $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
-        
-            $protocol = 'https://';
-    } else {
-      $protocol = 'http://';
-    }
+    $protocol = getCurrentProtocol();
     $URL = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 ?>
 <head>

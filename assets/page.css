@@ -858,7 +858,7 @@ summary {
     summary:not(.no-marker)::before {
         position: absolute;
         top: 0;
-        left: .1em;
+        left: .4em;
         content: '>';
         font-size: 2em;
         transform: rotate(0);

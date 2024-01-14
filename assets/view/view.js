@@ -9,7 +9,7 @@ const Now = () => performance.now();
 const AUDIO_START_DELAY = 6300;
 
 // Delay for credits to be shown
-const CREDITS_SHOW_DELAY = 103 * 1000;
+const CREDITS_SHOW_DELAY = 113 * 1000;
 
 // When animations start
 var start = 0;

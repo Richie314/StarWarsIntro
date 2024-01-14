@@ -11,7 +11,8 @@
         null, new DateTime(), null);
     if (isset($_GET["id"]) && ctype_digit($_GET["id"]))
     {
-        $opening = Opening::Load($db, (int)$_GET["id"]);
+        $id = (int)$_GET["id"];
+        $opening = Opening::Load($db, $id);
         if (!isset($opening))
         {
             throw new Exception("Risorsa non trovata", 404);
@@ -170,6 +171,11 @@
                 <button type="button" id="share">
                     Condividi
                 </button>
+                <?php if (isset($id)) { ?>
+                    <button type="button" id="report">
+                        Segnala
+                    </button>
+                <?php } ?>
             </div>
         </article>
 
@@ -183,7 +189,7 @@
         if (reloadBtn) {
             reloadBtn.addEventListener('click', () => window.location.reload());
         }
-        const shareBtn =document.getElementById('share');
+        const shareBtn = document.getElementById('share');
         if (!navigator.share || ! navigator.canShare({
             title: document.title,
             text: 'Guarda anche tu la mia intro di Star Wars',
@@ -197,6 +203,16 @@
                     text: 'Guarda anche tu la mia intro di Star Wars',
                     url: window.location.href
                 })
+            });
+        }
+        const reportBtn = document.getElementById('report');
+        if (reportBtn) {
+            reportBtn.addEventListener('click', () => {
+                const a =document.createElement('a');
+                a.href = './report.php?id=' + new URL(window.location.href).searchParams.get('id');
+                a.target = '_self';
+                document.body.appendChild(a);
+                a.click();
             });
         }
     </script>
