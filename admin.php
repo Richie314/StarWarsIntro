@@ -76,7 +76,7 @@
                                 <a href="./view.php?id=<?= $report->Opening ?>" target="_blank" class="link">
                                     Ispeziona #<?= $report->Opening ?>
                                 </a>
-                                <hr>
+                                <hr style="margin-inline-start: 0;">
                                 <p class="justify">
                                     <?= htmlspecialchars($report->Text) ?>
                                 </p>
