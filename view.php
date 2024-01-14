@@ -6,7 +6,7 @@
         0, 
         "Titolo qui",
         "Nome episodio qui",
-        "Contenuto qui",
+        null,
         "it",
         null, new DateTime(), null);
     if (isset($_GET["id"]) && ctype_digit($_GET["id"]))
