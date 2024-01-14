@@ -22,7 +22,7 @@
                     Login recenti
                 </h1>
             </summary>
-            <ul id="login-list">
+            <ul id="login-list" class="check-empty">
                 <?php foreach ($logins as $login) { ?>
                     <li>
                         <?php if (!isEmpty($login->User->Email)) { ?>
@@ -36,10 +36,14 @@
                         <a href="http://<?= $login->Ip ?>" class="link" target="_blank">
                             <?= $login->Ip ?>
                         </a>
-                        <br>
+                        &nbsp;
                         il <?= $login->When->format('d/m/Y H:i:s') ?>
                     </li>
                 <?php } ?>
+                <li class="show-if-list-empty">
+                    C'è qualcosa di strano: non sono stati trovati login. <br>
+                    Qualcosa potrebbe essere andato storto nel databse
+                </li>
             </ul>
         </details>
 
@@ -49,7 +53,7 @@
                     Segnalazioni
                 </h1>
             </summary>
-            <ul>
+            <ul id="report-list" class="check-empty">
                 <?php foreach ($reports as $report) { ?>
                     <li id="report-<?= $report->ID ?>">
                         <details>
@@ -80,6 +84,11 @@
                         </details>
                     </li>
                 <?php } ?>
+                <li class="show-if-list-empty">
+                    Nessuna segnalazione da vedere. <br>
+                    Per controllare se ce ne sono di nuove
+                    <a href="javascript:window.location.reload()" class="link">ricarica la pagina</a>
+                </li>
             </ul>
         </details>
 
@@ -89,7 +98,7 @@
                     Utenti inattivi
                 </h1>
             </summary>
-            <ul id="inactive-list">
+            <ul id="inactive-list" class="check-empty">
                 <?php foreach ($inactive as $user) { ?>
                     <li id="user-<?= $user->SafeID() ?>">
                         <?= $user->SafeID() ?>
@@ -106,6 +115,9 @@
                         </a>
                     </li>
                 <?php } ?>
+                <li class="show-if-list-empty">
+                    Nessun utente inattivo
+                </li>
             </ul>
         </details>
         <hr>

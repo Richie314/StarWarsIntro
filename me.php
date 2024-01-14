@@ -31,6 +31,11 @@
                             Lista utenti inattivi
                         </a>
                     </li>
+                    <li>
+                        <a href="./admin.php#report-list" class="link" target="_self" title="Vai alla lista">
+                            Lista segnalazioni da vedere
+                        </a>
+                    </li>
                 <?php } ?>
             </ul>
         </div>
