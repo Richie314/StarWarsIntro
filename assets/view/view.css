@@ -229,7 +229,7 @@ body {
     top: 0;
     left: 0;
 
-    width: 90%;
+    width: 100%;
     max-width: 600vw;
     margin-inline: auto;
     overflow-x: hidden;
@@ -242,7 +242,7 @@ body {
     text-align: center;
     word-break: break-word;
     background-color: transparent;
-    color:var(--color);
+    color: var(--color);
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 4vh;
 
@@ -251,13 +251,17 @@ body {
     transition: opacity 1.4s ease-in;
 }
     #credits a {
-        color:var(--color);
+        color: var(--color);
+    }
+    #credits p {
+        padding: 1em;
     }
 
 .row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
+    grid-template-rows: auto;
+    gap: 1em;
 
     width: 100%;
     margin-inline: 0;
