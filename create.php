@@ -159,7 +159,7 @@
             <h3>
                 Scegli l'intro da emulare e guarda nella tv
             </h3>
-            <select id="dialog-select">
+            <select id="dialog-select" title="Seleziona una intro delle originali">
                 <option value="0">Scegli</option>
 
                 <optgroup label="In italiano">
