@@ -7,9 +7,8 @@ session_start(); // Session automatic handling done in .htaccess
 
 function LogOut()
 {
-    $unset = session_unset();
-    $destroyed = session_destroy();
-    if ($unset && $destroyed)
+    session_unset();
+    if (session_destroy())
     {
         header("Location: ./index.php");
         exit;
