@@ -182,6 +182,7 @@ class Opening
         {
             throw new InvalidArgumentException("db was not a mysqli object!", 500);
         }
+        $id = (int)$id;
         $query = "SELECT * FROM `openings` WHERE `ID` = $id"; // No risk since $id is an int
         $result = $db->query($query);
         if (!$result || $result->num_rows !== 1)
@@ -285,10 +286,6 @@ class Opening
         if (!isset($db) || !($db instanceof mysqli))
         {
             throw new InvalidArgumentException("db was not a mysqli object!", 500);
-        }
-        if (!is_int($id))
-        {
-            throw new InvalidArgumentException("id was not int", 500);
         }
         $id = (int)$id;
         if ($id === 0)

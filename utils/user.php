@@ -24,7 +24,7 @@ class User
         $this->ID = $id;
         $this->Password = $hash;
         $this->Email = (string)$email;
-        $this->Admin = $is_admin;
+        $this->Admin = (bool)$is_admin;
     }
     public function checkPassword($plain_text_password) //: bool
     {
@@ -140,12 +140,12 @@ class User
         }
         $query = "INSERT INTO `login` (`User`, `When`, `Ip`, `Device`) VALUES (?, CURRENT_TIMESTAMP, ?, ?)";
         $stmt = $db->prepare($query);
+        $ip = getUserIP();
+        $user_agent = $_SERVER['HTTP_USER_AGENT'];
         if (!$stmt || !$stmt->bind_param('sss', $this->ID, $ip, $user_agent))
         {
             return false;
         }
-        $ip = getUserIP();
-        $user_agent = $_SERVER['HTTP_USER_AGENT'];
 
         return $stmt->execute() && $db->affected_rows === 1;
     }
