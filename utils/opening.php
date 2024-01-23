@@ -210,8 +210,8 @@ class Opening
         {
             throw new InvalidArgumentException("Invalid user!", 500);
         }
-        $query = "SELECT `ID`, `Title`, `Language` FROM `RecentOpenings` WHERE `Author` = ?";
-        $result = $db->execute_query($query, array($user));
+        $user = $db->real_escape_string($user);
+        $result = $db->query("SELECT `ID`, `Title`, `Language` FROM `RecentOpenings` WHERE `Author` = '$user'");
         if (!$result || $result->num_rows === 0)
         {
             return array();
