@@ -2,10 +2,10 @@
 
 class User 
 {
-    public string $ID;
-    public string $Password;
-    public string $Email;
-    public bool $Admin;
+    public $ID;
+    public $Password;
+    public $Email;
+    public $Admin;
     public function __construct(
         string $id,
         string $hash,
@@ -26,7 +26,7 @@ class User
         $this->Email = $email;
         $this->Admin = $is_admin;
     }
-    public function checkPassword(string $plain_text_password) : bool
+    public function checkPassword(string $plain_text_password) //: bool
     {
         if (isEmpty($this->ID) || isEmpty($this->Password) || isEmpty($plain_text_password))
         {
@@ -34,7 +34,7 @@ class User
         }
         return password_verify($plain_text_password, $this->Password);
     }
-    public static function Load(mysqli $db, string $id): User|null
+    public static function Load(mysqli $db, string $id) //: User|null
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
@@ -64,7 +64,7 @@ class User
         );
     }
 
-    public static function InactiveUsers(mysqli $db) : array
+    public static function InactiveUsers(mysqli $db) //: array
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
@@ -84,7 +84,12 @@ class User
         return $user_array;
     }
 
-    public static function Create(mysqli $db, string $id, string $plain_text_password, string $email, bool $is_admin = false) : bool
+    public static function Create(
+        mysqli $db, 
+        string $id, 
+        string $plain_text_password, 
+        string $email, 
+        bool $is_admin = false) //: bool
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
@@ -99,17 +104,17 @@ class User
         return $user->Upload($db);
     }
 
-    private function Upload(mysqli $db) : bool
+    private function Upload(mysqli $db) //: bool
     {
         $query = "INSERT INTO `users` (`ID`, `Password`, `Email`, `Admin`) VALUES (?, ?, ?, ?)";
         return $this->UploadOrUpdate($db, $query);
     }
-    public function Update(mysqli $db) : bool
+    public function Update(mysqli $db) //: bool
     {
         $query = "REPLACE INTO `users` (`ID`, `Password`, `Email`, `Admin`) VALUES (?, ?, ?, ?)";
         return $this->UploadOrUpdate($db, $query);
     }
-    private function UploadOrUpdate(mysqli $db, string $query) : bool
+    private function UploadOrUpdate(mysqli $db, string $query) //: bool
     {
         $stmt = $db->prepare($query);
         if (!$stmt || !$stmt->bind_param('sssi', $this->ID, $this->Password, $this->Email, $is_admin))
@@ -119,7 +124,7 @@ class User
         $is_admin = $this->Admin ? 1 : 0;
         return (bool)$stmt->execute() && $stmt->affected_rows >= 1;
     }
-    public function Log(mysqli $db) : bool
+    public function Log(mysqli $db) //: bool
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
@@ -141,7 +146,7 @@ class User
         return $stmt->execute() && $db->affected_rows === 1;
     }
 
-    private function SendEmail($subject, $message) : bool
+    private function SendEmail($subject, $message) //: bool
     {
         // Will fail on localhost
 
@@ -158,7 +163,7 @@ class User
             return false;
         }
     }
-    public function SendWelcomeEmail() : bool
+    public function SendWelcomeEmail() //: bool
     {
         $subject = "Benvenuto";
         $message = 
@@ -171,7 +176,7 @@ class User
             "<small>Ti preghiamo di non rispondere a questa email</small>";
         return $this->SendEmail($subject, $message);
     }
-    public function ResetPassword(mysqli $db) : bool
+    public function ResetPassword(mysqli $db) //: bool
     {
         if (isEmpty($this->ID))
         {
@@ -205,11 +210,11 @@ class User
             "<small>Ti preghiamo di non rispondere a questa email e di cancellarla appena accedi all'account</small>";
         return $this->SendEmail($subject, $message);
     }
-    public function SafeID():string
+    public function SafeID() //:string
     {
         return htmlspecialchars(str_replace(array("'", "\"", "\r", "\n", "\t"), "", $this->ID));
     }
-    public static function Delete(mysqli $db, string $username) : bool
+    public static function Delete(mysqli $db, string $username) //: bool
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
@@ -230,10 +235,10 @@ class User
 }
 class Login
 {
-    public User $User;
-    public DateTime $When;
-    public string $Ip;
-    public string $Device;
+    public $User;
+    public $When;
+    public $Ip;
+    public $Device;
     public function __construct(
         User $user, DateTime|string $datetime, string $ip, string $dev)
     {
@@ -251,7 +256,7 @@ class Login
         $this->Device = $dev;
     }
 
-    public static function RecentLogs(mysqli $db): array
+    public static function RecentLogs(mysqli $db) //: array
     {
         if (!isset($db) || !($db instanceof mysqli))
         {

@@ -101,10 +101,10 @@
                     Lingua:
                 </label>
                 <select id="lang" name="lang" tabindex="2" title="Scegli la lingua">
-                    <option value="<?= OpeningLanguage::Italian->value ?>" <?= $opening->Language === OpeningLanguage::Italian ? "selected" : "" ?>>
+                    <option value="<?= OpeningLanguage::$Italian->value ?>" <?= $opening->Language === OpeningLanguage::$Italian ? "selected" : "" ?>>
                         Italiano
                     </option>
-                    <option value="<?= OpeningLanguage::English->value ?>" <?= $opening->Language === OpeningLanguage::English ? "selected" : "" ?>>
+                    <option value="<?= OpeningLanguage::$English->value ?>" <?= $opening->Language === OpeningLanguage::$English ? "selected" : "" ?>>
                         Inglese
                     </option>
                 </select>

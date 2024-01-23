@@ -23,7 +23,7 @@
         {
             throw new Exception("Risorsa non trovata", 404);
         }
-        $lang = OpeningLanguage::Italian;
+        $lang = OpeningLanguage::$Italian;
         if (!isEmpty($_GET["lang"]) && is_string($_GET["lang"]))
         {
             $lang = Opening::StringToLanguage($_GET["lang"]);

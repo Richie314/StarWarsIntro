@@ -1,31 +1,43 @@
 <?php
 include_once "./utils/string.php";
 include_once "./utils/file.php";
-enum OpeningLanguage: string
+/*
+enum OpeningLanguage : string
 {
     case Italian = "it";
     case English = "en";
 }
+*/
+class OpeningLanguage
+{
+    static $Italian = new OpeningLanguage("it");
+    static $English = new OpeningLanguage("en");
+    public $value;
+    function __construct($str)
+    {
+        $this->value = (string)$str;
+    }
+}
 class Opening
 {
-    public int $ID;
-    public string $Title;
-    public string $Episode;
-    public string|null $Content;
+    public $ID;//int
+    public $Title;//string
+    public $Episode;//string
+    public $Content;//string|null
 
     public OpeningLanguage $Language;
 
     public string|null $Author;
     public DateTime $Creation;
     public DateTime|null $LastEdit;
-    static function StringToLanguage(string $lang) : OpeningLanguage
+    static function StringToLanguage(string $lang)// : OpeningLanguage
     {
         switch ($lang)
         {
-            case OpeningLanguage::English->value:
-                return OpeningLanguage::English;
-            case OpeningLanguage::Italian->value:
-                return OpeningLanguage::Italian;
+            case OpeningLanguage::$English->value:
+                return OpeningLanguage::$English;
+            case OpeningLanguage::$Italian->value:
+                return OpeningLanguage::$Italian;
             default:
                 throw new InvalidArgumentException("Invalid language", 500);
         } 
@@ -86,7 +98,7 @@ class Opening
         $this->Author = $author; // Can be null
     }
 
-    private function isInDB(): bool
+    private function isInDB() //: bool
     {
         return $this->ID !== 0;
     }
@@ -97,7 +109,7 @@ class Opening
         return $this->Creation->format('Y-m-d H:i:s');
     }
 
-    private function PrepareUploadStatement(mysqli $db): mysqli_stmt
+    private function PrepareUploadStatement(mysqli $db) //: mysqli_stmt
     {
         $lang = $this->Language->value;
         $creation = $this->getCreationDate();
@@ -143,7 +155,7 @@ class Opening
         return $stmt;
     }
 
-    public function Upload(mysqli $db): bool
+    public function Upload(mysqli $db) //: bool
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
@@ -164,7 +176,7 @@ class Opening
         return true;
     }
 
-    static public function Load(mysqli $db, int $id) : Opening|null
+    static public function Load(mysqli $db, int $id) // : Opening|null
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
@@ -188,7 +200,7 @@ class Opening
             $row['LastEdit']
         );
     }
-    static public function LoadBriefOfUser(mysqli $db, string $user): array
+    static public function LoadBriefOfUser(mysqli $db, string $user) //: array
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
@@ -222,7 +234,7 @@ class Opening
         return $array_to_return;
     }
 
-    static public function LoadOriginal(int $episode, OpeningLanguage $lang): Opening
+    static public function LoadOriginal(int $episode, OpeningLanguage $lang) //: Opening
     {
         if (!is_int($episode) || $episode < 1 || $episode > 9)
         {
@@ -251,7 +263,7 @@ class Opening
         );
     }
 
-    public function Paragraphs():array
+    public function Paragraphs() //:array
     {
         if (isEmpty($this->Content))
         {
@@ -260,15 +272,15 @@ class Opening
         $parts = explode("\n\n", str_replace("\r", "", $this->Content));
         return array_map("htmlspecialchars", $parts);
     }
-    public function getIntro():string
+    public function getIntro() //:string
     {
         $DefaultIntros = array(
-            OpeningLanguage::Italian->value => "Tanto tempo fa in una galassia lontana,<br>lontana...",
-            OpeningLanguage::English->value => "A long time ago in a galaxy far,<br>far away...",
+            OpeningLanguage::$Italian->value => "Tanto tempo fa in una galassia lontana,<br>lontana...",
+            OpeningLanguage::$English->value => "A long time ago in a galaxy far,<br>far away...",
         );
         return $DefaultIntros[$this->Language->value];
     }
-    public static function Delete(mysqli $db, int $id, string $user, bool $is_admin):bool
+    public static function Delete(mysqli $db, int $id, string $user, bool $is_admin) //:bool
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
@@ -291,12 +303,12 @@ class Opening
 }
 class Report
 {
-    public int $ID;
-    public int $Opening;
-    public string $Text;
-    public DateTime $Creation;
-    public bool $WasViewedByAdmin;
-    public bool $IsProblematic;
+    public $ID;
+    public $Opening;
+    public $Text;
+    public $Creation;
+    public $WasViewedByAdmin;
+    public $IsProblematic;
     function __construct(
         int $id, 
         int $opening, 
@@ -318,7 +330,7 @@ class Report
         }
     }
 
-    static function MakeNew(mysqli $db, int $opening, string $text) : Report|false
+    static function MakeNew(mysqli $db, int $opening, string $text) //: Report|false
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
@@ -335,7 +347,7 @@ class Report
         }
         return new Report((int)$db->insert_id, $opening, $text, new DateTime());
     }
-    static function Load(mysqli $db, int $id) : Report|null
+    static function Load(mysqli $db, int $id) //: Report|null
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
@@ -359,7 +371,7 @@ class Report
             (bool)$row["Viewed"],
             (bool)$row["Problematic"]);
     }
-    static function LoadUnViewed(mysqli $db) : array
+    static function LoadUnViewed(mysqli $db) //: array
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
@@ -385,7 +397,7 @@ class Report
         return $arr;
     }
 
-    static function SetProblematic(mysqli $db, int $id) : bool
+    static function SetProblematic(mysqli $db, int $id) //: bool
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
@@ -399,7 +411,7 @@ class Report
         }
         return $stmt->execute() && $stmt->affected_rows === 1;
     }
-    static function SetViewed(mysqli $db, int $id) : bool
+    static function SetViewed(mysqli $db, int $id) //: bool
     {
         if (!isset($db) || !($db instanceof mysqli))
         {

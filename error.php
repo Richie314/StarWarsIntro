@@ -1,33 +1,33 @@
 <?php
-error_reporting(E_ERROR | E_PARSE);
-include_once "./utils/string.php";
-$code = 0;
-if (isset($_GET["code"]) && ctype_digit($_GET["code"]))
-{
-    $code = (int)$_GET["code"];
-    if ($code >= 400 && $code < 600)
-        http_response_code($code);
-}
-$str = "";
-if (isset($_GET["err"]) && is_string($_GET["err"]))
-{
-    $str = htmlspecialchars($_GET["err"]);
-}
-if (isset($_GET["file"]) && is_string($_GET["file"]))
-{
-    $file = htmlspecialchars($_GET["file"]);
-}
-if (isset($_GET["trace"]) && is_string($_GET["trace"]))
-{
-    $trace = htmlspecialchars($_GET["trace"]);
-}
-$TITLE = "Errore";
-if ($code !== 0)
-{
-    $TITLE = "$TITLE $code";
-}
-$DESCRIPTION = $str;
-$SHOW_ONLY_HOME_LINK = true;
+    error_reporting(E_ERROR | E_PARSE);
+    include_once "./utils/string.php";
+    $code = 0;
+    if (isset($_GET["code"]) && ctype_digit($_GET["code"]))
+    {
+        $code = (int)$_GET["code"];
+        if ($code >= 400 && $code < 600)
+            http_response_code($code);
+    }
+    $str = "";
+    if (isset($_GET["err"]) && is_string($_GET["err"]))
+    {
+        $str = htmlspecialchars($_GET["err"]);
+    }
+    if (isset($_GET["file"]) && is_string($_GET["file"]))
+    {
+        $file = htmlspecialchars($_GET["file"]);
+    }
+    if (isset($_GET["trace"]) && is_string($_GET["trace"]))
+    {
+        $trace = htmlspecialchars($_GET["trace"]);
+    }
+    $TITLE = "Errore";
+    if ($code !== 0)
+    {
+        $TITLE = "$TITLE $code";
+    }
+    $DESCRIPTION = $str;
+    $SHOW_ONLY_HOME_LINK = true;
 ?>
 <!DOCTYPE html>
 <html lang="it">

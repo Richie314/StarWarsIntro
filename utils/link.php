@@ -2,8 +2,8 @@
 
 class Link
 {
-    public string $Url;
-    public string $Img;
+    public $Url;
+    public $Img;
     public string $Text;
     public function __construct($url, $img, $text)
     {

@@ -1,14 +1,14 @@
 <?php
-function random_float (float $min = 0, float $max = 1) : float
+function random_float (float $min = 0, float $max = 1) //: float
 {
     return ($min + lcg_value() * ($max - $min));
 }
-function random_percentage() : string
+function random_percentage() //: string
 {
     $number = random_float(0, 100);
     return sprintf("%.1f", $number) . "%";
 }
-function rand_int(int $min, int $max) : int
+function rand_int(int $min, int $max) //: int
 {
     if (function_exists('random_int'))
     {
@@ -16,7 +16,7 @@ function rand_int(int $min, int $max) : int
     }
     return rand($min, $max);
 }
-function random_password(int $length = 10) : string
+function random_password(int $length = 10) //: string
 {
     $alphabet = "abcdefghijklmnopqrstuvwxyz";
     $digits = "0123456789";

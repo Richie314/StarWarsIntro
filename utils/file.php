@@ -1,6 +1,6 @@
 <?php
 include_once "./utils/string.php";
-function ReadFullFile(string $path):string
+function ReadFullFile(string $path)
 {
     if (isEmpty($path))
     {
