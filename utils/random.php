@@ -10,10 +10,9 @@ function random_percentage() //: string
 }
 function rand_int($min, $max) //: int
 {
-    if (!is_int($min) || !is_int($max))
-    {
-        throw new InvalidArgumentException("min or max were not ints!");
-    }
+    $min = (int)$min;
+    $max = (int)$max;
+    
     if (function_exists('random_int'))
     {
         return random_int($min, $max);
