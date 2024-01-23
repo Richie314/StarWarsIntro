@@ -80,7 +80,7 @@ footer {
     padding: 0;
     display: block;
 }
-    .img > :is(svg, img, picture) {
+    .img > svg, .img > img, .img > picture {
         width: 100%;
         height: -moz-fit-content;
         height: fit-content;
@@ -205,14 +205,30 @@ h1, h2, h3, h4, h5, h6 {
     margin-inline: 1em;
     min-height: 1em;
 }
-    :is(h1, h2, h3, h4, h5, h6).aurebesh[data-content] {
+    h1.aurebesh[data-content], 
+    h2.aurebesh[data-content], 
+    h3.aurebesh[data-content], 
+    h4.aurebesh[data-content], 
+    h5.aurebesh[data-content], 
+    h6.aurebesh[data-content] {
         position: relative;
         content: ' ';
         display: inline-block;
         cursor: zoom-in;
     }
-        :is(h1, h2, h3, h4, h5, h6).aurebesh[data-content]::before,
-        :is(h1, h2, h3, h4, h5, h6).aurebesh[data-content]::after {
+        h1.aurebesh[data-content]::before, 
+        h2.aurebesh[data-content]::before, 
+        h3.aurebesh[data-content]::before, 
+        h4.aurebesh[data-content]::before, 
+        h5.aurebesh[data-content]::before, 
+        h6.aurebesh[data-content]::before,
+
+        h1.aurebesh[data-content]::after, 
+        h2.aurebesh[data-content]::after, 
+        h3.aurebesh[data-content]::after, 
+        h4.aurebesh[data-content]::after, 
+        h5.aurebesh[data-content]::after, 
+        h6.aurebesh[data-content]::after {
             content: attr(data-content);
             position: absolute;
             top: 0;
@@ -221,19 +237,39 @@ h1, h2, h3, h4, h5, h6 {
             height: 100%;
             transition: opacity .7s ease-in-out;
         }
-        :is(h1, h2, h3, h4, h5, h6).aurebesh[data-content]::before {
+        h1.aurebesh[data-content]::before, 
+        h2.aurebesh[data-content]::before, 
+        h3.aurebesh[data-content]::before, 
+        h4.aurebesh[data-content]::before, 
+        h5.aurebesh[data-content]::before, 
+        h6.aurebesh[data-content]::before {
             opacity: 1;
             font-family: 'Aurebesh';
         }
-        :is(h1, h2, h3, h4, h5, h6).aurebesh[data-content]::after {
+        h1.aurebesh[data-content]::after, 
+        h2.aurebesh[data-content]::after, 
+        h3.aurebesh[data-content]::after, 
+        h4.aurebesh[data-content]::after, 
+        h5.aurebesh[data-content]::after, 
+        h6.aurebesh[data-content]::after {
             opacity: 0;
             font-family: var(--main-font);
             text-transform: uppercase;
         }
-            :is(h1, h2, h3, h4, h5, h6).aurebesh[data-content]:hover::before {
+            h1.aurebesh[data-content]:hover::before, 
+            h2.aurebesh[data-content]:hover::before, 
+            h3.aurebesh[data-content]:hover::before, 
+            h4.aurebesh[data-content]:hover::before, 
+            h5.aurebesh[data-content]:hover::before, 
+            h6.aurebesh[data-content]:hover::before {
                 opacity: 0;
             }
-            :is(h1, h2, h3, h4, h5, h6).aurebesh[data-content]:hover::after {
+            h1.aurebesh[data-content]:hover::after, 
+            h2.aurebesh[data-content]:hover::after, 
+            h3.aurebesh[data-content]:hover::after, 
+            h4.aurebesh[data-content]:hover::after, 
+            h5.aurebesh[data-content]:hover::after, 
+            h6.aurebesh[data-content]:hover::after {
                 opacity: 1;
             }
 /*
@@ -483,15 +519,25 @@ textarea {
         user-select: none;
     }
     
-    .intro-form :is(textarea, input[type="text"], select, option) {
+    .intro-form textarea, .intro-form input[type="text"], 
+    .intro-form select, .intro-form option {
         color: var(--main-cl);
         font-family: var(--main-font);
         border: .2px solid;
         max-width: 100%;
     }
-        .intro-form :is(textarea, input[type="text"], select):is(:active, :focus, :focus-visible) {
+        .intro-form textarea:active, 
+        .intro-form textarea:focus, 
+        .intro-form textarea:focus-visible,
+        .intro-form input[type="text"]:active, 
+        .intro-form input[type="text"]:focus, 
+        .intro-form input[type="text"]:focus-visible,
+        .intro-form select:active, 
+        .intro-form select:focus, 
+        .intro-form select:focus-visible {
             outline: none;
         }
+        
     .intro-form input[type="text"] {
         background-color: transparent;
         height: 1.3em;
@@ -693,16 +739,25 @@ textarea {
     margin-bottom: .5em;
 }
 
-    :is(#dialog-close, #accept-cookie-btn, #share-btn, #share-close-btn):disabled {
+    #dialog-close:disabled, 
+    #accept-cookie-btn:disabled , 
+    #share-btn:disabled , 
+    #share-close-btn:disabled {
         pointer-events: none;
     }
 
-    :is(#dialog-close, #accept-cookie-btn, #share-btn, #share-close-btn):hover {
+    #dialog-close:hover, 
+    #accept-cookie-btn:hover, 
+    #share-btn:hover, 
+    #share-close-btn:hover {
         box-shadow: var(--main-cl) 0 6px 12px;
         transform: translateY(-3px);
     }
 
-    :is(#dialog-close, #accept-cookie-btn, #share-btn, #share-close-btn):active {
+    #dialog-close:active, 
+    #accept-cookie-btn:active, 
+    #share-btn.active, 
+    #share-close-btn:active {
         box-shadow: none;
         transform: translateY(0);
     }

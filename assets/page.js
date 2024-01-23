@@ -11,7 +11,7 @@ document.body.onscroll = () => {
     nav.classList.toggle('bg', pos > 5 - Math.floor(nav_rect.height));
 }
 // Discourage img copy by disabling right click
-const images = [...document.querySelectorAll('.no-ctx > :is(img, svg, picture)')];
+const images = [...document.querySelectorAll('.no-ctx > img, .no-ctx > svg, .no-ctx > picture')];
 images.forEach(img => img.oncontextmenu = e => e.preventDefault());
 
 //
