@@ -29,20 +29,20 @@ class Opening
     public $Episode;//string
     public $Content;//string|null
 
-    public OpeningLanguage $Language;
+    public $Language;
 
-    public string|null $Author;
-    public DateTime $Creation;
-    public DateTime|null $LastEdit;
+    public $Author;
+    public $Creation;
+    public $LastEdit;
     function __construct(
         int $id, 
         string $title, 
         string $episode, 
-        string|null $content, 
-        OpeningLanguage|string $lang, 
-        string|null $author,
-        DateTime|string|null $creation,
-        DateTime|string|null $lastEdit)
+        $content, 
+        $lang, 
+        $author,
+        $creation,
+        $lastEdit)
     {
         if (isEmpty($title) || isEmpty($episode))
         {
@@ -86,7 +86,15 @@ class Opening
 
         $this->Title = $title;
         $this->Episode = $episode;
+        if (isset($content) && !is_string($content))
+        {
+            throw new InvalidArgumentException("Invalid content", 500);
+        }
         $this->Content = $content; // Can be null
+        if (isset($author) && !is_string($author))
+        {
+            throw new InvalidArgumentException("Invalid content", 500);
+        }
         $this->Author = $author; // Can be null
     }
 
@@ -305,7 +313,7 @@ class Report
         int $id, 
         int $opening, 
         string $text, 
-        DateTime|string $creation,
+        $creation,
         bool $viewed = false,
         bool $problematic = false)
     {

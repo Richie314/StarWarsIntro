@@ -240,7 +240,7 @@ class Login
     public $Ip;
     public $Device;
     public function __construct(
-        User $user, DateTime|string $datetime, string $ip, string $dev)
+        User $user, $datetime, string $ip, string $dev)
     {
         if (!isset($user) || !isset($datetime))
         {
