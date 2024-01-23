@@ -1,11 +1,7 @@
 <?php
 function random_float ($min = 0, $max = 1) //: float
 {
-    if (!is_float($min) || !is_float($max))
-    {
-        throw new InvalidArgumentException("min or max were not floats!");
-    }
-    return ($min + lcg_value() * ($max - $min));
+    return ((float)$min + lcg_value() * ((float)$max - (float)$min));
 }
 function random_percentage() //: string
 {
