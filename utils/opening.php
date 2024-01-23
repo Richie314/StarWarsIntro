@@ -35,9 +35,9 @@ class Opening
     public $Creation;
     public $LastEdit;
     function __construct(
-        int $id, 
-        string $title, 
-        string $episode, 
+        $id, 
+        $title, 
+        $episode, 
         $content, 
         $lang, 
         $author,
@@ -109,7 +109,7 @@ class Opening
         return $this->Creation->format('Y-m-d H:i:s');
     }
 
-    private function PrepareUploadStatement(mysqli $db) //: mysqli_stmt
+    private function PrepareUploadStatement($db) //: mysqli_stmt
     {
         $lang = $this->Language->value;
         $creation = $this->getCreationDate();
@@ -155,7 +155,7 @@ class Opening
         return $stmt;
     }
 
-    public function Upload(mysqli $db) //: bool
+    public function Upload($db) //: bool
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
@@ -176,7 +176,7 @@ class Opening
         return true;
     }
 
-    static public function Load(mysqli $db, int $id) // : Opening|null
+    static public function Load($db, $id) // : Opening|null
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
@@ -200,7 +200,7 @@ class Opening
             $row['LastEdit']
         );
     }
-    static public function LoadBriefOfUser(mysqli $db, string $user) //: array
+    static public function LoadBriefOfUser($db, $user) //: array
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
@@ -234,7 +234,7 @@ class Opening
         return $array_to_return;
     }
 
-    static public function LoadOriginal(int $episode, OpeningLanguage $lang) //: Opening
+    static public function LoadOriginal($episode, OpeningLanguage $lang) //: Opening
     {
         if (!is_int($episode) || $episode < 1 || $episode > 9)
         {
@@ -280,20 +280,26 @@ class Opening
         );
         return $DefaultIntros[$this->Language->value];
     }
-    public static function Delete(mysqli $db, int $id, string $user, bool $is_admin) //:bool
+    public static function Delete($db, $id, $user, $is_admin) //:bool
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
             throw new InvalidArgumentException("db was not a mysqli object!", 500);
         }
+        if (!is_int($id))
+        {
+            throw new InvalidArgumentException("id was not int", 500);
+        }
+        $id = (int)$id;
         if ($id === 0)
         {
             return false;
         }
+        $user = (string)$user;
         // The intro can be deleted if the user owns it or if the user is an admin
         $query = "DELETE FROM `openings` WHERE `ID` = ? AND (`Author` = ? OR ?)";
         $stmt = $db->prepare($query);
-        $int_bool = $is_admin ? 1 : 0;
+        $int_bool = (bool)$is_admin ? 1 : 0;
         if (!$stmt || !$stmt->bind_param("isi", $id, $user, $int_bool))
         {
             return false;
@@ -310,18 +316,18 @@ class Report
     public $WasViewedByAdmin;
     public $IsProblematic;
     function __construct(
-        int $id, 
-        int $opening, 
-        string $text, 
+        $id, 
+        $opening, 
+        $text, 
         $creation,
-        bool $viewed = false,
-        bool $problematic = false)
+        $viewed = false,
+        $problematic = false)
     {
-        $this->ID = $id;
-        $this->Opening = $opening;
-        $this->Text = $text;
-        $this->WasViewedByAdmin = $viewed;
-        $this->IsProblematic = $problematic;
+        $this->ID = (int)$id;
+        $this->Opening = (int)$opening;
+        $this->Text = isset($text) ? (string)$text : null;
+        $this->WasViewedByAdmin = (bool)$viewed;
+        $this->IsProblematic = (bool)$problematic;
         if ($creation instanceof DateTime)
         {
             $this->Creation = $creation;
@@ -330,11 +336,15 @@ class Report
         }
     }
 
-    static function MakeNew(mysqli $db, int $opening, string $text) //: Report|false
+    static function MakeNew($db, $opening, $text) //: Report|false
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
             throw new InvalidArgumentException("db was not a mysqli object!", 500);
+        }
+        if (!is_int($opening))
+        {
+            throw new InvalidArgumentException("opening was not int!", 500);
         }
         $stmt = $db->prepare('INSERT INTO `report` (`Opening`, `Text`) VALUES (?, ?)');
         if (!$stmt || !$stmt->bind_param('is', $opening, $text))

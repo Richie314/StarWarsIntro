@@ -7,10 +7,10 @@ class User
     public $Email;
     public $Admin;
     public function __construct(
-        string $id,
-        string $hash,
-        string $email,
-        bool $is_admin = false
+        $id,
+        $hash,
+        $email,
+        $is_admin = false
     )
     {
         if (isEmpty($id))
@@ -23,10 +23,10 @@ class User
         }
         $this->ID = $id;
         $this->Password = $hash;
-        $this->Email = $email;
+        $this->Email = (string)$email;
         $this->Admin = $is_admin;
     }
-    public function checkPassword(string $plain_text_password) //: bool
+    public function checkPassword($plain_text_password) //: bool
     {
         if (isEmpty($this->ID) || isEmpty($this->Password) || isEmpty($plain_text_password))
         {
@@ -34,7 +34,7 @@ class User
         }
         return password_verify($plain_text_password, $this->Password);
     }
-    public static function Load(mysqli $db, string $id) //: User|null
+    public static function Load($db, $id) //: User|null
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
@@ -64,7 +64,7 @@ class User
         );
     }
 
-    public static function InactiveUsers(mysqli $db) //: array
+    public static function InactiveUsers($db) //: array
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
@@ -85,11 +85,11 @@ class User
     }
 
     public static function Create(
-        mysqli $db, 
-        string $id, 
-        string $plain_text_password, 
-        string $email, 
-        bool $is_admin = false) //: bool
+        $db, 
+        $id, 
+        $plain_text_password, 
+        $email, 
+        $is_admin = false) //: bool
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
@@ -104,27 +104,31 @@ class User
         return $user->Upload($db);
     }
 
-    private function Upload(mysqli $db) //: bool
+    private function Upload($db) //: bool
     {
         $query = "INSERT INTO `users` (`ID`, `Password`, `Email`, `Admin`) VALUES (?, ?, ?, ?)";
         return $this->UploadOrUpdate($db, $query);
     }
-    public function Update(mysqli $db) //: bool
+    public function Update($db) //: bool
     {
         $query = "REPLACE INTO `users` (`ID`, `Password`, `Email`, `Admin`) VALUES (?, ?, ?, ?)";
         return $this->UploadOrUpdate($db, $query);
     }
-    private function UploadOrUpdate(mysqli $db, string $query) //: bool
+    private function UploadOrUpdate($db, $query) //: bool
     {
+        if (isEmpty($query))
+        {
+            return false;
+        }
         $stmt = $db->prepare($query);
+        $is_admin = (bool)$this->Admin ? 1 : 0;
         if (!$stmt || !$stmt->bind_param('sssi', $this->ID, $this->Password, $this->Email, $is_admin))
         {
             return false;
         }
-        $is_admin = $this->Admin ? 1 : 0;
         return (bool)$stmt->execute() && $stmt->affected_rows >= 1;
     }
-    public function Log(mysqli $db) //: bool
+    public function Log($db) //: bool
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
@@ -176,7 +180,7 @@ class User
             "<small>Ti preghiamo di non rispondere a questa email</small>";
         return $this->SendEmail($subject, $message);
     }
-    public function ResetPassword(mysqli $db) //: bool
+    public function ResetPassword($db) //: bool
     {
         if (isEmpty($this->ID))
         {
@@ -214,7 +218,7 @@ class User
     {
         return htmlspecialchars(str_replace(array("'", "\"", "\r", "\n", "\t"), "", $this->ID));
     }
-    public static function Delete(mysqli $db, string $username) //: bool
+    public static function Delete($db, $username) //: bool
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
@@ -240,7 +244,7 @@ class Login
     public $Ip;
     public $Device;
     public function __construct(
-        User $user, $datetime, string $ip, string $dev)
+        User $user, $datetime, $ip, $dev)
     {
         if (!isset($user) || !isset($datetime))
         {
@@ -256,7 +260,7 @@ class Login
         $this->Device = $dev;
     }
 
-    public static function RecentLogs(mysqli $db) //: array
+    public static function RecentLogs($db) //: array
     {
         if (!isset($db) || !($db instanceof mysqli))
         {

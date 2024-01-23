@@ -36,7 +36,7 @@ function RedirectToLogin()
     exit;
 }
 
-function RedirectToError(string $err = NULL)
+function RedirectToError($err = NULL)
 {
     if (isEmpty($err))
         header("Location: ./error.php");

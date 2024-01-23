@@ -5,7 +5,9 @@
  */
 function isEmpty($str) //: bool
 {
-    return !(isset($str) && (strlen(trim($str)) > 0));
+    if (!isset($str) || !is_string($str))
+        return true;
+    return strlen(trim($str)) > 0;
 }
 /**
  * Returns client's ip4 string
