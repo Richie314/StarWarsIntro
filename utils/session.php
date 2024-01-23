@@ -3,7 +3,7 @@ include_once "./utils/no-warning.php";
 include_once "./utils/string.php";
 include_once "./utils/user.php";
 include_once "./utils/db.php";
-session_start();
+session_start(); // Session automatic handling done in .htaccess
 
 function LogOut()
 {
