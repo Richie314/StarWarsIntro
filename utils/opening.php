@@ -49,7 +49,7 @@ class Opening
             throw new InvalidArgumentException("Invalid params", 500);
         }
 
-        if (is_int($id) && $id !== 0)
+        if ($id !== 0)
         {
             $this->ID = (int)$id;
         } else {
@@ -220,7 +220,7 @@ class Opening
         while ($row = $result->fetch_assoc())
         {
             $current_element = new Opening(
-                $row['ID'],
+                (int)$row['ID'],
                 $row['Title'],
                 '?',
                 null,

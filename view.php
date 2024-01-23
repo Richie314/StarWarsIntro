@@ -64,8 +64,8 @@
 <html lang="<?= $opening->Language->value ?>">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <?php if (!isEmpty($opening->Author)) { ?>
         <meta name="author" content="<?= htmlspecialchars($opening->Author) ?>">
@@ -121,16 +121,19 @@
 
         <!-- Intro part -->
         <section class="intro">
+            <h3 class="hidden"> Intro </h3>
             <?= $opening->getIntro() ?>
         </section>
 
         <!-- Star wars logo svg. Do not copy -->
         <section class="logo">
+            <h3 class="hidden"> Logo </h3>
             <?php include "./assets/img/starwarslogo.svg"; ?>
         </section>
 
         <!-- Text parts -->
         <article id="board">
+            <h3 class="hidden"> Board </h3>
             <div id="content">
                 <p id="episode">
                     <?= $opening->Episode ?>
@@ -182,7 +185,7 @@
         <!-- Stars for the background -->
         <?php include "./parts/stars.php" ?>
     </main>
-    <script type="text/javascript">
+    <script>
         'use strict';
         // Restart the page (reload) and share
         const reloadBtn = document.getElementById('restart');
