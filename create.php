@@ -109,15 +109,13 @@
                     </option>
                 </select>
 
-                <div class="span-2">
-                    <br>
+                <div class="span-2 grid" style="grid-template-columns: 1fr; gap: 1.5em">
                     <label for="content" class="center" style="font-size: larger">
                         Testo qui:
                     </label>
-                    <br>
-                    <textarea maxlength="2048"
+                    <textarea maxlength="550"
                         name="content" id="content" 
-                        cols="30" rows="17"
+                        cols="34" rows="20"
                         placeholder="Vai a capo due volte per dividere in paragrafi"
                         spellcheck="true" tabindex="3"><?= isEmpty($opening->Content) ? "" : htmlentities($opening->Content) ?></textarea>
                     <br>

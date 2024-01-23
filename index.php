@@ -68,9 +68,9 @@
                     target="_blank" title="Apri in altra scheda">Figma<i class="icon figma"></i></a>
             </p>
             <p>
-                <a href="http://jigsaw.w3.org/css-validator/check/referer">
+                <a href="https://jigsaw.w3.org/css-validator/check/referer" referrerpolicy="no-referrer-when-downgrade" target="_blank">
                     <img style="border:0;width:88px;height:31px" 
-                        src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+                        src="https://jigsaw.w3.org/css-validator/images/vcss-blue"
                         alt="CSS Valido!">
                 </a>
             </p>

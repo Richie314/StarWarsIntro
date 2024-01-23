@@ -498,9 +498,11 @@ textarea {
         padding: .15em 1em .15em .2em;
     }
     .intro-form textarea {
-        width: 100%;
-        color: var(--main-cl);
+        margin-inline: auto;
         background-color: transparent;
+        overflow-y: hidden;
+        text-align: justify;
+        font-size: 1.3em;
     }
         .intro-form textarea::selection {
             color: var(--main-bg);
