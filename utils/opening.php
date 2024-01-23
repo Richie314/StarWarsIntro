@@ -354,12 +354,13 @@ class Report
         }
         return new Report((int)$db->insert_id, $opening, $text, new DateTime());
     }
-    static function Load(mysqli $db, int $id) //: Report|null
+    static function Load($db, $id) //: Report|null
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
             throw new InvalidArgumentException("db was not a mysqli object!", 500);
         }
+        $id = (int)$id;
         $query = "SELECT * FROM `report` WHERE `ID` = $id";
         $result = $db->query($query);
         if (!$result || !$result->num_rows !== 1)
@@ -378,7 +379,7 @@ class Report
             (bool)$row["Viewed"],
             (bool)$row["Problematic"]);
     }
-    static function LoadUnViewed(mysqli $db) //: array
+    static function LoadUnViewed($db) //: array
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
@@ -404,13 +405,14 @@ class Report
         return $arr;
     }
 
-    static function SetProblematic(mysqli $db, int $id) //: bool
+    static function SetProblematic($db, $id) //: bool
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
             throw new InvalidArgumentException("db was not a mysqli object!", 500);
         }
         $query = "UPDATE `report` SET `Problematic` = b'1' WHERE `ID` = ?";
+        $id = (int)$id;
         $stmt = $db->prepare($query);
         if (!$stmt || !$stmt->bind_param('i', $id))
         {
@@ -418,12 +420,13 @@ class Report
         }
         return $stmt->execute() && $stmt->affected_rows === 1;
     }
-    static function SetViewed(mysqli $db, int $id) //: bool
+    static function SetViewed($db, $id) //: bool
     {
         if (!isset($db) || !($db instanceof mysqli))
         {
             throw new InvalidArgumentException("db was not a mysqli object!", 500);
         }
+        $id = (int)$id;
         $query = "UPDATE `report` SET `Viewed` = b'1' WHERE `ID` = ?";
         $stmt = $db->prepare($query);
         if (!$stmt || !$stmt->bind_param('i', $id))
