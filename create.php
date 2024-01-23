@@ -41,7 +41,7 @@
             $opening->Title = $_POST["title"];
             $opening->Episode = $_POST["episode"];
             $opening->Content = isEmpty($_POST["content"]) || !is_string($_POST["content"]) ? null : $_POST["content"];
-            $opening->Language = Opening::StringToLanguage($_POST["lang"]);
+            $opening->Language = new OpeningLanguage($_POST["lang"]);
             if ($opening->Upload($db))
             {
                 header("Location: ./create.php?id=$opening->ID&action=edited");
@@ -101,10 +101,10 @@
                     Lingua:
                 </label>
                 <select id="lang" name="lang" tabindex="2" title="Scegli la lingua">
-                    <option value="<?= OpeningLanguage::$Italian->value ?>" <?= $opening->Language === OpeningLanguage::$Italian ? "selected" : "" ?>>
+                    <option value="<?= OpeningLanguage::$Italian ?>" <?= $opening->Language->value === OpeningLanguage::$Italian ? "selected" : "" ?>>
                         Italiano
                     </option>
-                    <option value="<?= OpeningLanguage::$English->value ?>" <?= $opening->Language === OpeningLanguage::$English ? "selected" : "" ?>>
+                    <option value="<?= OpeningLanguage::$English ?>" <?= $opening->Language->value === OpeningLanguage::$English ? "selected" : "" ?>>
                         Inglese
                     </option>
                 </select>

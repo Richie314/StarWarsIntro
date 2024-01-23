@@ -23,10 +23,10 @@
         {
             throw new Exception("Risorsa non trovata", 404);
         }
-        $lang = OpeningLanguage::$Italian;
+        $lang = new OpeningLanguage(OpeningLanguage::$Italian);
         if (!isEmpty($_GET["lang"]) && is_string($_GET["lang"]))
         {
-            $lang = Opening::StringToLanguage($_GET["lang"]);
+            $lang = new OpeningLanguage($_GET["lang"]);
         }
         $opening = Opening::LoadOriginal($original, $lang);
     } else {
@@ -45,7 +45,7 @@
         
         if (!isEmpty($_GET["lang"]) && is_string($_GET["lang"]))
         {
-            $opening->Language = Opening::StringToLanguage($_GET["lang"]);
+            $opening->Language = new OpeningLanguage($_GET["lang"]);
         }
     }
 

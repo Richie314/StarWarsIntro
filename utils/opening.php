@@ -10,12 +10,16 @@ enum OpeningLanguage : string
 */
 class OpeningLanguage
 {
-    static $Italian = new OpeningLanguage("it");
-    static $English = new OpeningLanguage("en");
+    static $Italian = "it";
+    static $English = "en";
     public $value;
     function __construct($str)
     {
         $this->value = (string)$str;
+        if ($this->value !== "it" && $this->value !== "en")
+        {
+            throw new InvalidArgumentException("Invalid language", 500);
+        }
     }
 }
 class Opening
@@ -30,18 +34,6 @@ class Opening
     public string|null $Author;
     public DateTime $Creation;
     public DateTime|null $LastEdit;
-    static function StringToLanguage(string $lang)// : OpeningLanguage
-    {
-        switch ($lang)
-        {
-            case OpeningLanguage::$English->value:
-                return OpeningLanguage::$English;
-            case OpeningLanguage::$Italian->value:
-                return OpeningLanguage::$Italian;
-            default:
-                throw new InvalidArgumentException("Invalid language", 500);
-        } 
-    }
     function __construct(
         int $id, 
         string $title, 
@@ -68,7 +60,7 @@ class Opening
         {
             $this->Language = $lang;
         } elseif (is_string($lang)) {
-            $this->Language = $this::StringToLanguage($lang);
+            $this->Language = new OpeningLanguage($lang);
         } else {
             throw new InvalidArgumentException("lang was invalid!", 500);
         }
@@ -275,8 +267,8 @@ class Opening
     public function getIntro() //:string
     {
         $DefaultIntros = array(
-            OpeningLanguage::$Italian->value => "Tanto tempo fa in una galassia lontana,<br>lontana...",
-            OpeningLanguage::$English->value => "A long time ago in a galaxy far,<br>far away...",
+            OpeningLanguage::$Italian => "Tanto tempo fa in una galassia lontana,<br>lontana...",
+            OpeningLanguage::$English => "A long time ago in a galaxy far,<br>far away...",
         );
         return $DefaultIntros[$this->Language->value];
     }
