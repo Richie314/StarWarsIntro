@@ -16,7 +16,7 @@ function ErrorToErrorPage($errno, $errstr, $errfile, $errline)
     exit;
 }
 set_error_handler("ErrorToErrorPage", E_STRICT);
-function ExceptionToErrorPage(Error|Exception $ex)
+function ExceptionToErrorPage(Exception $ex)
 {
     if (!isset($ex))
     {   
