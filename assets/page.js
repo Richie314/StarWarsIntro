@@ -157,3 +157,22 @@ async function ajax(params = null, path = './ajax.php')
     }
     return res['esit'];
 }
+
+//
+// Dialog element missing fallback
+//
+
+const dialogs = [...document.querySelectorAll('dialog')];
+dialogs.forEach(dialog => {
+    if (!('showModal' in dialog))
+    {
+        dialog.showModal = () => {
+            dialog.style.position = 'fixed';
+            dialog.style.display = 'block';
+            dialog.style.left = '50%';
+            dialog.style.top = '50%';
+            dialog.style.transform = 'translate(-50%, -50%)';
+        };
+        dialog.close = () => dialog.style.display = 'none';
+    }
+})
