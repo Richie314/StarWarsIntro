@@ -23,7 +23,12 @@ if (!CSS.supports('aspect-ratio', '1 / 1'))
      * @type {HTMLElement[]}
      */
     const targetsX = [...document.querySelectorAll('[data-aspect-ratio]')];
-    targetsX.forEach(elem => elem.style.height = String(elem.clientWidth / Number(elem.getAttribute('data-aspect-ratio'))) + 'px');
+    if (window.requestAnimationFrame)
+    {
+        requestAnimationFrame(() => targetsX.forEach(elem => elem.style.height = String(elem.clientWidth / Number(elem.getAttribute('data-aspect-ratio'))) + 'px'));
+    } else {
+        targetsX.forEach(elem => elem.style.height = String(elem.clientWidth / Number(elem.getAttribute('data-aspect-ratio'))) + 'px');
+    }
     window.addEventListener('resize', () => {
         targetsX.forEach(elem => {
             try {
