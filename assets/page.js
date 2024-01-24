@@ -15,6 +15,22 @@ const images = [...document.querySelectorAll('.no-ctx > img, .no-ctx > svg, .no-
 images.forEach(img => img.oncontextmenu = e => e.preventDefault());
 
 //
+//  Emulate css's aspect-ratio if missing
+//
+if (!CSS.supports('aspect-ratio', '1 / 1'))
+{
+    /**
+     * @type {HTMLElement[]}
+     */
+    const targets = [...document.querySelectorAll('[data-aspect-ratio]')];
+    targets.forEach(elem => {
+        elem.clientHeight = elem.clientWidth / Number(elem.getAttribute('data-aspect-ratio'));
+        elem.parentElement.addEventListener('resize', 
+            () => elem.clientHeight = elem.clientWidth / Number(elem.getAttribute('data-aspect-ratio')));
+    });
+}
+
+//
 //  Sharing checks
 //
 

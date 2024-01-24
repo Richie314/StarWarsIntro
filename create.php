@@ -130,12 +130,13 @@
                         Ecco un'anteprima della intro che stai creando:
                     </h2>
                 </div>
-                <div class="tv span-2">
+                <div class="tv span-2" data-aspect-ratio="1.17834395">
                     <iframe src="./view.php" allowfullscreen id="tv"
                         width="1600" height="900" title="Anteprima"
-                        loading="lazy" sandbox="allow-scripts">
+                        loading="lazy" sandbox="allow-scripts"
+                        data-aspect-ratio="1.7777777">
                     </iframe>
-                    <button type="button" id="reload-tv" title="Riavvia" class="tv-control">
+                    <button type="button" id="reload-tv" title="Riavvia" class="tv-control" data-aspect-ratio="1">
 
                     </button>
                 </div>

@@ -43,7 +43,7 @@
                 Spiega cosa c'è che non va:
             </label>
             <br>
-            <textarea style="width: calc(100% - 2em); margin-inline: auto;"
+            <textarea style="width: calc(100% - 2em); margin-inline-start: auto; margin-inline-end: auto;"
                 name="text" id="text" 
                 cols="15" rows="17" required
                 placeholder="Esempio: linguaggio scurrile"

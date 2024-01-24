@@ -42,7 +42,7 @@
             <div class="img no-ctx" style="max-width: 350px">
                 <img src="./assets/img/benkenobi.svg" alt="Obi wan kenobi" title="Questa non è la pagina che stai cercando">
             </div>
-            <p class="justify" style="max-width: 500px; margin-inline: auto;">
+            <p class="justify" style="max-width: 500px; margin-inline-start: auto; margin-inline-end: auto;">
                 Prova a controllare l'url digitato. Se stavi cercando un'intro è possibile che questa sia stata cancellata 
                 dopo una segnalazione perché conteneva linguaggio scurrile o altro testo non permesso.
                 <br><br>
@@ -61,7 +61,7 @@
                     Codice errore: <?= $code ?>
                 </h3>
             <?php } ?>
-            <p class="justify" style="max-width: 500px; margin-inline: auto;">
+            <p class="justify" style="max-width: 500px; margin-inline-start: auto; margin-inline-end: auto;">
                 Ci scusiamo per il disagio.
                 <br><br>
                 Non aspettare qui, prova ad <a href="./" class="link" target="_self">andare alla pagina principale</a>

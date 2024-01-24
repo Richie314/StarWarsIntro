@@ -15,7 +15,7 @@
         <div class="img no-ctx">
             <?php include "./assets/sitelogo.svg"; ?>
         </div>
-        <article style="max-width: 500px; padding: 1em; margin-inline: auto;">
+        <article style="max-width: 500px; padding: 1em; margin-inline-start: auto; margin-inline-end: auto;">
             <h3>
                 Hai mai voluto ricreare le intro di Star Wars?
             </h3>
