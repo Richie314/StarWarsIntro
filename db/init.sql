@@ -232,9 +232,8 @@ INSERT INTO `report` (`ID`, `Opening`, `Text`, `Creation`, `Viewed`, `Problemati
 (1, 2, 'boh', '2024-01-14 13:13:15', b'1', b'0'),
 (2, 5, 'Linguaggio inaccettabile', '2024-01-15 10:28:17', b'0', b'0');
 
-
-COMMIT;
-
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+COMMIT;

@@ -933,6 +933,9 @@ summary {
     summary::marker {
         content: '';
     }
+    summary::-webkit-detais-marker {
+        display: none;
+    }
     summary:not(.no-marker)::before {
         position: absolute;
         top: 0;
