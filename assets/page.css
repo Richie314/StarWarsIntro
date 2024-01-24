@@ -43,11 +43,13 @@ nav {
     margin-top: 3em;
     width: calc(100% - 0.7em);
     max-width: 800px;
-    margin-inline: auto;
+    /*margin-inline: auto;*/
+    margin-inline-start: auto; margin-inline-end: auto;
 }
     .body.center {
-        display: grid;
-        place-items: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 footer {
     margin-bottom: 0;
@@ -74,7 +76,8 @@ footer {
 .img {
     width: 90%;
     max-width: 400px;
-    margin-inline: auto;
+    /*margin-inline: auto;*/
+    margin-inline-start: auto; margin-inline-end: auto;
     height: auto;
     overflow: hidden;
     padding: 0;
@@ -82,8 +85,7 @@ footer {
 }
     .img > svg, .img > img, .img > picture {
         width: 100%;
-        height: -moz-fit-content;
-        height: fit-content;
+        height: auto;
     }
 
 /*
@@ -109,7 +111,8 @@ hr {
     width: 90%;
     min-width: 200px;
     max-width: 600px;
-    margin-inline: auto;
+    /*margin-inline: auto;*/
+    margin-inline-start: auto; margin-inline-end: auto;
 }
 /*
     Links
@@ -202,7 +205,8 @@ h1, h2, h3, h4, h5, h6 {
     cursor: auto;
     font-family: var(--main-font);
     width: calc(100% - 2em);
-    margin-inline: 1em;
+    /*margin-inline: 1em;*/
+    margin-inline-start: 1em; margin-inline-end: 1em;
     min-height: 1em;
 }
     h1.aurebesh[data-content], 
@@ -487,7 +491,8 @@ h1, h2, h3, h4, h5, h6 {
     .form button {
         cursor: pointer;
         width: 75%;
-        margin-inline: 12.5%;
+        /*margin-inline: 12.5%;*/
+        margin-inline-start: 12.5%; margin-inline-end: 12.5%;
         font-size: 1.3em;
         color: var(--main-cl);
         background-color: var(--main-bg);
@@ -544,7 +549,8 @@ textarea {
         padding: .15em 1em .15em .2em;
     }
     .intro-form textarea {
-        margin-inline: auto;
+        /*margin-inline: auto;*/
+        margin-inline-start: auto; margin-inline-end: auto;
         background-color: transparent;
         overflow-y: hidden;
         text-align: justify;
@@ -584,9 +590,11 @@ textarea {
         will-change: transform;
 
         width: 100%;
-        margin-inline: 0;
+        /*margin-inline: 0;*/
+        margin-inline-start: 0; margin-inline-end: 0;
 
-        margin-block: .3em;
+        /*margin-block: .3em;*/
+        margin-block-start: .3em; margin-block-end: .3em;
         min-height: 2.1em;
         
         position: relative;
@@ -636,8 +644,10 @@ textarea {
 
     width: 100%;
     max-width: 600px;
-    margin-inline: auto;
-    margin-block: .5em;
+    /*margin-inline: auto;*/
+    margin-inline-start: auto; margin-inline-end: auto;
+    /*margin-block: .5em;*/
+    margin-block-start: .5em; margin-block-end: .5em;
     height: auto;
 
     position: relative;
@@ -711,7 +721,8 @@ textarea {
 
     width: 100%;
     height: 2em;
-    margin-block: .7em;
+    /*margin-block: .7em;*/
+    margin-block-start: .7em; margin-block-end: .7em;
 
     background-color: var(--main-bg);
     padding: .15em 1em .15em .2em;
@@ -734,7 +745,8 @@ textarea {
     transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
 
     width: 80%;
-    margin-inline: 10%;
+    /*margin-inline: 10%;*/
+    margin-inline-start: 10%; margin-inline-end: 10%;
     height: 2.3em;
     margin-bottom: .5em;
 }
@@ -769,7 +781,8 @@ textarea {
 
     width: 90%;
     max-width: 600px;
-    margin-inline: auto;
+    /*margin-inline: auto;*/
+    margin-inline-start: auto; margin-inline-end: auto;
     overflow-x: hidden;
 
     height: -moz-fit-content;
@@ -854,7 +867,7 @@ span.aurebesh[data-content] {
 */
 .star {
     width: 1.5px;
-    aspect-ratio: 1 / 1;
+    height: 1.5px;
     background-color: rgba(249, 251, 242, 0.8);
     z-index: -1;
     position: fixed;
@@ -864,6 +877,7 @@ span.aurebesh[data-content] {
 
     .star.star-big {
         width: 4px;
+        height: 4px;
     }
 
 /*
@@ -895,7 +909,8 @@ details {
     }
         details > div > p {
             margin-block-start: 0;
-            margin-inline: 1.3em;
+            /*margin-inline: 1.3em;*/
+            margin-inline-start: 1.3em; margin-inline-end: 1.3em;
         }
 summary {
     position: relative;

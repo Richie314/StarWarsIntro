@@ -70,20 +70,21 @@ body {
     aspect-ratio: 16 / 9 !important;
     position: relative;
     width: 100vw;
-    height: auto;
+    height: calc(9 / 16 * 100vw);
     font-size: 1.15vw;
     background-color: transparent;
     --percentageOfHeight: calc(100vw / 1600 * 9);
-    margin-inline: 0;
+    /*margin-inline: 0;*/
     /*margin-block: calc(50vh - 50 * var(--percentageOfHeight)) auto;*/
-    margin-block: calc(50vh - 5000vw / 1600 * 9) auto;
+    /*margin-block: calc(50vh - 5000vw / 1600 * 9) auto;*/
+    margin: calc(50vh - 5000vw / 1600 * 9) 0 auto 0;
 }
 @media screen and (min-aspect-ratio: 16 / 9) {
     /*
         Keep all horizontal and in proportion
     */
     #screen {
-        width: auto;
+        width: calc(16 / 9 * 100vh);
         height: 100vh;
         margin: 0 auto 0 auto;
         font-size: 2.3vh;
@@ -231,7 +232,8 @@ body {
 
     width: 100%;
     max-width: 600vw;
-    margin-inline: auto;
+    /*margin-inline: auto;*/
+    margin-inline-start: auto; margin-inline-end: auto;
     overflow-x: hidden;
 
     height: auto;
@@ -264,7 +266,8 @@ body {
     gap: 1em;
 
     width: 100%;
-    margin-inline: 0;
+    /*margin-inline: 0;*/
+    margin-inline-start: 0; margin-inline-end: 0;
     height: auto;
 
     overflow: hidden;
@@ -279,7 +282,8 @@ body {
     font-size: x-large;
 
     width: 85%;
-    margin-inline: auto;
+    /*margin-inline: auto;*/
+    margin-inline-start: auto; margin-inline-end: auto;
 }
 
 /*
@@ -287,7 +291,7 @@ body {
 */
 .star {
     width: 1.5px;
-    aspect-ratio: 1 / 1;
+    height: 1.5px;
     border: none;
     border-radius: 50%;
     background-color: rgba(249, 251, 242, 0.8);
@@ -297,4 +301,5 @@ body {
 
     .star.star-big {
         width: 4px;
+        height: 4px;
     }
