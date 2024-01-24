@@ -250,7 +250,7 @@ class Opening
         //echo $content;
         if (!isset($obj))
         {
-            throw new JsonException(json_last_error_msg(), 500);
+            throw new Exception(json_last_error_msg(), 500);
         }
         $path2 = $obj['path'];
         $body = ReadFullFile("./preload/$lang_str/Body/$path2");
