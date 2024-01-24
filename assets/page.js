@@ -22,11 +22,20 @@ if (!CSS.supports('aspect-ratio', '1 / 1'))
     /**
      * @type {HTMLElement[]}
      */
-    const targets = [...document.querySelectorAll('[data-aspect-ratio]')];
-    targets.forEach(elem => {
-        elem.clientHeight = elem.clientWidth / Number(elem.getAttribute('data-aspect-ratio'));
+    const targetsX = [...document.querySelectorAll('[data-aspect-ratio]')];
+    targetsX.forEach(elem => {
+        elem.style.height = String(elem.clientWidth / Number(elem.getAttribute('data-aspect-ratio'))) + 'px';
         elem.parentElement.addEventListener('resize', 
-            () => elem.clientHeight = elem.clientWidth / Number(elem.getAttribute('data-aspect-ratio')));
+            () => elem.style.height = String(elem.clientWidth / Number(elem.getAttribute('data-aspect-ratio'))) + 'px');
+    });
+    /**
+     * @type {HTMLElement[]}
+     */
+    const targetsY = [...document.querySelectorAll('[data-inverse-aspect-ratio]')];
+    targetsY.forEach(elem => {
+        elem.style.width = String(elem.clientHeight * Number(elem.getAttribute('data-inverse-aspect-ratio'))) + 'px';
+        elem.parentElement.addEventListener('resize', 
+            () => elem.style.width = String(elem.clientHeight * Number(elem.getAttribute('data-inverse-aspect-ratio'))) + 'px');
     });
 }
 
