@@ -23,19 +23,29 @@ if (!CSS.supports('aspect-ratio', '1 / 1'))
      * @type {HTMLElement[]}
      */
     const targetsX = [...document.querySelectorAll('[data-aspect-ratio]')];
-    targetsX.forEach(elem => {
-        elem.style.height = String(elem.clientWidth / Number(elem.getAttribute('data-aspect-ratio'))) + 'px';
-        elem.parentElement.addEventListener('resize', 
-            () => elem.style.height = String(elem.clientWidth / Number(elem.getAttribute('data-aspect-ratio'))) + 'px');
+    targetsX.forEach(elem => elem.style.height = String(elem.clientWidth / Number(elem.getAttribute('data-aspect-ratio'))) + 'px');
+    window.addEventListener('resize', () => {
+        targetsX.forEach(elem => {
+            try {
+                elem.style.height = String(elem.clientWidth / Number(elem.getAttribute('data-aspect-ratio'))) + 'px';
+            } catch (err) {
+                console.warn(err);
+            }
+        });
     });
     /**
      * @type {HTMLElement[]}
      */
     const targetsY = [...document.querySelectorAll('[data-inverse-aspect-ratio]')];
-    targetsY.forEach(elem => {
-        elem.style.width = String(elem.clientHeight * Number(elem.getAttribute('data-inverse-aspect-ratio'))) + 'px';
-        elem.parentElement.addEventListener('resize', 
-            () => elem.style.width = String(elem.clientHeight * Number(elem.getAttribute('data-inverse-aspect-ratio'))) + 'px');
+    targetsY.forEach(elem => elem.style.width = String(elem.clientHeight * Number(elem.getAttribute('data-inverse-aspect-ratio'))) + 'px');
+    window.addEventListener('resize', () => {
+        targetsY.forEach(elem => {
+            try {
+                elem.style.width = String(elem.clientHeight * Number(elem.getAttribute('data-inverse-aspect-ratio'))) + 'px';
+            } catch (err) {
+                console.warn(err);
+            }
+        });
     });
 }
 
