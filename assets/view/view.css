@@ -55,6 +55,7 @@ body {
 .loader {
     width: 80px;
     aspect-ratio: 1 / 1;
+    height: 80px;
     border-radius: 50%;
     border: 8px solid;
     border-color: #ffe478 #ffff2d00;
