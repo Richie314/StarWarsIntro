@@ -76,9 +76,9 @@ if (tv && episodeInput && titleInput && langInput && contentInput) {
 const tvObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
         entry.target.classList.toggle('visible', entry.intersectionRatio > 0.5);
-        if (entry.target.hasAttribute('preloaded-src'))
+        if (entry.target.hasAttribute('data-preloaded-src'))
         {
-            SetTvSrc(entry.target.getAttribute('preloaded-src'));
+            SetTvSrc(entry.target.getAttribute('data-preloaded-src'));
         }
     });
 }, {
