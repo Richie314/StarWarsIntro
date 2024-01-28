@@ -58,7 +58,7 @@
                         Modifica <i class="edit"></i>
                     </a>
                     &nbsp; -
-                    <a href="javascript:DeleteIntro(<?= $intro->ID ?>)"
+                    <a onclick="DeleteIntro(<?= $intro->ID ?>)"
                         title="Elimina" class="link">
                         Elimina <i class="delete"></i>
                     </a>

@@ -62,7 +62,7 @@
                             </summary>
                             <div>
                                 <?php if (!$report->IsProblematic) { ?>
-                                    <a href="javascript:SetProblematic(<?= $report->ID ?>)" class="link">
+                                    <a onclick="SetProblematic(<?= $report->ID ?>)" class="link">
                                         Segna come problematica
                                     </a>
                                 <?php } ?>
@@ -110,7 +110,7 @@
                             </a>
                         <?php } ?>
                         &rarr;
-                        <a href="javascript:DeleteUser('<?= $user->SafeID() ?>')" class="link">
+                        <a onclick="DeleteUser('<?= $user->SafeID() ?>')" class="link">
                             Cancella <i class="icon delete"></i>
                         </a>
                     </li>
