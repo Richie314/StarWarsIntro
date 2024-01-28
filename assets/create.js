@@ -35,6 +35,8 @@ const submitBtn = document.getElementById('submit');
  */
 const refreshTvBtn = document.getElementById('reload-tv');
 
+const PRELOADED_SRC = 'data-preloaded-src';
+
 function UpdateTvSrc()
 {
     const base = './view.php?';
@@ -76,9 +78,9 @@ if (tv && episodeInput && titleInput && langInput && contentInput) {
 const tvObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
         entry.target.classList.toggle('visible', entry.intersectionRatio > 0.5);
-        if (entry.target.hasAttribute('data-preloaded-src'))
+        if (entry.target.hasAttribute(PRELOADED_SRC))
         {
-            SetTvSrc(entry.target.getAttribute('data-preloaded-src'));
+            SetTvSrc(entry.target.getAttribute(PRELOADED_SRC));
         }
     });
 }, {
@@ -98,14 +100,14 @@ if (refreshTvBtn) {
 function SetTvSrc(src) {
     if (tv.classList.contains('visible'))
     {
-        tv.removeAttribute('preloaded-src');
+        tv.removeAttribute(PRELOADED_SRC);
         if (tv.src !== src) {
             tv.src = src;// Load the new page if it's different
         }
         return;
     } 
     // Iframe not visible: don't load it yet
-    tv.setAttribute('preloaded-src', src);
+    tv.setAttribute(PRELOADED_SRC, src);
 }
 
 /**
