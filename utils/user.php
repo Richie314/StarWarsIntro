@@ -107,26 +107,25 @@ class User
     private function Upload($db) //: bool
     {
         $query = "INSERT INTO `users` (`ID`, `Password`, `Email`, `Admin`) VALUES (?, ?, ?, ?)";
-        return $this->UploadOrUpdate($db, $query);
-    }
-    public function Update($db) //: bool
-    {
-        $query = "REPLACE INTO `users` (`ID`, `Password`, `Email`, `Admin`) VALUES (?, ?, ?, ?)";
-        return $this->UploadOrUpdate($db, $query);
-    }
-    private function UploadOrUpdate($db, $query) //: bool
-    {
-        if (isEmpty($query))
-        {
-            return false;
-        }
         $stmt = $db->prepare($query);
         $is_admin = (bool)$this->Admin ? 1 : 0;
         if (!$stmt || !$stmt->bind_param('sssi', $this->ID, $this->Password, $this->Email, $is_admin))
         {
             return false;
         }
-        return (bool)$stmt->execute() && $stmt->affected_rows >= 1;
+        return (bool)$stmt->execute() && $stmt->affected_rows == 1;
+    }
+    public function Update($db) //: bool
+    {
+        $query = "REPLACE INTO `users` (`ID`, `Password`, `Email`, `Admin`) VALUES (?, ?, ?, ?)";
+        $query = "UPDATE `users` SET `Password` = ?, `Email` = ?, `Admin` = ? WHERE `ID` = ?";
+        $stmt = $db->prepare($query);
+        $is_admin = (bool)$this->Admin ? 1 : 0;
+        if (!$stmt || !$stmt->bind_param('ssis', $this->Password, $this->Email, $is_admin, $this->ID))
+        {
+            return false;
+        }
+        return (bool)$stmt->execute() && $stmt->affected_rows == 1;
     }
     public function Log($db) //: bool
     {
