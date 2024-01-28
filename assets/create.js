@@ -242,6 +242,7 @@ function ShowShareDialog()
     p.appendChild(a);
     
     dialog.replaceChild(p, share_btn);
+    close_btn.innerText = 'Chiudi';
     dialog.showModal();
 }
 ShowShareDialog();

@@ -23,34 +23,53 @@ if (!CSS.supports('aspect-ratio', '1 / 1'))
      * @type {HTMLElement[]}
      */
     const targetsX = [...document.querySelectorAll('[data-aspect-ratio]')];
-    if (window.requestAnimationFrame)
-    {
-        requestAnimationFrame(() => targetsX.forEach(elem => elem.style.height = String(elem.clientWidth / Number(elem.getAttribute('data-aspect-ratio'))) + 'px'));
-    } else {
-        targetsX.forEach(elem => elem.style.height = String(elem.clientWidth / Number(elem.getAttribute('data-aspect-ratio'))) + 'px');
-    }
-    window.addEventListener('resize', () => {
-        targetsX.forEach(elem => {
+    targetsX.forEach(elem => {
+        elem.ResizeX = () => {
             try {
                 elem.style.height = String(elem.clientWidth / Number(elem.getAttribute('data-aspect-ratio'))) + 'px';
             } catch (err) {
                 console.warn(err);
             }
-        });
+        }
     });
+    // Delay it a bit to give time for the page to have the first render
+    setInterval(() => {
+        if (window.requestAnimationFrame)
+        {
+            requestAnimationFrame(() => targetsX.forEach(elem => elem.ResizeX()));
+        } else {
+            targetsX.forEach(elem => elem.ResizeX());
+        }
+    }, 350);
+    window.addEventListener('resize', () => {
+        targetsX.forEach(elem => elem.ResizeX());
+    });
+
+
     /**
      * @type {HTMLElement[]}
      */
     const targetsY = [...document.querySelectorAll('[data-inverse-aspect-ratio]')];
-    targetsY.forEach(elem => elem.style.width = String(elem.clientHeight * Number(elem.getAttribute('data-inverse-aspect-ratio'))) + 'px');
-    window.addEventListener('resize', () => {
-        targetsY.forEach(elem => {
+    targetsY.forEach(elem => {
+        elem.ResizeY = () => {
             try {
                 elem.style.width = String(elem.clientHeight * Number(elem.getAttribute('data-inverse-aspect-ratio'))) + 'px';
             } catch (err) {
                 console.warn(err);
             }
-        });
+        }
+    });
+    // Delay it a bit to give time for the page to have the first render
+    setInterval(() => {
+        if (window.requestAnimationFrame)
+        {
+            requestAnimationFrame(() => targetsY.forEach(elem => elem.ResizeY()));
+        } else {
+            targetsY.forEach(elem => elem.ResizeY());
+        }
+    }, 350);
+    window.addEventListener('resize', () => {
+        targetsY.forEach(elem => elem.ResizeY());
     });
 }
 
@@ -59,7 +78,7 @@ if (!CSS.supports('aspect-ratio', '1 / 1'))
 //
 
 const current_folder = location.protocol + '//' + 
-    location.hostname + location.pathname.split('/').filter((s, i) => i !== location.pathname.split('/').length - 1).join('/') + '/';
+    location.hostname + location.pathname.split('/').slice(0, -1).join('/') + '/';
 if (navigator.share && navigator.canShare({
     title: 'Intro di Star Wars personalizzata',
     text: 'Guarda la mia intro di Star Wars personalizzata!',
