@@ -74,7 +74,9 @@
     <?php include "./parts/nav.php"; ?>
     <main class="body">
         <h1 class="aurebesh" data-content="Crea nuova intro">
-            &nbsp;
+            <span class="hidden">
+                Crea nuova intro
+            </span>
         </h1>
         <form class="intro-form" method="post">
             <input type="hidden" name="id" value="<?= $opening->ID ?>">

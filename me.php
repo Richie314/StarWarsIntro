@@ -40,7 +40,9 @@
             </ul>
         </div>
         <h1 class="aurebesh" data-content="Le mie intro">
-            &nbsp;
+            <span class="hidden">
+                Le mie intro
+            </span>
         </h1>
         <ul class="check-empty">
             <?php foreach ($intros as $intro) { ?>

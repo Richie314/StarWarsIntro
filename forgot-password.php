@@ -30,7 +30,7 @@
     $DESCRIPTION = "Resetta la tua password";
     $HIDE_PASSWORD_FIELD = true;
     $SHOW_EMAIL_FIELD = true;
-    $FORM_BUTTON_LABEL = "Inviami nuova password";
+    $FORM_BUTTON_LABEL = "Inviami password";
 
 ?>
 <!DOCTYPE html>

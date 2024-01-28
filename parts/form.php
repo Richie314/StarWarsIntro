@@ -4,14 +4,17 @@
         die("Form misconfigured.");
     }
     $HIDE_USERNAME_FILED = isset($HIDE_USERNAME_FILED) && $HIDE_USERNAME_FILED;
-    $HIDE_PASSWORD_FIELD = isset($HIDE_PASSWORD_FILED) && $HIDE_PASSWORD_FILED;
+    $HIDE_PASSWORD_FIELD = isset($HIDE_PASSWORD_FIELD) && $HIDE_PASSWORD_FIELD;
+    
     $SHOW_NEW_PASSWORD_FIELD = isset($SHOW_NEW_PASSWORD_FIELD) && $SHOW_NEW_PASSWORD_FIELD;
     $SHOW_EMAIL_FIELD = isset($SHOW_EMAIL_FIELD) && $SHOW_EMAIL_FIELD;
     $SHOW_FORGOT_PASSWORD_LINK = isset($SHOW_FORGOT_PASSWORD_LINK) && $SHOW_FORGOT_PASSWORD_LINK;
 ?>
 <form class="form" method="post">
     <h2 class="aurebesh" data-content="<?= $FORM_BUTTON_LABEL ?>">
-        &nbsp;
+        <span class="hidden">
+            <?= $FORM_BUTTON_LABEL ?>
+        </span>
     </h2>
     <?php if (!$HIDE_USERNAME_FILED) { ?>
         <div class="field">
