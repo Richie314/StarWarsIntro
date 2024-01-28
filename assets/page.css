@@ -922,6 +922,7 @@ summary {
     overflow: hidden;
     height: 3em;
     cursor: pointer;
+    list-style-type: none;
 }
     summary > :first-child {
         position: absolute;
@@ -935,11 +936,9 @@ summary {
         summary > :not(:first-child) {
             display: none;
         }
-    summary::marker {
-        content: '';
-    }
-    summary::-webkit-detais-marker {
-        display: none;
+    summary::marker, 
+    summary::-webkit-details-marker {
+        display: none !important;
     }
     summary:not(.no-marker)::before {
         position: absolute;
