@@ -2,6 +2,9 @@
 include_once "./utils/string.php";
 
 $parts = parse_ini_file(".env"); # Credentials are stored in a .ini file
+
+$DISABLE_PASSWORD_RECOVERY = !isEmpty($parts["DISABLE_PASSWORD_RECOVERY"]) && (bool)$parts["DISABLE_PASSWORD_RECOVERY"];
+
 if (!$parts ||
     isEmpty($parts["MYSQL_USER"]) ||  
     isEmpty($parts["MYSQL_DATABASE_NAME"]) || 

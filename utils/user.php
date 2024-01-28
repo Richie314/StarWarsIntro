@@ -190,18 +190,15 @@ class User
         {
             throw new BadFunctionCallException("Email mancante nell'account!", 500);
         }
+        if (!isset($db) || !($db instanceof mysqli))
+        {
+            throw new InvalidArgumentException("db was not a mysqli object!", 500);
+        }
         
         require_once "./utils/random.php";
 
         $new_password = random_password(12);
         $new_password_encoded = htmlspecialchars($new_password);
-
-        $this->Password = password_hash($new_password, PASSWORD_BCRYPT);
-
-        if (!$this->Update($db))
-        {
-            return false;
-        }
 
         $subject = "Cambio password";
         $message = 
@@ -212,7 +209,13 @@ class User
                 "<pre>$new_password_encoded</pre>" .
             "</p>" .
             "<small>Ti preghiamo di non rispondere a questa email e di cancellarla appena accedi all'account</small>";
-        return $this->SendEmail($subject, $message);
+        if (!$this->SendEmail($subject, $message))
+        {
+            return false;
+        }
+        $this->Password = password_hash($new_password, PASSWORD_BCRYPT);
+
+        return $this->Update($db);
     }
     public function SafeID() //:string
     {
