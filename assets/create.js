@@ -186,8 +186,17 @@ function ShowShareDialog()
         return;
     }
     history.replaceState({ canonical: window.location.href }, '', url.pathname + url.search);
+    /**
+     * @type {HTMLDialogElement}
+     */
     const dialog = document.getElementById('share-dialog');
+    /**
+     * @type {HTMLButtonElement}
+     */
     const share_btn = document.getElementById('share-btn');
+    /**
+     * @type {HTMLButtonElement}
+     */
     const close_btn = document.getElementById('share-close-btn');
     if (!dialog || !share_btn || !close_btn)
     {
@@ -201,20 +210,36 @@ function ShowShareDialog()
             navigator.share({
                 title: 'Intro di Star Wars personalizzata',
                 text: 'Guarda la mia intro di Star Wars personalizzata!',
-                url: `./view.php?original=${id}`
+                url: `./view.php?id=${id}`
             });
             dialog.close();
         }
         dialog.showModal();
         return;
     }
-    if (!navigator.clipboard)
+    const sitePath = url.pathname.split('/').slice(0, -1).join('/'); // Removes 'create.php' from the end
+    const introPath = `${url.protocol}//${url.host}${sitePath}/view.php?id=${id}`;
+    if (navigator.clipboard)
+    {
+        share_btn.onclick = () => {
+            navigator.clipboard.writeText(introPath).then(() => dialog.close());
+        }
+        share_btn.innerText = 'Copia URL della Intro';
+        dialog.showModal();
         return;
-    share_btn.onclick = () => {
-        const sitePath = new URL(location.href).pathname.split('/').slice(0, -1).join('/');
-        navigator.clipboard.writeText(`${url.protocol}//${url.host}${sitePath}/view.php?original=${id}`).then(() => dialog.close());
     }
-    share_btn.innerText = 'Copia URL della Intro';
+    const p = document.createElement('p');
+    const a = document.createElement('a');
+    a.className = 'link';
+    a.target = '_blank';
+    a.innerText = introPath;
+    a.href = introPath;
+    a.title = 'Apri in un\'altra scheda';
+    a.onclick = () => dialog.close();
+    p.innerHTML = 'Ecco il link dell\'intro appena creata:<br>';
+    p.appendChild(a);
+    
+    dialog.replaceChild(p, share_btn);
     dialog.showModal();
 }
 ShowShareDialog();
