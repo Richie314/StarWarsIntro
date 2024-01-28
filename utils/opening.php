@@ -116,22 +116,24 @@ class Opening
         if ($this->isInDB())
         {
             $stmt = $db->prepare(
-                'REPLACE INTO `openings` (`ID`, `Title`, `Episode`, `Content`, `Language`, `Author`, `Creation`, `LastEdit`) VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)');
+                'UPDATE `openings` " .
+                "SET `Title` = ?, `Episode` = ?, `Content` = ?, `Language` = ?, `Author` = ?, `Creation` = ?, `LastEdit` = CURRENT_TIMESTAMP " .
+                "WHERE `ID` = ?');
             if (!$stmt)
             {
-                throw new UnexpectedValueException('Could not prepare the statement!', 500);
+                throw new Exception('Could not prepare the statement!', 500);
             }
             if (!$stmt->bind_param(
                 'issssss', 
-                $this->ID, 
                 $this->Title, 
                 $this->Episode, 
                 $this->Content, 
                 $lang, 
                 $this->Author,
-                $creation))
+                $creation,
+                $this->ID))
             {
-                throw new UnexpectedValueException('Could not bind parameters to the statement!', 500);
+                throw new Exception('Could not bind parameters to the statement!', 500);
             }
             return $stmt;
         } 
@@ -140,7 +142,7 @@ class Opening
             'INSERT INTO `openings` (`Title`, `Episode`, `Content`, `Language`, `Author`) VALUES (?, ?, ?, ?, ?)');
         if (!$stmt)
         {
-            throw new UnexpectedValueException('Could not prepare the statement!', 500);
+            throw new Exception('Could not prepare the statement!', 500);
         }
         if (!$stmt->bind_param(
             'sssss', 
@@ -150,7 +152,7 @@ class Opening
             $lang,
             $this->Author))
         {
-            throw new UnexpectedValueException('Could not bind parameters to the statement!', 500);
+            throw new Exception('Could not bind parameters to the statement!', 500);
         }
         return $stmt;
     }
