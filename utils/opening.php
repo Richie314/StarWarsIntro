@@ -116,15 +116,15 @@ class Opening
         if ($this->isInDB())
         {
             $stmt = $db->prepare(
-                'UPDATE `openings` " .
-                "SET `Title` = ?, `Episode` = ?, `Content` = ?, `Language` = ?, `Author` = ?, `Creation` = ?, `LastEdit` = CURRENT_TIMESTAMP " .
-                "WHERE `ID` = ?');
+                "UPDATE `openings` " .
+                "SET `Title` = ?, `Episode` = ?, `Content` = ?, `Language` = ?, `Author` = ?, `Creation` = ? " .
+                "WHERE `ID` = ?");
             if (!$stmt)
             {
                 throw new Exception('Could not prepare the statement!', 500);
             }
             if (!$stmt->bind_param(
-                'issssss', 
+                'ssssssi', 
                 $this->Title, 
                 $this->Episode, 
                 $this->Content, 
