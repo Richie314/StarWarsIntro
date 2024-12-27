@@ -4,3 +4,4 @@ COPY . .
 EXPOSE 80
 EXPOSE 443
 RUN a2enmod rewrite
+RUN docker-php-ext-install mysqli
