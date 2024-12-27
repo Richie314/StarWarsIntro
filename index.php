@@ -53,12 +53,11 @@
                 Perch&eacute; questo sito?
             </h3>
             <p class="justify">
-                Il sito &egrave; stato realizzato da Riccardo Ciucci, come progetto per l'esame
+                Il sito &egrave; stato realizzato da <a href="https://ciucci.dev">Riccardo Ciucci</a>, come progetto per l'esame
                 di Progettazione Web del corso di laurea triennale in Ingegneria Informatica
-                dell'<a href="https://www.unipi.it/" class="link" target="_self">Universit&agrave; di Pisa</a>.<br><br>
-                Professore del corso: Vecchio Alessio.<br>
+                dell'<a href="https://www.unipi.it/" class="link" target="_self">Universit&agrave; di Pisa</a>.<br>
                 Anno Accademico 2023-24.<br><br>
-                Non vi sono fini di lucro n&eacute; infrangimenti di copyright intesi.<br>
+                Non vi sono fini di lucro n&eacute; infrangimenti di copyright intesi: il sito &egrave; disponibile come demo e a fini open-source.<br>
                 Le icone sono state ottenute da
                 <a href="https://svgrepo.com" class="link" 
                     target="_blank" title="Apri in altra scheda">svgrepo.com<i class="icon svgrepo"></i></a> o realizzate tramite

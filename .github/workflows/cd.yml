@@ -1,0 +1,51 @@
+name: Docker image
+
+on:
+  push: 
+    branches: ['main']
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+    docker:
+        name: Build and publish image
+        runs-on: ubuntu-latest
+
+        permissions:
+            contents: read
+            packages: write
+            attestations: write
+            id-token: write
+
+        steps:
+          - name: Converting repo name to lowercase
+            id: repo
+            uses: ASzc/change-string-case-action@v1
+            with:
+                string: ${{ github.repository }}
+
+          - name: Checkout repository
+            uses: actions/checkout@v4
+            
+          - name: Log in to the Container registry
+            uses: docker/login-action@v3
+            with:
+                registry: ${{ env.REGISTRY }}
+                username: ${{ github.actor }}
+                password: ${{ secrets.GITHUB_TOKEN }}
+
+          - name: Extract metadata for Docker
+            id: meta
+            uses: docker/metadata-action@v5
+            with:
+                images: ${{ env.REGISTRY }}/${{ steps.repo.outputs.lowercase }}
+
+          - name: Build and push Docker image
+            id: push
+            uses: docker/build-push-action@v6
+            with:
+                context: .
+                push: true
+                tags: ${{ steps.meta.outputs.tags }}, ${{ env.REGISTRY }}/${{ steps.repo.outputs.lowercase }}:latest
+                labels: ${{ steps.meta.outputs.labels }}
