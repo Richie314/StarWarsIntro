@@ -3,3 +3,4 @@ WORKDIR /var/www/html/
 COPY . .
 EXPOSE 80
 EXPOSE 443
+RUN a2enmod rewrite
