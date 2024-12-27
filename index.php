@@ -53,7 +53,7 @@
                 Perch&eacute; questo sito?
             </h3>
             <p class="justify">
-                Il sito &egrave; stato realizzato da <a href="https://ciucci.dev">Riccardo Ciucci</a>, come progetto per l'esame
+                Il sito &egrave; stato realizzato da <a href="https://ciucci.dev" target="_blank" class="link">Riccardo Ciucci</a>, come progetto per l'esame
                 di Progettazione Web del corso di laurea triennale in Ingegneria Informatica
                 dell'<a href="https://www.unipi.it/" class="link" target="_self">Universit&agrave; di Pisa</a>.<br>
                 Anno Accademico 2023-24.<br><br>
