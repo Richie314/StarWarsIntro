@@ -2,7 +2,7 @@
 include_once "./utils/string.php";
 
 # $parts = parse_ini_file(".env"); # Credentials are stored in a .ini file
-if (!$parts ||
+if (# !$parts ||
     isEmpty(getenv("MYSQL_USER")) ||  
     isEmpty(getenv("MYSQL_DATABASE_NAME")) || 
     isEmpty(getenv("MYSQL_HOST")))
@@ -16,7 +16,7 @@ $db = new mysqli(
     isEmpty(getenv("MYSQL_PASSWORD")) ? null : getenv("MYSQL_PASSWORD"),
     getenv("MYSQL_DATABASE_NAME"));
 
-unset($parts); # Prevent credential leaks
+# unset($parts); # Prevent credential leaks
 if (!$db || $db->connect_errno)
 {
     throw new RuntimeException('Could not connect to db', 500);
