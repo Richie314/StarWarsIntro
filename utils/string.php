@@ -12,11 +12,19 @@ function isEmpty($str) : bool
  */
 function getUserIP() : string
 {
-    if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && $_SERVER['HTTP_X_FORWARDED_FOR'] !== "::1")
+    $headers = getallheaders();
+    if (array_key_exists(key: 'Cf-Connecting-Ip', array: $headers)) {
+        // Cloudflare tunnel forwarding
+        return $headers['Cf-Connecting-Ip'];
+    }
+    
+    if (!empty($_SERVER['HTTP_CLIENT_IP']) && $_SERVER['HTTP_CLIENT_IP'] !== '::1') {
+        //ip from share internet
+        return $_SERVER['HTTP_CLIENT_IP'];
+    }
+    if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        //ip pass from proxy
         return $_SERVER['HTTP_X_FORWARDED_FOR'];
-    
-    if (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] !== "::1")
-        return $_SERVER['REMOTE_ADDR'];
-    
-    return "127.0.0.1";
+    }
+    return $_SERVER['REMOTE_ADDR'];
 }
