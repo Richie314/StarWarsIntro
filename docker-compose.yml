@@ -1,0 +1,38 @@
+services:
+  starwars:
+    build: .
+    ports:
+      - 80:80
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_USER=starwars
+      - MYSQL_PASSWORD=starwars
+      - MYSQL_DATABASE_NAME=starwars
+      - SITE_DOMAIN=starwars.ciucci.dev
+    networks:
+      - db
+
+  mysql:
+    image: mariadb:latest
+    expose:
+      - 3306
+    environment:
+      - MARIADB_ROOT_PASSWORD=starwars
+      - MARIADB_USER=starwars
+      - MARIADB_PASSWORD=starwars
+      - MARIADB_DATABASE=starwars
+    networks:
+      - db
+    volumes:
+      - ./test_db:/var/lib/mysql:Z
+
+  phpmyadmin:
+    image: phpmyadmin
+    ports: 
+      - 8080:80
+    environment:
+      - PMA_HOST=mysql
+    networks:
+      - db
+networks:
+  db:

@@ -18,7 +18,7 @@ CREATE TABLE `login`
 (
     `User` VARCHAR(32) NOT NULL,
     `When` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `Ip` VARCHAR(15) NOT NULL,
+    `Ip` VARCHAR(64) NOT NULL,
     `Device` VARCHAR(256) NOT NULL,
 
     PRIMARY KEY (`User`, `When`, `Ip`),

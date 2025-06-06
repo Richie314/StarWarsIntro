@@ -2,3 +2,4 @@
 *.md
 db
 .github
+Dockerfile
