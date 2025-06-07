@@ -8,8 +8,31 @@ const Now = () => performance.now();
 // Delay for audio start after the start of the animations
 const AUDIO_START_DELAY = 6300;
 
+// Get rendered lines of the content
+function ContentLength() {
+    const element = document.getElementById('content');
+    const totalHeight = element.getBoundingClientRect().height;
+
+    const range = document.createRange();
+    range.selectNodeContents(element);
+    const p = document.createElement("p");
+    p.className = 'paragraph';
+    p.textContent = "A";
+    element.appendChild(p);
+    const singleLineHeight = p.getBoundingClientRect().height;
+    element.removeChild(p);
+
+
+    const lines =  Math.round(totalHeight / singleLineHeight);
+    if (isNaN(lines) || lines < 0)
+    {
+        return 0;
+    }
+    return lines;
+}
+
 // Delay for credits to be shown
-const CREDITS_SHOW_DELAY = 103 * 1000;
+const CREDITS_SHOW_DELAY = 105 * 1000;
 
 // When animations start
 var start = 0;
@@ -30,13 +53,23 @@ function StartPage() {
     document.body.classList.remove('wait'); // Start animations
     StartAudio();
     const credits = document.getElementById('credits');
-    if (credits) {
-        setTimeout(() => {
-            credits.classList.remove('hidden');
-            credits.style.userSelect = 'text';
-            setTimeout(() => credits.style.opacity = 1, 1000);
-        }, CREDITS_SHOW_DELAY);
+    if (!credits) {
+        return;
     }
+    function show_credits() {
+        credits.classList.remove('hidden');
+        credits.style.userSelect = 'text';
+        setTimeout(() => credits.style.opacity = 1, 1000);
+    }
+    setTimeout(() => {
+        const additional_delay = Math.sqrt(ContentLength() + 10) * 2100;
+        if (!isNaN(additional_delay) && additional_delay > 0)
+        {
+            setTimeout(show_credits, additional_delay);
+        } else {
+            show_credits();
+        }
+    }, CREDITS_SHOW_DELAY);
 }
 
 // Starts the audio.

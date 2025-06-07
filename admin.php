@@ -32,7 +32,7 @@
                     <a href="http://<?= $login->Ip ?>" class="link" traget="_blank">
                         <?= $login->Ip ?>
                     </a>
-                    <br>
+                    &nbsp;
                     il <?= $login->When->format('d/m/Y H:i:s') ?>
                 </li>
             <?php } ?>

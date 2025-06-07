@@ -143,10 +143,10 @@
         <article id="board">
             <div id="content">
                 <p id="episode">
-                    <?= $opening->Episode ?>
+                    <?= htmlspecialchars(string: $opening->Episode) ?>
                 </p>
                 <p id="title">
-                    <?= $opening->Title ?>
+                    <?= htmlspecialchars(string: $opening->Title) ?>
                 </p>
                 <br>
                 <?php foreach ($opening->Paragraphs() as $part) { ?>
@@ -159,9 +159,9 @@
 
         <!-- Who created the opening -->
         <article id="credits" class="hidden">
-            <?php if (!isEmpty($opening->Author)) { ?>
+            <?php if (!isEmpty(str: $opening->Author)) { ?>
                 <h2>
-                    Creato da utente <?= htmlspecialchars($opening->Author) ?>
+                    Creato da utente <?= htmlspecialchars(string: $opening->Author) ?>
                 </h2>
             <?php } ?>
             
