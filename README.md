@@ -1,8 +1,26 @@
+<p align="center"><img src="assets/sitelogo.svg" alt="Star Wars Intro logo" width="150"></p>
+
 # Star Wars Intro
+
+[![CI](https://github.com/Richie314/StarWarsIntro/actions/workflows/ci.yml/badge.svg)](https://github.com/Richie314/StarWarsIntro/actions/workflows/ci.yml)
+[![PHP](https://img.shields.io/badge/PHP-8.4-777BB4?logo=php&logoColor=white)](https://www.php.net/)
+[![Simple MVC](https://img.shields.io/packagist/v/richie314/simple-mvc?label=Simple%20MVC)](https://packagist.org/packages/richie314/simple-mvc)
+[![Docker Compose](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)](docker-compose.yml)
+[![jQuery](https://img.shields.io/badge/jQuery-4.0.0-0769AD?logo=jquery&logoColor=white)](https://jquery.com/)
 
 A PHP and MySQL application for creating and sharing custom Star Wars opening crawls. Users can register, write their own intros, preview them in a browser, and share a link. The animation uses CSS and JavaScript.
 
 The interface is in Italian. Original movie intros are available in Italian and English.
+
+## Your intro collection
+
+The personal dashboard displays your own intros in a responsive card grid, with crawl previews, language, dates, and quick links to watch, edit, or delete each intro. Posters are static, so browsing your collection never starts multiple players.
+
+![Personal dashboard with intro cards](docs/images/dashboard.png)
+
+<p align="center"><img src="assets/img/starwarslogo.svg" alt="Star Wars" width="260"></p>
+
+Shared pages load jQuery 4.0.0 from the jQuery CDN with Subresource Integrity. It handles forms, preview updates, dialogs, and deletion feedback. The standalone playback page keeps its own scripts and does not load jQuery.
 
 ## Run with Docker Compose
 
@@ -167,6 +185,8 @@ Each intro JSON contains `title`, `episode`, and a `content` array with one stri
 
 ## Verification
 
+JavaScript checks require Node.js 24.15 or newer and npm. The npm dependencies are only used for tests; browsers load jQuery from the CDN.
+
 ```sh
 composer validate --strict
 composer dump-autoload --optimize --strict-psr
@@ -174,7 +194,8 @@ find app -name '*.php' -print0 | xargs -0 -n1 php -l
 php tests/preload.php
 php tests/random.php
 php tests/bootstrap.php
-node tests/urls.cjs
+npm ci
+npm test
 docker compose exec starwars nginx -t
 python3 tests/smoke.py http://localhost:8080
 ```

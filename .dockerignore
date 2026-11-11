@@ -7,3 +7,4 @@ vendor
 test_db
 .vscode
 db
+/node_modules/

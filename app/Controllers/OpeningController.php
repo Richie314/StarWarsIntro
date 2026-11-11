@@ -90,6 +90,7 @@ class OpeningController extends Controller
     public function index(...$extra): StatusCode
     {
         return $this->Render('Pages/me', [
+            'mainClass' => 'body dashboard',
             'intros' => Opening::LoadBriefOfUser($this->DB, $this->User->Id),
             'scripts' => ['manage.js'],
         ], title: 'Le mie intro');

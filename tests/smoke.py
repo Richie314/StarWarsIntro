@@ -56,6 +56,11 @@ def page(path, playback=False, status=200):
     html = HTML(body)
     assert html.count('html') == html.count('head') == html.count('body') == html.count('main') == 1, path
     assert html.count('nav') == html.count('footer') == (0 if playback else 1), path
+    scripts = [script.get('src', '') for script in html.attributes('script')]
+    jquery = 'https://code.jquery.com/jquery-4.0.0.min.js'
+    assert scripts.count(jquery) == (0 if playback else 1), path
+    if not playback:
+        assert scripts.index(jquery) < scripts.index(prefix + '/assets/page.js'), path
     if playback:
         assert 'accept-cookie' not in body and '/assets/page.js' not in body, path
         assert any(script.get('data-audio-url') == prefix + '/assets/intro.mp3' for script in html.attributes('script')), path
@@ -129,7 +134,10 @@ if args.database:
     username = 'mvc' + uuid.uuid4().hex[:12]
     password = 'TestPassword123'
     redirect('/auth/register', dict(username=username, password=password, email=username + '@example.test'), target='/opening/create' if prefix else '/opening')
-    assert username in page('/opening')[0]
+    dashboard, dashboard_html = page('/opening')
+    assert username in dashboard
+    assert not any('data-intro-card' in attrs for _, attrs in dashboard_html.elements)
+    assert 'hidden' not in next(attrs for _, attrs in dashboard_html.elements if attrs.get('id') == 'intro-empty')
     page('/admin', status=401)
     page('/opening/create?id[]=1', status=400)
     _, html = page('/auth/changePassword')
@@ -140,6 +148,10 @@ if args.database:
     opening_id = urllib.parse.parse_qs(urllib.parse.urlsplit(location).query)['id'][0]
     assert location == f'/opening/create?id={opening_id}&action=share'
     page(location)
+    dashboard, dashboard_html = page('/opening')
+    assert sum('data-intro-card' in attrs for _, attrs in dashboard_html.elements) == 1
+    assert 'MVC Test &amp; Friends' in dashboard
+    assert 'hidden' in next(attrs for _, attrs in dashboard_html.elements if attrs.get('id') == 'intro-empty')
     rendered_intro = page('/opening/view?id=' + opening_id, playback=True)[0]
     assert 'MVC Test &amp; Friends' in rendered_intro and username in rendered_intro
     redirect('/opening/create', dict(id=opening_id, title='Edited Test', episode='Episode X', lang='it', content='Updated'),
@@ -156,6 +168,7 @@ if args.database:
     owned_id = urllib.parse.parse_qs(urllib.parse.urlsplit(location).query)['id'][0]
     redirect('/auth/logout', target='/')
     redirect('/auth/register', dict(username=username + 'b', password=password, email=username + 'b@example.test'), target='/opening')
+    assert 'Private owner' not in page('/opening')[0]
     page('/opening/create?id=' + owned_id, status=401)
     request('/opening/create', dict(id=owned_id, title='Stolen', episode='X', lang='en'), status=401)
     assert json.loads(request('/opening/delete', dict(id=owned_id))[0])['esit'] == 'error'

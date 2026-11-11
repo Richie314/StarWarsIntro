@@ -75,7 +75,7 @@ use StarWars\Models\OpeningLanguage;
         <div class="span-2">
             <p>
                 Vuoi dei suggerimenti?
-                Guarda le <strong><a href="javascript:ShowOriginals()" class="link">Intro originali</a></strong>
+                Guarda le <strong><a href="#show-originals-dialog" id="show-originals" class="link">Intro originali</a></strong>
             </p>
         </div>
 
@@ -118,7 +118,7 @@ use StarWars\Models\OpeningLanguage;
         </optgroup>
     </select>
     <br>
-    <button role="button" type="button" id="dialog-close">
+    <button role="button" type="button" id="dialog-close" data-close-dialog>
         Annulla
     </button>
 </dialog>
@@ -129,7 +129,7 @@ use StarWars\Models\OpeningLanguage;
     <button role="button" type="button" id="share-btn">
         Condividi
     </button>
-    <button role="button" type="button" id="share-close-btn">
+    <button role="button" type="button" id="share-close-btn" data-close-dialog>
         Per ora no
     </button>
 </dialog>

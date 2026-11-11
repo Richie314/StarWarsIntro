@@ -1,227 +1,52 @@
-//
-//  Handle TV in create page
-//
+'use strict';
 
-/**
- * @type {HTMLIFrameElement}
- */
-const tv = document.getElementById('tv');
-/**
- * @type {HTMLInputElement}
- */
-const episodeInput = document.getElementById('episode');
-/**
- * @type {HTMLInputElement}
- */
-const titleInput = document.getElementById('title');
-/**
- * @type {HTMLSelectElement}
- */
-const langInput = document.getElementById('lang');
-/**
- * @type {HTMLTextAreaElement}
- */
-const contentInput = document.getElementById('content');
-/**
- * @type {HTMLButtonElement}
- */
-const clearBtn = document.getElementById('clear');
-/**
- * @type {HTMLButtonElement}
- */
-const submitBtn = document.getElementById('submit');
-/**
- * @type {HTMLButtonElement}
- */
-const refreshTvBtn = document.getElementById('reload-tv');
-
-function UpdateTvSrc()
-{
-    const base = tv.dataset.viewUrl + '?';
-    const params =  new URLSearchParams({
-        'episode': episodeInput.value.trim(),
-        'title': titleInput.value.trim(),
-        'lang': langInput.value.trim(),
-        'content': contentInput.value.trim()
-    });
-    const url = base + params.toString();
-
-    tv.blur(); // Remove focus from the element
-    tv.lang = langInput.value;
-    SetTvSrc(url);
-}
-var UpdateTimeoutId = 0;
-function ScheduleTvUpdate()
-{
-    ClearTvUpdate();
-    UpdateTimeoutId = setTimeout(UpdateTvSrc, 100);
-}
-function ClearTvUpdate()
-{
-    if (UpdateTimeoutId !== 0)
-    {
-        clearTimeout(UpdateTimeoutId);
+$(() => {
+    const $tv = $('#tv'), $fields = $('#episode, #title, #lang, #content');
+    const viewUrl = $tv.data('view-url');
+    let timer;
+    function preview(query = $fields.serialize(), lang = $('#lang').val()) {
+        clearTimeout(timer);
+        $tv.attr({ src: viewUrl + '?' + query, lang });
     }
-}
-if (tv && episodeInput && titleInput && langInput && contentInput) {
-    tv.onload = ClearTvUpdate;
-    episodeInput.addEventListener('input', ScheduleTvUpdate);
-    titleInput.addEventListener('input', ScheduleTvUpdate);
-    langInput.addEventListener('input', ScheduleTvUpdate);
-    contentInput.addEventListener('input', ScheduleTvUpdate);
-    ScheduleTvUpdate();
-}
-
-// Observer that monitors when the iframe appears or disappears from screen
-const tvObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-        entry.target.classList.toggle('visible', entry.intersectionRatio > 0.5);
-        if (entry.target.hasAttribute('preloaded-src'))
-        {
-            SetTvSrc(entry.target.getAttribute('preloaded-src'));
-        }
+    $fields.on('input change', () => {
+        clearTimeout(timer);
+        timer = setTimeout(() => preview(), 120);
     });
-}, {
-    threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
-});
-tvObserver.observe(tv);
-
-// Handle tv button clicks
-if (refreshTvBtn) {
-    refreshTvBtn.onclick = () => tv.src = tv.src;
-    refreshTvBtn.oncontextmenu = evt => evt.preventDefault();
-}
-
-/**
- * @param {string} src 
- */
-function SetTvSrc(src) {
-    if (tv.classList.contains('visible'))
-    {
-        tv.removeAttribute('preloaded-src');
-        if (tv.src !== src) {
-            tv.src = src;// Load the new page if it's different
-        }
-        return;
-    } 
-    // Iframe not visible: don't load it yet
-    tv.setAttribute('preloaded-src', src);
-}
-
-/**
- * @type {HTMLDialogElement}
- */
-const dialog = document.getElementById('show-originals-dialog');
-/**
- * @type {HTMLSelectElement}
- */
-const dialogSelect = document.getElementById('dialog-select');
-/**
- * @type {HTMLButtonElement}
- */
-const dialogCloseBtn = document.getElementById('dialog-close');
-
-
-function ShowOriginals()
-{
-    episodeInput.disabled = titleInput.disabled = langInput.disabled = contentInput.disabled = true;
-    clearBtn.disabled = submitBtn.disabled = true;
-    ClearTvUpdate();
-    dialog.showModal();
-}
-function CloseDialog()
-{
-    dialog.close();
-    episodeInput.disabled = titleInput.disabled = langInput.disabled = contentInput.disabled = false;
-    clearBtn.disabled = submitBtn.disabled = false;
-}
-/**
- * @param {string} episode 
- * @param {string} lang 
- */
-function ShowOriginal(episode, lang)
-{
-    if (!episode || episode.length === 0 || !lang || lang.length === 0)
-        return;
-    const base = tv.dataset.viewUrl + '?';
-    const params =  new URLSearchParams({
-        'original': episode,
-        'lang': lang
+    $('.intro-form').on('reset', () => setTimeout(() => preview(), 0));
+    $('#reload-tv').on('click', () => $tv.attr('src', $tv.attr('src')));
+    $('#show-originals').on('click', event => {
+        event.preventDefault();
+        clearTimeout(timer);
+        $('#dialog-select').val('0');
+        $('#show-originals-dialog')[0].showModal();
     });
-    const url = base + params.toString();
+    $('[data-close-dialog]').on('click', function () { $(this).closest('dialog')[0].close(); });
+    $('#dialog-select').on('change', function () {
+        if (this.value === '0') return;
+        const [original, lang] = this.value.split('-');
+        preview($.param({ original, lang }), lang);
+        $('#show-originals-dialog')[0].close();
+    });
+    preview();
 
-    tv.blur(); // Remove focus from the element
-    tv.lang = lang;
-    SetTvSrc(url);
-}
-if (dialogSelect) {
-    dialogSelect.addEventListener('change', () => {
-        const value = dialogSelect.value;
-        if (value === '0')
-            return;
-        const [number, lang] = value.split('-');
-        CloseDialog();
-        ShowOriginal(number, lang);
-    })
-}
-if (dialogCloseBtn) {
-    dialogCloseBtn.onclick = CloseDialog;
-}
-
-//
-//  Handle share dialog 
-//
-
-function ShowShareDialog()
-{
-    if (!document.body.classList.contains('can-share'))
-        return;
-    const url = new URL(location.href);
-    if (url.searchParams.get('action') !== 'share')
-    {
-        return;
-    }
-    url.searchParams.delete('action');
+    const url = new URL(location.href), action = url.searchParams.get('action');
     const id = url.searchParams.get('id');
-    if (!id)
-    {
-        return;
+    if (action === 'edited' || action === 'share') {
+        url.searchParams.delete('action');
+        history.replaceState(null, '', url.pathname + url.search + url.hash);
     }
-    history.replaceState({ canonical: window.location.href }, '', url.pathname + url.search);
-    const dialog = document.getElementById('share-dialog');
-    const share_btn = document.getElementById('share-btn');
-    const close_btn = document.getElementById('share-close-btn');
-    if (!dialog || !share_btn || !close_btn)
-    {
-        console.warn('Invalid elements of share dialog')
-        return;
-    }
-    share_btn.onclick = () => {
-        navigator.share({
-            title: 'Intro di Star Wars personalizzata',
-            text: 'Guarda la mia intro di Star Wars personalizzata!',
-            url: new URL(tv.dataset.viewUrl + '?id=' + encodeURIComponent(id), location.origin).href
+    if (action === 'edited') $('#action-feedback').text('Modifiche effettuate con successo!').prop('hidden', false);
+    if (action === 'share' && id && $('body').hasClass('can-share')) {
+        $('#share-dialog')[0].showModal();
+        $('#share-btn').on('click', async () => {
+            try {
+                await navigator.share({ title: 'Intro di Star Wars personalizzata',
+                    text: 'Guarda la mia intro di Star Wars personalizzata!',
+                    url: new URL(viewUrl + '?' + $.param({ id }), location.origin).href });
+                $('#share-dialog')[0].close();
+            } catch (error) {
+                if (error.name !== 'AbortError') $('#action-feedback').text('Condivisione non riuscita. Riprova.').prop('hidden', false);
+            }
         });
-        dialog.close();
     }
-    close_btn.onclick = () => dialog.close();
-    dialog.showModal();
-}
-ShowShareDialog();
-
-//
-//  Handle edited prompt 
-//
-
-function ShowEditedPrompt()
-{
-    const url = new URL(location.href);
-    if (url.searchParams.get('action') !== 'edited')
-    {
-        return;
-    }
-    url.searchParams.delete('action');
-    history.replaceState({ canonical: window.location.href }, '', url.pathname + url.search);
-    alert('Modifiche effettuate con successo!');
-}
-ShowEditedPrompt();
+});

@@ -31,10 +31,11 @@ jobs:
         uses: actions/setup-node@v7
         with:
           node-version: '24'
-          package-manager-cache: false
+          cache: npm
 
       - name: Check JavaScript
         run: |
+          npm ci
           find assets -name '*.js' -print0 | xargs -0 -n1 node --check
           node tests/urls.cjs
 

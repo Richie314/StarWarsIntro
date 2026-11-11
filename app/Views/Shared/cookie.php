@@ -8,8 +8,7 @@ use Richie314\SimpleMvc\Utils\Cookie;
             Non vi sono cookie a scopo di tracciamento o cookie di terze parti.</p>
         <form method="post" action="<?= htmlspecialchars($p . '/acceptCookies') ?>">
             <input type="hidden" name="return_to" value="<?= htmlspecialchars($requestPath) ?>">
-            <button type="submit">Accetto</button>
+            <button type="submit" id="accept-cookie-btn">Accetto</button>
         </form>
     </dialog>
-    <script>document.getElementById('accept-cookie').showModal();</script>
 <?php } ?>

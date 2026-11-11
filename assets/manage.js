@@ -1,17 +1,26 @@
 'use strict';
 
-document.querySelectorAll('[data-delete-url]').forEach(link => {
-    link.addEventListener('click', async event => {
+$(() => {
+    $(document).on('click', '[data-delete-url]', function (event) {
         event.preventDefault();
-        const result = await post(link.dataset.deleteUrl, {
-            [link.dataset.deleteField]: link.dataset.deleteId
-        });
-        if (result.esit === 'ok') {
-            const row = document.getElementById(link.dataset.deleteRow);
-            if (row) {
-                row.classList.add('fade-out');
-                setTimeout(() => row.remove(), 1000);
-            }
-        }
+        const $button = $(this), data = $button.data();
+        if ($button.attr('aria-disabled') === 'true') return;
+        $button.attr('aria-disabled', 'true').prop('disabled', true);
+        const failure = () => {
+            $button.removeAttr('aria-disabled').prop('disabled', false);
+            $('#action-feedback').text('Impossibile eliminare. Riprova.').prop('hidden', false);
+        };
+        $.post(data.deleteUrl, { [data.deleteField]: data.deleteId }, null, 'json')
+            .done(result => {
+                if (result.esit !== 'ok') return failure();
+                $('#action-feedback').prop('hidden', true);
+                $(document.getElementById(data.deleteRow)).fadeOut(180, function () {
+                    $(this).remove();
+                    const count = $('[data-intro-card]').length;
+                    $('[data-intro-count]').text(count);
+                    $('#intro-empty').prop('hidden', count !== 0);
+                });
+            })
+            .fail(failure);
     });
 });

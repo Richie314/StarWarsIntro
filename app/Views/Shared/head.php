@@ -26,7 +26,6 @@ $playback ??= false;
         <link rel="stylesheet" href="<?= htmlspecialchars($p) ?>/assets/view/animations.css" onload="PageAnimationsLoaded()">
     <?php } else { ?>
         <link rel="stylesheet" href="<?= htmlspecialchars($p) ?>/assets/page.css">
-        <link rel="stylesheet" href="<?= htmlspecialchars($p) ?>/assets/font.css" media="print" onload="this.media = 'all'">
-        <script src="<?= htmlspecialchars($p) ?>/assets/page.js" defer></script>
+        <link rel="stylesheet" href="<?= htmlspecialchars($p) ?>/assets/font.css">
     <?php } ?>
 </head>

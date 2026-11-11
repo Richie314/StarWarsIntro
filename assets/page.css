@@ -719,39 +719,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /*
-    Fade something out (make it slowly disappear)
-*/
-.fade-out {
-    opacity: 1;
-    -webkit-animation: fade-out 1s ease-in;
-    -moz-animation: fade-out 1s ease-in;
-    animation: fade-out 1s ease-in;
-}
-@keyframes fade-out {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-@-webkit-keyframes fade-out {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-@-moz-keyframes fade-out {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-/*
     Font change inline
 */
 span.aurebesh[data-content] {
@@ -786,3 +753,38 @@ span.aurebesh[data-content] {
         span.aurebesh[data-content]:hover::after {
             opacity: 1;
         }
+
+/* Personal intro collection: lightweight posters, without embedded players. */
+[hidden] { display: none !important; }
+.body.dashboard { max-width: 1100px; padding: 2rem 1rem; box-sizing: border-box; }
+.dashboard-header { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+.dashboard h1, .dashboard h2 { width: auto; margin: 0; text-align: left; user-select: auto; }
+.dashboard h1 { font-size: clamp(2rem, 5vw, 3rem); }
+.dashboard-eyebrow { font-size: .75rem; letter-spacing: .22em; }
+.dashboard-header p:not(.dashboard-eyebrow), .intro-episode { color: #bdbbb4; }
+.dashboard-primary { display: inline-block; background: var(--main-cl); color: #141313; padding: .9rem 1.2rem; border-radius: .45rem; font-weight: bold; text-decoration: none; }
+.dashboard-primary:hover { background: #fff088; }
+.dashboard-settings { display: flex; flex-wrap: wrap; gap: 1.25rem; padding: 1rem 0 2rem; font-size: .85rem; }
+.intro-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 1.5rem; }
+.intro-card { min-width: 0; overflow: hidden; border: 1px solid #484338; border-radius: .7rem; background: #1c1b18; }
+.intro-card:hover { border-color: #a49435; }
+.intro-poster { text-decoration: none; display: block; position: relative; height: 210px; overflow: hidden; perspective: 260px; background: radial-gradient(1px 1px at 20% 30%, #fff 80%, transparent), radial-gradient(1px 1px at 65% 70%, #aaa 80%, transparent), radial-gradient(1px 1px at 80% 20%, #fff 80%, transparent), #050608; background-size: 73px 97px, 113px 79px, 137px 117px; color: var(--main-cl); }
+.intro-crawl { width: 78%; margin: 2rem auto; text-align: center; transform: rotateX(25deg); transform-origin: bottom; }
+.intro-crawl span, .intro-crawl strong { display: block; margin: .5rem 0; }
+.intro-crawl strong { text-transform: uppercase; font-size: 1.2rem; }
+.intro-crawl p { text-align: justify; font-size: .85rem; line-height: 1.6; white-space: pre-line; }
+.intro-poster::after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent 55%, #050608); }
+.intro-play { font-family: Arial, sans-serif; color: var(--main-cl); position: absolute; z-index: 1; top: 40%; left: calc(50% - 1.4rem); background: #141313d9; border: 1px solid var(--main-cl); border-radius: 50%; width: 2.8rem; height: 2.8rem; display: grid; place-items: center; }
+.intro-details { padding: 1rem; }
+.intro-meta { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin: 0 0 1rem; color: #bdbbb4; font-size: .75rem; }
+.intro-meta span { display: flex; align-items: center; gap: .4rem; }
+.intro-details h2 { font-size: 1.15rem; overflow-wrap: anywhere; }
+.intro-episode { font-size: .8rem; margin: .5rem 0 1.25rem; }
+.intro-actions { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; border-top: 1px solid #484338; padding-top: 1rem; font-size: .8rem; }
+.intro-actions a, .intro-actions button { color: var(--main-cl); font: inherit; }
+.intro-actions button { margin-left: auto; border: 0; background: none; padding: .25rem 0; cursor: pointer; color: #ffb7a8; }
+.intro-actions button:disabled { opacity: .5; cursor: wait; }
+.intro-empty { text-align: center; padding: 3rem 1rem; border: 1px dashed #665e38; border-radius: .7rem; }
+.intro-empty h2 { text-align: center; margin-top: 1rem; }
+.intro-empty p { color: #bdbbb4; }
+.dashboard a:focus-visible, .dashboard button:focus-visible { outline: 2px solid white; outline-offset: 4px; }
