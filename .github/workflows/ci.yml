@@ -1,0 +1,125 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Build and test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      COMPOSE_PROJECT_NAME: starwars-ci
+      HTTP_PORT: '8080'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+
+      - name: Check JavaScript
+        run: |
+          find assets -name '*.js' -print0 | xargs -0 -n1 node --check
+          node tests/urls.cjs
+
+      - name: Validate Compose configuration
+        run: docker compose config --quiet
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Build application image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          load: true
+          push: false
+          tags: starwars-intro:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Start fresh application and database
+        run: docker compose up --no-build --detach --wait --wait-timeout 120 starwars
+
+      - name: Validate PHP and server configuration
+        run: |
+          docker compose exec -T starwars composer validate --strict
+          docker compose exec -T starwars composer dump-autoload --optimize --strict-psr
+          docker compose exec -T starwars sh -ec 'find app tests -name "*.php" -print0 | xargs -0 -n1 php -l; php -l index.php'
+          docker compose exec -T starwars nginx -t
+          docker compose exec -T starwars php-fpm -t
+          docker compose exec -T starwars php -r 'if (!extension_loaded("xdebug")) { throw new RuntimeException("Xdebug is missing"); }'
+
+      - name: Run PHP regression checks
+        run: |
+          docker compose exec -T starwars php tests/preload.php
+          docker compose exec -T starwars php tests/random.php
+          docker compose exec -T starwars php tests/bootstrap.php
+
+      - name: Check fresh schema and user management
+        run: |
+          docker compose run --rm --no-deps -T --entrypoint php \
+            --volume "$PWD/db:/starwars/db:ro" \
+            --env RUN_DATABASE_TESTS=1 --env TEST_MYSQL_ROOT_PASSWORD=starwars \
+            starwars tests/database.php
+
+      - name: Seed HTTP test accounts
+        run: |
+          docker compose exec -T starwars php <<'PHP'
+          <?php
+          require 'vendor/autoload.php';
+          use StarWars\Models\{Database, User};
+          $db = Database::connection();
+          User::Create($db, 'CiAdmin', 'AdminPassword123', 'admin@example.test', true);
+          User::Create($db, 'CiInactive', 'FixturePassword123', 'inactive@example.test');
+          PHP
+
+      - name: Test application at root
+        run: |
+          python3 tests/smoke.py "http://127.0.0.1:${HTTP_PORT}" --database \
+            --admin-username CiAdmin --admin-password AdminPassword123
+
+      - name: Start application under a URL prefix
+        env:
+          SITE_PATH_PREFIX: /demo
+        run: docker compose up --no-build --detach --wait --wait-timeout 120 starwars
+
+      - name: Seed inactive account for prefixed checks
+        run: |
+          docker compose exec -T starwars php <<'PHP'
+          <?php
+          require 'vendor/autoload.php';
+          use StarWars\Models\{Database, User};
+          User::Create(Database::connection(), 'CiInactive', 'FixturePassword123', 'inactive@example.test');
+          PHP
+
+      - name: Test application under a URL prefix
+        run: |
+          python3 tests/smoke.py "http://127.0.0.1:${HTTP_PORT}/demo" --database \
+            --admin-username CiAdmin --admin-password AdminPassword123
+
+      - name: Show container diagnostics on failure
+        if: failure()
+        run: |
+          docker compose ps --all
+          docker compose logs --no-color --tail=200
+
+      - name: Remove test containers and data
+        if: always()
+        run: docker compose down --volumes --remove-orphans

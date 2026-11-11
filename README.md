@@ -199,6 +199,12 @@ These checks require the test server's root password. They verify the current sc
 
 The HTTP suite checks controller routes, layouts, static-file responses, cookies, authentication, intro CRUD, and integer-ID ownership restrictions. Email delivery requires a configured mail transport and is not covered.
 
+## Continuous integration
+
+The GitHub Actions `CI` workflow runs on pushes, pull requests, and manual dispatch. It checks JavaScript, builds the combined Docker image, validates PHP and server configuration, and runs preload, random-generation, session-error, fresh-schema, and user-management tests. HTTP checks cover authentication, admin actions, intro CRUD, and both root and `/demo` URLs.
+
+CI loads the image locally for testing and does not publish it to a registry. Failed runs print container diagnostics, and the test containers and database volume are always cleaned up.
+
 ## Credits
 
 Vector artwork was created by Riccardo Ciucci or provided by [SVG Repo](https://www.svgrepo.com). The Star Wars logo and music belong to Disney. This project's code may not be used for profit.
