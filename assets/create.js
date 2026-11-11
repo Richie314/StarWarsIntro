@@ -37,7 +37,7 @@ const refreshTvBtn = document.getElementById('reload-tv');
 
 function UpdateTvSrc()
 {
-    const base = './view.php?';
+    const base = tv.dataset.viewUrl + '?';
     const params =  new URLSearchParams({
         'episode': episodeInput.value.trim(),
         'title': titleInput.value.trim(),
@@ -143,7 +143,7 @@ function ShowOriginal(episode, lang)
 {
     if (!episode || episode.length === 0 || !lang || lang.length === 0)
         return;
-    const base = './view.php?';
+    const base = tv.dataset.viewUrl + '?';
     const params =  new URLSearchParams({
         'original': episode,
         'lang': lang
@@ -151,7 +151,7 @@ function ShowOriginal(episode, lang)
     const url = base + params.toString();
 
     tv.blur(); // Remove focus from the element
-    tv.lang = langInput.value;
+    tv.lang = lang;
     SetTvSrc(url);
 }
 if (dialogSelect) {
@@ -177,7 +177,7 @@ function ShowShareDialog()
     if (!document.body.classList.contains('can-share'))
         return;
     const url = new URL(location.href);
-    if (!url.searchParams.has('action', 'share'))
+    if (url.searchParams.get('action') !== 'share')
     {
         return;
     }
@@ -200,7 +200,7 @@ function ShowShareDialog()
         navigator.share({
             title: 'Intro di Star Wars personalizzata',
             text: 'Guarda la mia intro di Star Wars personalizzata!',
-            url: `./view.php?original=${id}`
+            url: new URL(tv.dataset.viewUrl + '?id=' + encodeURIComponent(id), location.origin).href
         });
         dialog.close();
     }
@@ -216,7 +216,7 @@ ShowShareDialog();
 function ShowEditedPrompt()
 {
     const url = new URL(location.href);
-    if (!url.searchParams.has('action', 'edited'))
+    if (url.searchParams.get('action') !== 'edited')
     {
         return;
     }

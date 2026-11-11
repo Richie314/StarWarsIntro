@@ -1,14 +1,21 @@
 services:
   starwars:
+    image: starwars-intro:latest
     build: .
     ports:
-      - 80:80
+      - "${HTTP_PORT:-8080}:80"
     environment:
-      - MYSQL_HOST=mysql
-      - MYSQL_USER=starwars
-      - MYSQL_PASSWORD=starwars
-      - MYSQL_DATABASE_NAME=starwars
-      - SITE_DOMAIN=starwars.ciucci.dev
+      MYSQL_HOST: mysql
+      MYSQL_USER: starwars
+      MYSQL_PASSWORD: starwars
+      MYSQL_DATABASE_NAME: starwars
+      SITE_PATH_PREFIX: "${SITE_PATH_PREFIX:-}"
+      ASSET_CACHE_TTL: 'off'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    depends_on:
+      mysql:
+        condition: service_healthy
     networks:
       - db
 
@@ -17,22 +24,32 @@ services:
     expose:
       - 3306
     environment:
-      - MARIADB_ROOT_PASSWORD=starwars
-      - MARIADB_USER=starwars
-      - MARIADB_PASSWORD=starwars
-      - MARIADB_DATABASE=starwars
+      MARIADB_ROOT_PASSWORD: starwars
+      MARIADB_USER: starwars
+      MARIADB_PASSWORD: starwars
+      MARIADB_DATABASE: starwars
     networks:
       - db
     volumes:
-      - ./test_db:/var/lib/mysql:Z
+      - db-data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
 
   phpmyadmin:
     image: phpmyadmin
-    ports: 
-      - 8080:80
+    profiles: [database-tools]
+    ports:
+      - "${PHPMYADMIN_PORT:-8081}:80"
     environment:
-      - PMA_HOST=mysql
+      PMA_HOST: mysql
     networks:
       - db
 networks:
   db:
+volumes:
+  db-data:

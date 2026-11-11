@@ -1,0 +1,164 @@
+{
+  "en/1": {
+    "sha256": "c20974ca544d933db7328df1b21b85de2a7f4f336abb777bbe29621159df7a64",
+    "bytes": 494,
+    "crlf": 0,
+    "lf": 19,
+    "title": "The Phantom Menace",
+    "episode": "Episode I",
+    "bom": true
+  },
+  "en/2": {
+    "sha256": "383745f17dad12a24f102318dee4623cf1105b1f092d3756f93e0aa7295d9421",
+    "bytes": 492,
+    "crlf": 0,
+    "lf": 18,
+    "title": "Attack of the Clones",
+    "episode": "Episode II",
+    "bom": true
+  },
+  "en/3": {
+    "sha256": "092819054437c0d952afcd6a91c3c603abfb1ae81435046c8b722b636a52eab8",
+    "bytes": 484,
+    "crlf": 0,
+    "lf": 18,
+    "title": "Revenge of the Sith",
+    "episode": "Episode III",
+    "bom": true
+  },
+  "en/4": {
+    "sha256": "15195b7c70658d149681c506ffcc830b2b9a88684fec8ff663dc08fc17b1a42b",
+    "bytes": 512,
+    "crlf": 0,
+    "lf": 21,
+    "title": "A New Hope",
+    "episode": "Episode IV",
+    "bom": true
+  },
+  "en/5": {
+    "sha256": "235521216a547f8e9bd01fe2277ff7ec1f42051859e3ba91c7aa3ea3fa40cce9",
+    "bytes": 488,
+    "crlf": 0,
+    "lf": 19,
+    "title": "The Empire Strikes Back",
+    "episode": "Episode V",
+    "bom": true
+  },
+  "en/6": {
+    "sha256": "d8e8c328d828bbfdb96056966a5fd645e98e6de6da59e3bd7c6c3430e2f00b4e",
+    "bytes": 463,
+    "crlf": 0,
+    "lf": 18,
+    "title": "Return of The Jedi",
+    "episode": "Episode VI",
+    "bom": true
+  },
+  "en/7": {
+    "sha256": "c8539f73f64162fa074bf580fd0e4e28a4d1f94456379b561e4c1b99de0b43cc",
+    "bytes": 501,
+    "crlf": 0,
+    "lf": 20,
+    "title": "The Force Awakens",
+    "episode": "Episodio VII",
+    "bom": true
+  },
+  "en/8": {
+    "sha256": "d21c09095676068133e359cc784fda64757ffa07abb34f94e115b5b63afb21a7",
+    "bytes": 479,
+    "crlf": 0,
+    "lf": 19,
+    "title": "The last Jedi",
+    "episode": "Episode VIII",
+    "bom": true
+  },
+  "en/9": {
+    "sha256": "b49da239ba79bf90bcd0e4d6440c32705f7e42c4c1774519dbb182eecf14be84",
+    "bytes": 424,
+    "crlf": 0,
+    "lf": 17,
+    "title": "Rise of Skywalker",
+    "episode": "Episode IX",
+    "bom": true
+  },
+  "it/1": {
+    "sha256": "b95616ba72b63d4762afa9ba1303f84ddc29f9da8b7f19e647a7324661bdaa83",
+    "bytes": 553,
+    "crlf": 0,
+    "lf": 20,
+    "title": "La minaccia fantasma",
+    "episode": "Episodio I",
+    "bom": true
+  },
+  "it/2": {
+    "sha256": "ed7156be05c70cd380540908e681dfa62bebbabca82784e6b1b25790f1f7bc69",
+    "bytes": 522,
+    "crlf": 0,
+    "lf": 19,
+    "title": "L'attacco dei cloni",
+    "episode": "Episodio II",
+    "bom": true
+  },
+  "it/3": {
+    "sha256": "602d7f6a66b1d01daeb91185f8fc8abffca53ada9a78eac93e3dce64ee54e1c3",
+    "bytes": 573,
+    "crlf": 0,
+    "lf": 21,
+    "title": "La vendetta dei Sith",
+    "episode": "Episodio III",
+    "bom": true
+  },
+  "it/4": {
+    "sha256": "8e4f03aec336fea7021bd0104b7561f8f610b6588ac277607598f42066d644fd",
+    "bytes": 591,
+    "crlf": 0,
+    "lf": 25,
+    "title": "Una nuova speranza",
+    "episode": "Episodio IV",
+    "bom": true
+  },
+  "it/5": {
+    "sha256": "1d96265489d4e7610fd31c60ab2895aa8bfdce7cd601b88389ff24230546f3ef",
+    "bytes": 581,
+    "crlf": 0,
+    "lf": 23,
+    "title": "L'Impero colpisce ancora",
+    "episode": "Episodio V",
+    "bom": true
+  },
+  "it/6": {
+    "sha256": "d4e7545536d01087f2c71caa07fb218f3a3a8b1ced4c45cf280ca784210bde70",
+    "bytes": 480,
+    "crlf": 0,
+    "lf": 21,
+    "title": "Il Ritorno dello Jedi",
+    "episode": "Episodio VI",
+    "bom": true
+  },
+  "it/7": {
+    "sha256": "f878d5fbd1d6171ee647ac335a259426f1996298e89078835f5c01dba105760e",
+    "bytes": 549,
+    "crlf": 0,
+    "lf": 20,
+    "title": "Il Risveglio della Forza",
+    "episode": "Episodio VII",
+    "bom": true
+  },
+  "it/8": {
+    "sha256": "4014fe8bd1f552ade9870c3657ca1225048329bebb6765b2d24116e7da5814ff",
+    "bytes": 532,
+    "crlf": 0,
+    "lf": 20,
+    "title": "Gli Ultimi Jedi",
+    "episode": "Episodio VIII",
+    "bom": true
+  },
+  "it/9": {
+    "sha256": "211f9fcf9e4062ed783eb0e94e610f3186689a583a4c530a9735dae76f30e577",
+    "bytes": 462,
+    "crlf": 0,
+    "lf": 19,
+    "title": "L'Ascesa di Skywalker",
+    "episode": "Episodio IX",
+    "bom": true
+  }
+}

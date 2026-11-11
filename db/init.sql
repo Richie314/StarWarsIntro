@@ -1,101 +1,69 @@
-
---
--- Creation of tables and indexes
---
-
+-- The library user contract is Id:int, Name:string, Admin:bool.
+-- Persistence, login history and intro tables are application-owned.
 CREATE TABLE `users`
 (
-    `ID` VARCHAR(32) NOT NULL PRIMARY KEY,
-    `Password` CHAR(64) NOT NULL,
+    `Id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `Name` VARCHAR(32) NOT NULL,
+    `PasswordHash` VARCHAR(255) NOT NULL,
     `Email` VARCHAR(128) DEFAULT NULL,
-    `Admin` BIT NOT NULL DEFAULT FALSE
-) Engine=InnoDB;
-
-CREATE INDEX `UsersEmailIndex`
-ON `users` (`Email`);
+    `Admin` BOOLEAN NOT NULL DEFAULT FALSE,
+    CONSTRAINT `UsersNameUnique` UNIQUE (`Name`),
+    CONSTRAINT `UsersNameNotBlank` CHECK (CHAR_LENGTH(TRIM(`Name`)) > 0),
+    CONSTRAINT `UsersPasswordNotBlank` CHECK (CHAR_LENGTH(`PasswordHash`) > 0),
+    CONSTRAINT `UsersAdminBoolean` CHECK (`Admin` IN (0, 1)),
+    INDEX `UsersEmailIndex` (`Email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `login`
 (
-    `User` VARCHAR(32) NOT NULL,
-    `When` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `Id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `UserId` INT UNSIGNED NOT NULL,
+    `When` DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     `Ip` VARCHAR(64) NOT NULL,
     `Device` VARCHAR(256) NOT NULL,
-
-    PRIMARY KEY (`User`, `When`, `Ip`),
-    FOREIGN KEY (`User` ) 
-        REFERENCES `users` (`ID`)
-            ON UPDATE CASCADE
-            ON DELETE CASCADE
-) Engine=InnoDB;
-
-CREATE INDEX `LoginWhenIndex`
-ON `login` (`When`);
-
-CREATE INDEX `LoginIpIndex`
-ON `login` (`Ip`);
+    CONSTRAINT `LoginUserForeignKey` FOREIGN KEY (`UserId`)
+        REFERENCES `users` (`Id`) ON UPDATE CASCADE ON DELETE CASCADE,
+    INDEX `LoginWhenIndex` (`When`),
+    INDEX `LoginIpIndex` (`Ip`),
+    INDEX `LoginUserWhenIndex` (`UserId`, `When`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `openings`
 (
-    `ID` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `Id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `Title` VARCHAR(128) NOT NULL,
     `Episode` VARCHAR(64) NOT NULL,
     `Content` VARCHAR(4096) DEFAULT NULL,
     `Language` ENUM ('it', 'en') NOT NULL,
-    `Author` VARCHAR(32) DEFAULT NULL,
+    `AuthorId` INT UNSIGNED DEFAULT NULL,
     `Creation` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `LastEdit` DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP CHECK (`LastEdit` >= `Creation`),
+    `LastEdit` DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT `OpeningsEditDate` CHECK (`LastEdit` >= `Creation`),
+    CONSTRAINT `OpeningsAuthorForeignKey` FOREIGN KEY (`AuthorId`)
+        REFERENCES `users` (`Id`) ON UPDATE CASCADE ON DELETE SET NULL,
+    INDEX `OpeningsCreationIndex` (`Creation`),
+    INDEX `OpeningsLastEditIndex` (`LastEdit`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-    FOREIGN KEY (`Author`) 
-        REFERENCES `users` (`ID`)
-            ON UPDATE CASCADE
-            ON DELETE SET NULL
-) Engine=InnoDB;
-
-CREATE INDEX `OpeningsCreationIndex`
-ON `openings` (`Creation`);
-
-CREATE INDEX `OpeningsLastEditIndex`
-ON `openings` (`LastEdit`);
-
---
--- Creation of views: common queries to store
---
-
--- All the openings ordered by the
--- most recently created or edited
 CREATE VIEW `RecentOpenings` AS
-SELECT `o`.* 
-FROM `openings` AS `o`
-ORDER BY IFNULL(`o`.`LastEdit`, `o`.`Creation`) DESC;
+SELECT O.*, U.`Name` AS `AuthorName`
+FROM `openings` O LEFT JOIN `users` U ON U.`Id` = O.`AuthorId`
+ORDER BY COALESCE(O.`LastEdit`, O.`Creation`) DESC;
 
--- The most recent 100 log ins
 CREATE VIEW `RecentLogs` AS
-SELECT L.*, U.`Email`, U.`Admin`
-FROM `login` L
-    INNER JOIN `users`U ON L.`User` = U.`ID`
-ORDER BY L.`When` DESC
-LIMIT 100;
+SELECT L.`Id`, L.`UserId`, L.`When`, L.`Ip`, L.`Device`, U.`Name`, U.`Email`, U.`Admin`
+FROM `login` L INNER JOIN `users` U ON L.`UserId` = U.`Id`
+ORDER BY L.`When` DESC, L.`Id` DESC LIMIT 100;
 
--- Users that haven't logged in in a year 
 CREATE VIEW `InactiveUsers` AS
-SELECT U.`ID`, U.`Email`
+SELECT U.`Id`, U.`Name`, U.`PasswordHash`, U.`Email`, U.`Admin`
 FROM `users` U
-WHERE U.`Admin` = 0 AND NOT EXISTS (
-    SELECT *
-    FROM `login` L
-    WHERE L.`User` = U.`ID` AND DATEDIFF(CURRENT_TIMESTAMP, L.`When`) <= 366
+WHERE U.`Admin` = FALSE AND NOT EXISTS (
+    SELECT 1 FROM `login` L
+    WHERE L.`UserId` = U.`Id` AND L.`When` >= CURRENT_TIMESTAMP - INTERVAL 366 DAY
 );
 
---
--- Creation of events
---
-
-DROP EVENT IF EXISTS `DeleteOldLoginsEvent`;
-
--- Deletes logins of more than 150 days ago
 CREATE EVENT `DeleteOldLoginsEvent`
 ON SCHEDULE EVERY 1 MONTH
 STARTS CURRENT_TIMESTAMP + INTERVAL 1 DAY
-DO 
-    DELETE FROM `login`
-    WHERE DATEDIFF(CURRENT_TIMESTAMP, `When`) > 150;
+DO DELETE FROM `login` WHERE `When` < CURRENT_TIMESTAMP - INTERVAL 150 DAY;

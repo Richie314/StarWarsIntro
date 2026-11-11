@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Docker: Start and debug PHP",
+            "type": "php",
+            "request": "launch",
+            "port": 9003,
+            "pathMappings": {
+                "/starwars": "${workspaceFolder}"
+            },
+            "preLaunchTask": "Docker: Build and start",
+            "stopOnEntry": false
+        },
+        {
+            "name": "Docker: Listen for PHP debugger",
+            "type": "php",
+            "request": "launch",
+            "port": 9003,
+            "pathMappings": {
+                "/starwars": "${workspaceFolder}"
+            },
+            "stopOnEntry": false
+        }
+    ]
+}

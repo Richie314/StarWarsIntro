@@ -1,4 +1,5 @@
 'use strict';
+const audioSource = document.currentScript.dataset.audioUrl;
 // Prevent contextmenu from getting in the way
 document.oncontextmenu = evt => evt.preventDefault();
 
@@ -39,7 +40,7 @@ var start = 0;
 
 // Generate the audio as we want it
 function CreateAudio() {
-    const audio = new Audio('./assets/intro.mp3');
+    const audio = new Audio(audioSource);
     audio.autoplay = false;
     audio.muted = false;
     audio.preload = 'auto';
@@ -109,7 +110,7 @@ var audioLoaded = false;
 var pageStyleLoaded = false;
 var pageAnimationsLoaded = false;
 function CheckLoad() {
-    if (!audioLoaded || !pageStyleLoaded || !pageAnimationsLoaded)
+    if (document.readyState === 'loading' || !audioLoaded || !pageStyleLoaded || !pageAnimationsLoaded)
         return;
     StartPage();
 }
@@ -126,6 +127,7 @@ function PageAnimationsLoaded() {
     CheckLoad();
 }
 
+document.addEventListener('DOMContentLoaded', CheckLoad);
 audio.addEventListener('loadeddata', () => AudioLoaded());
 document.addEventListener('click', () => StartAudio());
 

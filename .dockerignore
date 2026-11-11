@@ -1,5 +1,9 @@
 *.env
 *.md
-db
 .github
 Dockerfile
+.git
+vendor
+test_db
+.vscode
+db

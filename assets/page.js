@@ -18,15 +18,11 @@ images.forEach(img => img.oncontextmenu = e => e.preventDefault());
 //  Sharing checks
 //
 
-const current_folder = location.protocol + '//' + 
-    location.hostname + location.pathname.split('/').filter((s, i) => i !== location.pathname.split('/').length - 1).join('/') + '/';
-if (navigator.share && navigator.canShare({
-    title: 'Intro di Star Wars personalizzata',
-    text: 'Guarda la mia intro di Star Wars personalizzata!',
-    url: current_folder + 'view.php?original=' + Math.floor(Math.random() * 9) + 1
-}));
-
-document.body.classList.add('can-share');
+const sampleUrl = new URL(document.body.dataset.viewUrl, location.origin);
+sampleUrl.searchParams.set('original', String(Math.floor(Math.random() * 9) + 1));
+if (navigator.share && navigator.canShare && navigator.canShare({ url: sampleUrl.href })) {
+    document.body.classList.add('can-share');
+}
 
 //
 //  Handle automatic scroll on page load
@@ -53,12 +49,12 @@ ScrollFragment();
 const inPageAnchors = document.querySelectorAll('a[href*=\'#\']');
 inPageAnchors.forEach(a => {
     const url = new URL(a.href);
-    if (!url.hash || url.hash.length <= 1 || url.pathname !== '')
+    if (!url.hash || url.hash.length <= 1 || url.pathname !== location.pathname || url.origin !== location.origin)
         return;
     a.onclick = e => {
         e.preventDefault();
         const target = document.getElementById(url.hash.substring(1));
-        target.scrollIntoView();
+        target?.scrollIntoView();
     }
 });
 
@@ -70,36 +66,16 @@ inPageAnchors.forEach(a => {
  * @param {object} params the parameters to add to the url
  * @returns {object}
  */
-async function post(path, params = null)
-{
-    async function post_async(path, params)
-    {
-
-        if (params)
-        {
-            const form_data = new FormData();
-            for (const [name, value] of Object.entries(params))
-            {
-                form_data.append(name, value);
-            }
-            return await fetch(path, {
-                method: 'POST',
-                body: form_data
-            });
-        }
-        return await fetch(path, {
-            method: 'POST'
-        });
+async function post(path, params = {}) {
+    const body = new FormData();
+    for (const [name, value] of Object.entries(params)) {
+        body.append(name, value);
     }
     try {
-		const response = await post_async(path, params);
-		if (!response.ok)
-		{
-			return {};
-		}
-		return await response.json();
-	} catch (err) {
-		console.warn(err);
-		return {};
-	}
+        const response = await fetch(path, { method: 'POST', body });
+        return response.ok ? await response.json() : {};
+    } catch (error) {
+        console.warn(error);
+        return {};
+    }
 }

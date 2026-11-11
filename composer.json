@@ -1,0 +1,16 @@
+{
+    "name": "richie314/star-wars-intro",
+    "description": "Create and share custom Star Wars openings",
+    "type": "project",
+    "require": {
+        "php": ">=8.3",
+        "ext-mysqli": "*",
+        "richie314/simple-mvc": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "StarWars\\": "app/"
+        }
+    },
+    "license": "proprietary"
+}

@@ -1,3 +1,5 @@
 .hintrc
 .env
 test_db
+/vendor/
+composer.lock
