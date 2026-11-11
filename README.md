@@ -67,7 +67,7 @@ Available **Terminal → Run Task** actions:
 - **Docker: Build and start**: build and start the combined image and MariaDB.
 - **Docker: Stop**: stop containers while preserving data.
 
-Use **Docker: Listen for PHP debugger** to attach to an already running stack. Stopping the debugger leaves the containers running. There is one Compose configuration for both regular browsing and debugging; Xdebug activates only when a request contains a trigger.
+Use **Docker: Listen for PHP debugger** to attach to an already running stack. Ending either debug session automatically runs **Docker: Stop**, which stops the Compose containers while preserving database data. There is one Compose configuration for both regular browsing and debugging; Xdebug activates only when a request contains a trigger.
 
 After changing source files, assets, or dependencies, rebuild the application image:
 

@@ -10,7 +10,8 @@
                 "/starwars": "${workspaceFolder}"
             },
             "preLaunchTask": "Docker: Build and start",
-            "stopOnEntry": false
+            "stopOnEntry": false,
+            "postDebugTask": "Docker: Stop"
         },
         {
             "name": "Docker: Listen for PHP debugger",
@@ -20,7 +21,8 @@
             "pathMappings": {
                 "/starwars": "${workspaceFolder}"
             },
-            "stopOnEntry": false
+            "stopOnEntry": false,
+            "postDebugTask": "Docker: Stop"
         }
     ]
 }
