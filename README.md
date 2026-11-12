@@ -9,6 +9,8 @@
 [![Docker Compose](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)](docker-compose.yml)
 [![jQuery](https://img.shields.io/badge/jQuery-4.0.0-0769AD?logo=jquery&logoColor=white)](https://jquery.com/)
 
+> **Live demo:** [Try Star Wars Intro](https://starwars.ciucci.dev).
+
 A PHP and MySQL application for creating and sharing custom Star Wars opening crawls. Users can register, write their own intros, preview them in a browser, and share a link. The animation uses CSS and JavaScript.
 
 The interface defaults to English. Use the SVG flag buttons in the navbar to switch between English and Italian; your choice is remembered for a year. Navigation includes visible labels, active-page highlighting, and a keyboard-accessible mobile menu. Original movie intros are available in both languages.

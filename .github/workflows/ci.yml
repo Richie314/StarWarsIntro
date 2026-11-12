@@ -68,12 +68,17 @@ jobs:
           docker compose exec -T starwars php-fpm -t
           docker compose exec -T starwars php -r 'if (!extension_loaded("xdebug")) { throw new RuntimeException("Xdebug is missing"); }'
 
-      - name: Run PHP regression checks
-        run: |
-          docker compose exec -T starwars php tests/i18n.php
-          docker compose exec -T starwars php tests/preload.php
-          docker compose exec -T starwars php tests/random.php
-          docker compose exec -T starwars php tests/bootstrap.php
+      - name: Check translations
+        run: docker compose exec -T starwars php tests/i18n.php
+
+      - name: Check original intro data
+        run: docker compose exec -T starwars php tests/preload.php
+
+      - name: Check random helpers
+        run: docker compose exec -T starwars php tests/random.php
+
+      - name: Check bootstrap error handling
+        run: docker compose exec -T starwars php tests/bootstrap.php
 
       - name: Check fresh schema and user management
         run: |

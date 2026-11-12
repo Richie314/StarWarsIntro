@@ -6,8 +6,19 @@ use StarWars\Support\I18n;
 
 $en = json_decode(file_get_contents(__DIR__ . '/../app/Translations/en.json'), true, flags: JSON_THROW_ON_ERROR);
 $it = json_decode(file_get_contents(__DIR__ . '/../app/Translations/it.json'), true, flags: JSON_THROW_ON_ERROR);
-if (array_keys($en) !== array_keys($it) || count(array_filter($it, fn($text) => !is_string($text) || $text === ''))) {
-    throw new RuntimeException('Translation catalogues must have matching keys and nonempty strings.');
+$missingItalian = array_diff(array_keys($en), array_keys($it));
+$missingEnglish = array_diff(array_keys($it), array_keys($en));
+if ($missingItalian || $missingEnglish) {
+    throw new RuntimeException('Translation catalogue mismatch. Missing Italian keys: '
+        . json_encode(array_values($missingItalian), JSON_UNESCAPED_UNICODE)
+        . '; missing English keys: ' . json_encode(array_values($missingEnglish), JSON_UNESCAPED_UNICODE));
+}
+foreach (['en' => $en, 'it' => $it] as $language => $catalogue) {
+    foreach ($catalogue as $key => $value) {
+        if (!is_string($value) || trim($value) === '') {
+            throw new RuntimeException("Empty or invalid translation in $language: $key");
+        }
+    }
 }
 foreach (['en', 'it', 'fr', null, ['it']] as $cookie) {
     $_COOKIE['site-language'] = $cookie;
