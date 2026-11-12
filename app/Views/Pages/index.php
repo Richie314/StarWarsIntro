@@ -17,7 +17,7 @@
     <h2><?= $t('About this project') ?></h2>
     <p class="justify"><?= $t('Created by Riccardo Ciucci for the Web Design exam of the Computer Engineering degree at the University of Pisa, academic year 2023–24.') ?></p>
     <p><a class="link" href="https://ciucci.dev" target="_blank" rel="noopener">Riccardo Ciucci</a> · <a class="link" href="https://www.unipi.it/">Università di Pisa</a></p>
-    <p class="justify"><?= $t('This is a non-commercial, open-source demo. No copyright infringement is intended.') ?></p>
+    <p class="justify"><?= $t('This is a noncommercial, source-available educational demo. Third-party rights are separate; see credits and license.') ?></p>
     <p><?= $t('Icons from') ?> <a href="https://svgrepo.com" class="link" target="_blank" rel="noopener">SVG Repo<i class="icon svgrepo"></i></a>
         <?= $t('and created with') ?> <a href="https://www.figma.com/" class="link" target="_blank" rel="noopener">Figma<i class="icon figma"></i></a>.</p>
 </article>

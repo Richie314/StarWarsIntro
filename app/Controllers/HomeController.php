@@ -14,6 +14,16 @@ class HomeController extends Controller
         return $this->Render('Pages/index', title: I18n::text("Star Wars Intro Creator"));
     }
 
+    public function credits(): StatusCode
+    {
+        $root = dirname(__DIR__, 2);
+        return $this->Render('Pages/credits', [
+            'licenseText' => file_get_contents($root . '/LICENSE'),
+            'rightsNotice' => file_get_contents($root . '/NOTICE'),
+            'thirdPartyNotices' => file_get_contents($root . '/THIRD_PARTY_NOTICES'),
+        ], title: I18n::text('Credits and license'));
+    }
+
     public function error(int $code = 400, string $err = ''): StatusCode
     {
         $status = StatusCode::tryFrom($code);

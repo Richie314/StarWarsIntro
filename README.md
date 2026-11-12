@@ -3,6 +3,7 @@
 # Star Wars Intro
 
 [![CI](https://github.com/Richie314/StarWarsIntro/actions/workflows/ci.yml/badge.svg)](https://github.com/Richie314/StarWarsIntro/actions/workflows/ci.yml)
+[![License: Noncommercial](https://img.shields.io/badge/License-Education%20%26%20Personal%20NC-yellow)](LICENSE)
 [![PHP](https://img.shields.io/badge/PHP-8.4-777BB4?logo=php&logoColor=white)](https://www.php.net/)
 [![Simple MVC](https://img.shields.io/packagist/v/richie314/simple-mvc?label=Simple%20MVC)](https://packagist.org/packages/richie314/simple-mvc)
 [![Docker Compose](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)](docker-compose.yml)
@@ -117,6 +118,8 @@ Each base path maps to the controller's `index()` action. Other public action na
 | `/admin` | Administration |
 | `/admin/deleteUser` | Delete a user via POST |
 | `/acceptCookies` | Store cookie consent via POST |
+| `/language` | Store the interface language via POST |
+| `/credits` | Bilingual credits, license, and rights notices |
 | `/error` | Error page |
 
 Links use hardcoded paths with the installation prefix: `$p . '/opening/view'` in templates and `$this->PathPrefix . '/opening/view'` in controllers. There is no route registry or PHP static-file router. Shared legacy `/view.php?...` links redirect to `/opening/view?...` in Nginx.
@@ -225,14 +228,22 @@ These checks require the test server's root password. They verify the current sc
 
 The HTTP suite checks controller routes, layouts, static-file responses, cookies, authentication, intro CRUD, and integer-ID ownership restrictions. Email delivery requires a configured mail transport and is not covered.
 
-## Continuous integration
+## License
 
-The GitHub Actions `CI` workflow runs on pushes, pull requests, and manual dispatch. It checks JavaScript, builds the combined Docker image, validates PHP and server configuration, and runs preload, random-generation, session-error, fresh-schema, and user-management tests. HTTP checks cover authentication, admin actions, intro CRUD, and both root and `/demo` URLs.
+The original code is **source available**, under the custom [Educational and Personal Noncommercial License 1.0](LICENSE). It permits noncommercial education, research, study, occasional personal recreation, and free demonstrations. It is not an OSI-approved open-source license.
 
-CI loads the image locally for testing and does not publish it to a registry. Failed runs print container diagnostics, and the test containers and database volume are always cleaned up.
+Resale, paid products or bundles, subscriptions, paid services or client work, advertising (including ads that only cover hosting), sponsorship, affiliate income, and related donations or tips are prohibited. An educational label or nonprofit status does not override these restrictions. Preserve the author credit, full license, and notices when sharing copies or container images; mark modifications. The full English license is authoritative. Composer's `proprietary` value denotes these custom terms; it does not replace the license file.
 
-## Credits
+This custom wording addresses the explicit no-monetization requirement; standard licenses may allow uses this project does not intend to authorize. Have qualified counsel review the terms for the intended jurisdictions before relying on their enforceability.
 
-Vector artwork was created by Riccardo Ciucci or provided by [SVG Repo](https://www.svgrepo.com). The Star Wars logo and music belong to Disney. This project's code may not be used for profit.
+## Credits and third-party rights
 
-Originally developed for the Web Programming examination in the Computer Engineering degree at the [University of Pisa](https://www.unipi.it), taught by [Alessio Vecchio](https://vecchio.iet.unipi.it/vecchio/), academic year 2023–2024.
+Original application: **Riccardo Ciucci** ([ciucci.dev](https://ciucci.dev)). Originally developed for the Web Programming examination in the Computer Engineering degree at the [University of Pisa](https://www.unipi.it), taught by [Alessio Vecchio](https://vecchio.iet.unipi.it/vecchio/), academic year 2023–2024. Academic origin does not imply university endorsement.
+
+This is an **unofficial educational fan project**, unaffiliated with and not endorsed by Lucasfilm or Disney. Star Wars names, marks, characters, artwork, and film material remain subject to their respective owners' rights. The code license grants **no rights** to third-party music, recordings, film text, fonts, or artwork.
+
+See [NOTICE](NOTICE) and [THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES) for the rights inventory, references, and unresolved permissions. The bilingual **Credits and license** page is linked from the footer and playback credits. License and notice files are included in the application image.
+
+**No disclaimer or code license shields this project from Disney or other rights holders.** Noncommercial or educational intent does not automatically make copying lawful. [EU teaching exceptions have specific conditions](https://www.wipo.int/wipolex/en/legislation/details/1453), and [US fair use depends on multiple factors](https://www.copyright.gov/fair-use/more-info.html). Existing assets are retained at the author's request; public distribution is not represented as cleared. Obtain the necessary permissions or replace/remove uncleared assets before public deployment or redistribution. Disney publishes an [official permission inquiry process](https://www.disneystudiolicensing.com/).
+
+Rights inquiries or removal requests can be raised through the [project issue tracker](https://github.com/Richie314/StarWarsIntro/issues). Do not post confidential documents publicly. This contact channel is not a legal safe-harbor claim.

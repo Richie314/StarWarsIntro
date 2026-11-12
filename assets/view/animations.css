@@ -1,40 +1,43 @@
 /*
-*    ./assets/view/animations.css
-*    included through php
-*    every keyframes is presented as @keyframes, @-webkit-keyframes and @-moz-keyframes
-*/
+ * ./assets/view/animations.css
+ * included through php
+ * every keyframes is presented as @keyframes, @-webkit-keyframes and @-moz-keyframes
+ */
 
-/*
-    Main loading screen
-*/
+/* Main loading screen */
+
 @-webkit-keyframes Loader {
     from {
         transform: rotate(0turn);
     }
-    to {
-        transform: rotate(1turn);
-    }
-}
-@-moz-keyframes Loader {
-    from {
-        transform: rotate(0turn);
-    }
-    to {
-        transform: rotate(1turn);
-    }
-}
-@keyframes Loader {
-    from {
-        transform: rotate(0turn);
-    }
+
     to {
         transform: rotate(1turn);
     }
 }
 
-/*
-    Intro animation: fade in and out
-*/
+@-moz-keyframes Loader {
+    from {
+        transform: rotate(0turn);
+    }
+
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+@keyframes Loader {
+    from {
+        transform: rotate(0turn);
+    }
+
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+/* Intro animation: fade in and out */
+
 @-webkit-keyframes intro {
     0% {
         opacity: 0;
@@ -52,6 +55,7 @@
         opacity: 0;
     }
 }
+
 @-moz-keyframes intro {
     0% {
         opacity: 0;
@@ -69,6 +73,7 @@
         opacity: 0;
     }
 }
+
 @keyframes intro {
     0% {
         opacity: 0;
@@ -87,9 +92,8 @@
     }
 }
 
-/*
-    Logo animation: shrink and fade out
-*/
+/* Logo animation: shrink and fade out */
+
 @-webkit-keyframes logo {
     0% {
         transform: scale(1.25);
@@ -157,6 +161,7 @@
         opacity: 0;
     }
 }
+
 @-moz-keyframes logo {
     0% {
         transform: scale(1.25);
@@ -224,6 +229,7 @@
         opacity: 0;
     }
 }
+
 @keyframes logo {
     0% {
         transform: scale(1.25);
@@ -292,29 +298,33 @@
     }
 }
 
-/*
-    Text scrolling
-*/
+/* Text scrolling */
+
 @-webkit-keyframes scroll {
     from {
         top: 100%;
     }
+
     to {
         top: -200%;
     }
 }
+
 @-moz-keyframes scroll {
     from {
         top: 100%;
     }
+
     to {
         top: -200%;
     }
 }
+
 @keyframes scroll {
     from {
         top: 100%;
     }
+
     to {
         top: -200%;
     }

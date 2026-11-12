@@ -47,12 +47,14 @@
         <?php } ?>
 
         <p>
-            <?= $t('Music belongs to Lucasfilm and Disney.') ?>
+            <?= $t('Unaffiliated fan project. Not endorsed by Disney or Lucasfilm.') ?>
             <br>
-            <?= $t('This public demo showcases web design and may not be used for commercial purposes.') ?>
+            <?= $t('Star Wars names, logos, characters, film text, music, and recordings remain subject to their respective rights holders. This project grants no rights to those materials.') ?>
             <br>
             <?= $t('For more information, visit the') ?> <a href="<?= htmlspecialchars($p . '/') ?>"><?= $t('home page') ?></a>
         </p>
+
+        <p><a href="<?= htmlspecialchars($p . '/credits') ?>"><?= $t('Credits and license') ?></a></p>
 
         <div class="row">
             <button type="button" id="restart">

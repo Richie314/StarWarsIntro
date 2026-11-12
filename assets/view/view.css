@@ -1,15 +1,16 @@
 /*
-*    ./assets/view/view.css
-*    included through php
-*/
+ * ./assets/view/view.css
+ * included through php
+ */
 
-/*
-    Main tags
-*/
+/* Main tags */
+
 * {
-    speak: none; /* prevent screen readers from reading */
+    speak: none;
+    /* prevent screen readers from reading */
     --color: #E2C64E;
 }
+
 body {
     margin: 0;
     background-color: black;
@@ -17,27 +18,29 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    /*min-width: 200px;*/
+    /* min-width: 200px; */
     min-height: 80px;
 }
 
-/*
-    Generic helper to hide elements
-*/
+/* Generic helper to hide elements */
+
 .hidden {
     display: none !important;
 }
+
 .no-cursor {
     cursor: none;
 }
 
 /*
-    Loader shown on start
-    with a good connection it can never appear (every loads really fast)
-*/
+ * Loader shown on start
+ * with a good connection it can never appear (every loads really fast)
+ */
+
 #loader {
     display: none;
 }
+
     body.wait #loader {
         display: flex;
         width: 100%;
@@ -50,6 +53,7 @@ body {
         align-items: center;
         filter: none;
     }
+
     body.wait *:not(#loader, .loader) {
         filter: blur(1.5px);
         /* Halt all animations until the loader is visible */
@@ -63,33 +67,34 @@ body {
     display: grid;
     user-select: none;
     cursor: progress;
-    
     -webkit-mask: conic-gradient(from 22deg, rgba(224, 191, 2, 0.2),yellow);
     mask: conic-gradient(from 22deg, rgba(224, 191, 2, 0.2),yellow);
-    
     -o-animation: Loader 1s steps(8) infinite;
     -moz-animation: Loader 1s steps(8) infinite;
     -webkit-animation: Loader 1s steps(8) infinite;
     animation: Loader 1s steps(8) infinite;
 }
-    .loader,
-    .loader::before {
-        --bar-w: 9.5%; /* Width of bars */
-        --bar-h: 35%; /* Height of bars */
-        background: 
-            linear-gradient(#d7d361 0 0) 50%/var(--bar-h) var(--bar-w) space no-repeat, /* More bright ones */
-            linear-gradient(#d7d361 0 0) 50%/var(--bar-w)  var(--bar-h) no-repeat space; /* Less bright ones */
-        
-    }
+
+.loader,
+.loader::before {
+    --bar-w: 9.5%;
+    /* Width of bars */
+    --bar-h: 35%;
+    /* Height of bars */
+    background:
+        linear-gradient(#d7d361 0 0) 50%/var(--bar-h) var(--bar-w) space no-repeat,
+        linear-gradient(#d7d361 0 0) 50%/var(--bar-w)  var(--bar-h) no-repeat space;
+    /* Less bright ones */
+}
+
     .loader::before {
         content: "";
         transform: rotate(45deg);
         /* .loader has 4 bars, .loader::before has the other 4 */
     }
 
-/*
-    Main element
-*/
+/* Main element */
+
 #screen {
     padding: 0;
     overflow: hidden;
@@ -102,10 +107,10 @@ body {
     --percentageOfHeight: calc(100vw / 1600 * 9);
     margin: calc(50vh - 50 * var(--percentageOfHeight)) 0 auto 0;
 }
+
 @media screen and (min-aspect-ratio: 16 / 9) {
-    /*
-        Keep all horizontal and in proportion
-    */
+    /* Keep all horizontal and in proportion */
+
     #screen {
         width: auto;
         height: 100vh;
@@ -115,9 +120,8 @@ body {
     }
 }
 
-/*
-    Style for "a long time ago in a galacy far, far away...."
-*/
+/* Style for "a long time ago in a galacy far, far away...." */
+
 .intro {
     font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
     position: absolute;
@@ -137,10 +141,8 @@ body {
     opacity: 0;
 }
 
+/* Style for STAR WARS svg logo */
 
-/*
-    Style for STAR WARS svg logo
-*/
 .logo {
     margin: 0;
     padding: 0;
@@ -158,6 +160,7 @@ body {
     opacity: 0;
     user-select: none;
 }
+
     .logo img {
         width: 100%;
         height: auto;
@@ -165,27 +168,24 @@ body {
         user-select: none;
     }
 
-/*
-    Text part
-*/
+/* Text part */
+
 #board {
     color: var(--color);
     font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
     user-select: none;
     font-weight: bold;
-    
     transform: perspective(calc(var(--percentageOfHeight) * 100)) rotateX(35deg);
     transform-origin: 50% 100%;
-    
     overflow: hidden;
     height: calc(350 * var(--percentageOfHeight));
     width: 95%;
     margin: auto 2.5% 0 2.5%;
-
     position: absolute;
     bottom: 0;
     left: 0;
 }
+
     #board::after {
         position: absolute;
         content: ' ';
@@ -194,23 +194,21 @@ body {
         right: 0;
         top: 0;
     }
-/*
-    Generic helper for br tags
-*/
+
+/* Generic helper for br tags */
+
 .break {
     font-size: 3.2em;
 }
 
-/*
-    Main text
-*/
+/* Main text */
+
 #content {
     color: inherit;
     -webkit-animation: scroll 140s linear 18s;
     -moz-animation: scroll 140s linear 18s;
     -o-animation: scroll 140s linear 18s;
     animation: scroll 140s linear 18s;
-
     position: absolute;
     top: 100%;
     width: 100%;
@@ -223,16 +221,18 @@ body {
     text-align: justify;
     user-select: none;
 }
+
     .paragraph br {
         content: "";
         margin: 2em;
         display: block;
         font-size: 24%;
     }
-/*
-    Espisode X, Css strikes back
-*/
-#episode, #title {
+
+/* Espisode X, Css strikes back */
+
+#episode,
+#title {
     color: inherit;
     text-align: center;
     font-size: 5.8em;
@@ -240,71 +240,65 @@ body {
     overflow-y: hidden;
     word-break: keep-all;
 }
-#title {
-    text-transform: uppercase;
-}
 
-/*
-    Who created the intro, link to site. Shown after everything else has disappeared
-*/
+    #title {
+        text-transform: uppercase;
+    }
+
+/* Who created the intro, link to site. Shown after everything else has disappeared */
+
 #credits {
     position: absolute;
     z-index: 50;
     top: 0;
     left: 0;
-
     width: 90%;
     max-width: 600vw;
     margin-inline: auto;
     overflow-x: hidden;
-
     height: auto;
     max-height: 100%;
     overflow-y: auto;
     margin-block-start: 8px;
-
     text-align: center;
     word-break: break-word;
     background-color: transparent;
-    color:var(--color);
+    color: var(--color);
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 4vh;
-
     user-select: none;
     opacity: 0;
     transition: opacity 1.4s ease-in;
 }
+
     #credits a {
-        color:var(--color);
+        color: var(--color);
     }
 
 .row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
-
     width: 100%;
     margin-inline: 0;
     height: auto;
-
     overflow: hidden;
 }
 
-#restart, #share {
+#restart,
+#share {
     cursor: pointer;
     background-color: transparent;
     color: var(--color);
     border: 2px solid;
     border-radius: 9px;
     font-size: x-large;
-
     width: 85%;
     margin-inline: auto;
 }
 
-/*
-    Stars that form the background
-*/
+/* Stars that form the background */
+
 .star {
     position: absolute;
 }

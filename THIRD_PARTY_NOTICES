@@ -1,0 +1,83 @@
+Third-party credits and rights inventory
+======================================
+
+The application license covers only material the author can license. This
+inventory gives known credits; entries marked unverified are NOT permission
+to copy, redistribute, publish, or relicense the corresponding material.
+
+Film material — separate permission not documented
+-------------------------------------------------
+* assets/intro.mp3: Star Wars-related soundtrack recording. Star Wars film
+  music was composed by John Williams. The precise recording, performer,
+  publisher, master owner, source, and redistribution permission for this
+  particular file are not documented in the repository. Composition and
+  sound-recording rights must be cleared separately; ownership must not be
+  attributed wholesale to a single company without verifying the recording.
+  Composer reference: https://www.lucasfilm.com/productions/music-by-john-williams/
+* preload/en/*.json and preload/it/*.json: transcribed film opening crawls and
+  titles, in English and Italian. Underlying film text and translation rights
+  remain with the relevant rights holders. Their preservation as data files
+  does not put them under the application's code license.
+* assets/img/starwarslogo.svg: Star Wars logo artwork and associated marks.
+* assets/img/benkenobi.svg: depiction of a Star Wars character.
+* assets/sitelogo.svg: composite site artwork containing Star Wars imagery.
+* docs/images/dashboard.png: screenshot of the application that may reproduce
+  some of the above material; it does not create new rights in that material.
+
+Star Wars-related material is associated with Lucasfilm Ltd. and The Walt
+Disney Company. This project is unofficial and is not endorsed by them.
+No permission from those companies is asserted. Official permission inquiry:
+https://www.disneystudiolicensing.com/
+https://disneypermissions.my.salesforce-sites.com/WelcomeIntakePage
+
+Font — author identified; distribution terms unverified
+-------------------------------------------------------
+assets/aurebesh.ttf identifies its designer in its embedded name table as
+Neale Davidson and contains: "Aurebesh © (Neale Davidson). 2013. All Rights
+Reserved". A redistribution or web-embedding grant for this precise file is
+not included in the repository. This is not a claim that it is licensed by
+other designers of similarly named Aurebesh fonts. Obtain its actual terms
+or replace it before relying on redistribution permission.
+
+Vector icons and artwork — mixed provenance
+-------------------------------------------
+The original project credits SVG Repo (https://www.svgrepo.com) as a source
+of icons and Figma (https://www.figma.com) as an authoring tool. SVG Repo is
+a catalogue of works under different licenses, not proof that every icon
+has one common license. Individual source pages and author records were not
+retained for most files in assets/img/. Verify them individually; no blanket
+permission or public-domain status is claimed here. GitHub, Figma, and other
+brand marks remain subject to their owners' rights.
+
+assets/img/italy.svg contains adapted Twemoji artwork and identifiers; its
+SVG wrapper and path representation differ from the upstream file. Credit:
+Twemoji graphics, Copyright Twitter, Inc. and other contributors, licensed
+under Creative Commons Attribution 4.0 International (CC BY 4.0):
+https://github.com/twitter/twemoji
+https://github.com/twitter/twemoji/blob/master/assets/svg/1f1ee-1f1f9.svg
+https://creativecommons.org/licenses/by/4.0/
+The file is used as an Italian language flag in this application's interface.
+This attribution is not a license for other, unrelated flag or icon files.
+
+Software dependencies — independent licenses
+--------------------------------------------
+* richie314/simple-mvc: Riccardo Ciucci / Richie314.
+  https://github.com/Richie314/Php-Simple-MVC
+  The installed v1.1.0 distribution contains an Apache License 2.0 LICENSE;
+  its Composer metadata reports "proprietary". The bundled license text is
+  reproduced in licenses/simple-mvc-LICENSE.txt. Review the actual upstream
+  distribution and resolve the metadata discrepancy before redistributing
+  it under an assumed license. This project's restrictions do not amend it.
+* jQuery 4.0.0: Copyright OpenJS Foundation and other contributors.
+  https://jquery.com/ — MIT; text in licenses/jquery-LICENSE.txt.
+  Loaded from the jQuery CDN for shared pages and used in development checks.
+* jsdom and its transitive npm dependencies are development-only. Their
+  respective package licenses and notices remain in their npm distributions;
+  node_modules is excluded from the application image.
+* PHP, Nginx, MariaDB, Composer, Xdebug, Supervisor, the base image, and other
+  container packages retain their independent upstream licenses and notices.
+  Their inclusion does not place them under the application's restrictions.
+
+Figma is credited as a tool, not as the owner or licensor of all vector work.
+Other than the credits identified above, no authorship or license has been
+inferred merely from a filename, an icon's appearance, or a download site.

@@ -1,0 +1,126 @@
+Educational and Personal Noncommercial License 1.0
+
+Copyright (c) 2026 Riccardo Ciucci
+Project: https://github.com/Richie314/StarWarsIntro
+
+1. SCOPE AND DEFINITIONS
+
+"Licensor" means the copyright holder granting rights under this license.
+"Software" means the original source code, documentation, and other original
+material that the Licensor expressly makes available under this license,
+including copies, modifications, translations, and derivative works of that
+material. "You" means any person or organization exercising these rights.
+
+The Software does not include third-party software, music, recordings, film
+texts, fonts, artwork, logos, trademarks, or user submissions merely because
+they appear in this repository or an application built from it. Those materials
+remain subject to their own rights and terms. See NOTICE and THIRD_PARTY_NOTICES.
+The Licensor grants only rights that the Licensor owns or is authorized to grant.
+
+2. PERMITTED PURPOSES AND GRANT
+
+Subject to every condition below, the Licensor grants You a worldwide,
+non-exclusive, royalty-free copyright license to use, study, execute, copy,
+modify, and distribute the Software solely for:
+
+(a) noncommercial education, teaching, learning, academic research, or evaluation;
+(b) personal, private, occasional recreational or hobby use; and
+(c) free, noncommercial demonstrations and sharing serving those purposes.
+
+A free educational demonstration may be publicly accessible. Public access is
+not permission to monetize it or to use third-party material without authority.
+There is no numerical limit on classroom uses that otherwise meet these terms.
+
+3. COMMERCIAL USE AND MONETIZATION ARE PROHIBITED
+
+You must not use, distribute, modify, provide access to, or otherwise exploit
+the Software, any substantial part of it, or a work based on it for commercial
+advantage or direct or indirect financial gain. In particular, You must not:
+
+(a) sell, resell, rent, sublicense for a fee, or charge for copies, access,
+    execution, generated intros, hosting, or services based on the Software;
+(b) bundle, embed, package, or incorporate it into a paid product, application,
+    subscription, hosted service, paid course, or paid distribution, even if
+    the Software is described as a free component or optional extra;
+(c) operate an advertising-supported use, or place operator-controlled
+    advertisements, paid promotions, sponsorships, or affiliate monetization
+    in or alongside the Software, its outputs, or pages providing access to it;
+(d) solicit or receive donations, tips, crowdfunding, or other payments in
+    connection with access to, distribution of, or services using the Software;
+(e) use it as part of paid client work, paid events, commercial marketing,
+    commercial internal operations, or another revenue-generating offering; or
+(f) evade these restrictions by removing branding, making changes, routing
+    payments through another person, or charging for an associated component.
+
+These restrictions apply even if revenue only covers operating costs, no profit
+is made, or the operator is an educational institution or nonprofit organization.
+Ordinary academic study and use of the Software to complete coursework are
+permitted when they are not themselves a paid offering under this section.
+
+4. DISTRIBUTION, MODIFICATIONS, AND ATTRIBUTION
+
+Every distribution of the Software, including a modified copy or container
+image, must be free of charge and include this complete license, the Licensor's
+copyright notice, NOTICE, and applicable third-party notices. Mark modified
+versions clearly with the fact and date of modification. Do not claim that Your
+changes were made, approved, or supported by the original author.
+
+Keep a reasonably visible author credit and an accessible link or copy of this
+license in public applications and demonstrations. You may change the layout
+and wording of a credit if its meaning and accessibility are preserved.
+
+You may not offer the Licensor's material under conflicting or less restrictive
+terms. Your additions must not remove these conditions from that material.
+Recipients receive rights to that material directly under this license.
+Independent third-party components retain their own licenses; this license
+does not restrict rights granted separately by their respective owners.
+
+5. THIRD-PARTY RIGHTS AND NO ENDORSEMENT
+
+No copyright, trademark, publicity, privacy, music, recording, performance,
+patent, or other right belonging to a third party is granted by this license.
+You are responsible for obtaining any separate rights Your use requires,
+including rights to publish or redistribute bundled assets and submitted text.
+The Licensor does not warrant that those permissions have been obtained.
+
+No affiliation with, sponsorship by, approval from, or endorsement by Disney,
+Lucasfilm, any university, or any other third party is implied. Names used to
+identify third-party works do not grant permission to use their marks.
+A credit, educational purpose, noncommercial purpose, or disclaimer is not a
+guarantee of lawful use or protection against a rights holder's claim.
+
+6. RIGHTS RESERVED AND TERMINATION
+
+All rights not expressly granted are reserved. Uses outside these terms require
+prior written permission from every relevant rights holder. This license does
+not authorize the Licensor to grant permission for material owned by others.
+
+Your rights under this license terminate automatically upon a material breach.
+You must then stop using and distributing the Software and delete copies under
+Your control, except copies that applicable law requires You to retain. Rights
+of recipients who independently comply with this license are not terminated
+solely because of Your breach. Reinstatement requires the Licensor's written
+agreement. Obligations and limitations that by their nature must survive do so.
+
+7. NO WARRANTY; LIMITATION OF LIABILITY
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED
+"AS IS" AND "AS AVAILABLE", WITHOUT ANY EXPRESS OR IMPLIED WARRANTY, INCLUDING
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, OR NONINFRINGEMENT.
+THE LICENSOR DOES NOT PROMISE THAT USING OR DISTRIBUTING THE SOFTWARE OR ITS
+ASSETS WILL AVOID THIRD-PARTY CLAIMS.
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE LICENSOR AND CONTRIBUTORS
+ARE NOT LIABLE FOR DAMAGES OR OTHER LIABILITY ARISING FROM THIS LICENSE OR
+FROM THE SOFTWARE OR ITS USE, INCLUDING LOST PROFITS, LOST DATA, INTERRUPTION,
+OR THIRD-PARTY CLAIMS, WHETHER IN CONTRACT, TORT, OR OTHERWISE, EVEN IF ADVISED
+OF THE POSSIBILITY. NOTHING EXCLUDES LIABILITY THAT CANNOT LAWFULLY BE EXCLUDED.
+
+8. MANDATORY LAW AND INTERPRETATION
+
+This license does not limit statutory exceptions, rights, or remedies that
+cannot lawfully be restricted. If a provision is unenforceable, it is limited
+only as far as necessary, and the remaining provisions continue to apply.
+The English text is authoritative; summaries and translations are explanatory.
+This is a custom source-available license, not an OSI-approved open-source
+license. It does not alter licenses previously and validly granted by others.

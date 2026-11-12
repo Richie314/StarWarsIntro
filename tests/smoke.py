@@ -66,7 +66,7 @@ def page(path, playback=False, status=200):
         assert any(script.get('data-audio-url') == prefix + '/assets/intro.mp3' for script in html.attributes('script')), path
     assert body.lower().count('<!doctype html>') == 1, path
     routes = {'/', '/auth', '/auth/register', '/auth/forgotPassword', '/auth/changePassword', '/auth/logout',
-              '/opening/create', '/opening/view', '/opening', '/admin', '/opening/delete', '/admin/deleteUser', '/acceptCookies', '/language', '/error'}
+              '/opening/create', '/opening/view', '/opening', '/admin', '/opening/delete', '/admin/deleteUser', '/acceptCookies', '/language', '/credits', '/error'}
     for tag, attrs in html.elements:
         for attr in ('href', 'src', 'action', 'data-view-url', 'data-delete-url'):
             target = attrs.get(attr, '')
@@ -119,6 +119,12 @@ for locale, heading, login, reset in [('it', 'Creatore Intro di Star Wars', 'Acc
     assert f'<title>{login}</title>' in page('/auth')[0]
     assert f'<title>{reset}</title>' in page('/auth/forgotPassword')[0]
     page('/auth/register')
+    credits, credits_html = page('/credits')
+    assert f'<html lang="{locale}">' in credits
+    assert 'Educational and Personal Noncommercial License 1.0' in credits
+    assert 'Neale Davidson' in credits and 'Twemoji' in credits and 'John Williams' in credits
+    assert credits_html.count('details') == 3
+    assert ('Crediti e licenza' if locale == 'it' else 'Credits and license') in credits
     page('/missing', status=404)
     assert any(button.get('value') == locale and button.get('aria-pressed') == 'true' for button in html.attributes('button'))
     assert any(cookie.name == 'site-language' and cookie.value == locale and cookie.path == (prefix or '/') and cookie.expires for cookie in jar)
@@ -190,6 +196,7 @@ if args.database:
     assert 'MVC Test &amp; Friends' in dashboard
     assert 'hidden' in next(attrs for _, attrs in dashboard_html.elements if attrs.get('id') == 'intro-empty')
     rendered_intro = page('/opening/view?id=' + opening_id, playback=True)[0]
+    assert prefix + '/credits' in rendered_intro
     assert 'MVC Test &amp; Friends' in rendered_intro and username in rendered_intro
     redirect('/opening/create', dict(id=opening_id, title='Edited Test', episode='Episode X', lang='it', content='Updated'),
              target=f'/opening/create?id={opening_id}&action=edited')

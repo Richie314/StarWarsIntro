@@ -12,5 +12,11 @@
             "StarWars\\": "app/"
         }
     },
-    "license": "proprietary"
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Riccardo Ciucci",
+            "homepage": "https://ciucci.dev"
+        }
+    ]
 }
