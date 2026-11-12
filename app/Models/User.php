@@ -5,7 +5,7 @@ namespace StarWars\Models;
 use InvalidArgumentException;
 use Richie314\SimpleMvc\Users\User as MvcUser;
 use Richie314\SimpleMvc\Utils\Security;
-use StarWars\Support\Random;
+use StarWars\Support\{I18n, Random};
 use mysqli;
 
 class User extends MvcUser
@@ -101,8 +101,9 @@ class User extends MvcUser
 
     public function SendWelcomeEmail(): bool
     {
-        return $this->SendEmail('Benvenuto', '<h1>Registrazione avvenuta</h1><p>Benvenuto e grazie per esserti registrato.<br>
-            &nbsp;- Il team di Star Wars Intro</p><small>Ti preghiamo di non rispondere a questa email</small>');
+        return $this->SendEmail(I18n::text('Welcome'), '<h1>' . I18n::html('Registration complete') . '</h1><p>'
+            . I18n::html('Welcome, and thank you for signing up.') . '<br>— ' . I18n::html('The Star Wars Intro team')
+            . '</p><small>' . I18n::html('Please do not reply to this email.') . '</small>');
     }
 
     public function ResetPassword(mysqli $db): bool
@@ -111,9 +112,10 @@ class User extends MvcUser
             return false;
         }
         $password = Random::password();
-        return $this->ChangePassword($db, $password) && $this->SendEmail('Cambio password', '<h1>Cambio password</h1><p>La tua password &egrave;
-            stata cambiata in:</p><pre>' . htmlspecialchars($password) . '</pre><small>Ti preghiamo di non rispondere
-            a questa email e di cancellarla appena accedi all\'account</small>');
+        return $this->ChangePassword($db, $password) && $this->SendEmail(I18n::text('Password changed'),
+            '<h1>' . I18n::html('Password changed') . '</h1><p>' . I18n::html('Your password has been changed to:')
+            . '</p><pre>' . htmlspecialchars($password) . '</pre><small>'
+            . I18n::html('Please do not reply to this email. Delete it after signing in.') . '</small>');
     }
 
     public static function Delete(mysqli $db, int $id): bool

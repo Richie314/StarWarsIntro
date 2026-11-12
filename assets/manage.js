@@ -1,6 +1,7 @@
 'use strict';
 
 $(() => {
+    const messages = $('body').data('messages');
     $(document).on('click', '[data-delete-url]', function (event) {
         event.preventDefault();
         const $button = $(this), data = $button.data();
@@ -8,7 +9,7 @@ $(() => {
         $button.attr('aria-disabled', 'true').prop('disabled', true);
         const failure = () => {
             $button.removeAttr('aria-disabled').prop('disabled', false);
-            $('#action-feedback').text('Impossibile eliminare. Riprova.').prop('hidden', false);
+            $('#action-feedback').text(messages.deleteFailed).prop('hidden', false);
         };
         $.post(data.deleteUrl, { [data.deleteField]: data.deleteId }, null, 'json')
             .done(result => {

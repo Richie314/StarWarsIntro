@@ -1,59 +1,23 @@
 <?php use StarWars\Support\Random; ?>
-<h1>
-    Creatore Intro di Star Wars
-</h1>
+<h1><?= $t('Star Wars Intro Creator') ?></h1>
 <div class="img no-ctx">
     <img src="<?= htmlspecialchars($p) ?>/assets/sitelogo.svg" alt="Star Wars Intro">
 </div>
 <article style="max-width: 500px; padding: 1em; margin-inline: auto;">
-    <h3>
-        Hai mai voluto ricreare le intro di Star Wars?
-    </h3>
-    <h3>
-        Hai mai voluto crearne di tue e condividerle con i tuoi amici?
-    </h3>
-    <p class="justify">
-        Questo &egrave; il sito che fa al caso tuo!<br>
-        <?php if ($user !== null) { ?>
-            <a href="<?= htmlspecialchars($p . '/opening/create') ?>" target="_self" class="link">
-                <strong>Crea una nuova intro</strong>
-            </a>.
-        <?php } else { ?>
-            Per iniziare,
-            <a href="<?= htmlspecialchars($p . '/auth/register') ?>" target="_self" class="link">
-                <strong>Crea un account</strong>
-            </a>.
-        <?php } ?>
-    </p>
-    <h3>
-        Come funziona il sito?
-    </h3>
-    <p class="justify">
-        La pagina <a href="<?= htmlspecialchars($p . '/opening/create') ?>" target="_self" class="link">Crea intro</a> permette
-        di creare/modificare le intro, che possono essere visualizzate all'endpoint
-        <a href="<?= htmlspecialchars($p . '/opening/view') ?>?original=<?= Random::int(1, 9)?>" target="_self" class="link">Guarda intro</a>.
-        <br>
-        I titoli delle pagine private sono, talvolta, visualizzati col font
-        <span data-content="Aurebesh" class="aurebesh"></span>
-        all'interno delle stesse. Andando col cursore sopra tali titoli saranno convertiti in un font pi&ugrave;
-        comune.
-        <br>
-        Il tema del sito (giallo su nero con stelle) &egrave; anch'esso ispirato ai titoli di testa di Star Wars.
-    </p>
-    <h3>
-        Perch&eacute; questo sito?
-    </h3>
-    <p class="justify">
-        Il sito &egrave; stato realizzato da <a href="https://ciucci.dev" target="_blank" class="link">Riccardo Ciucci</a>, come progetto per l'esame
-        di Progettazione Web del corso di laurea triennale in Ingegneria Informatica
-        dell'<a href="https://www.unipi.it/" class="link" target="_self">Universit&agrave; di Pisa</a>.<br>
-        Anno Accademico 2023-24.<br><br>
-        Non vi sono fini di lucro n&eacute; infrangimenti di copyright intesi: il sito &egrave; disponibile come demo e a fini open-source.<br>
-        Le icone sono state ottenute da
-        <a href="https://svgrepo.com" class="link"
-            target="_blank" title="Apri in altra scheda">svgrepo.com<i class="icon svgrepo"></i></a> o realizzate tramite
-        il software
-        <a href="https://www.figma.com/" class="link"
-            target="_blank" title="Apri in altra scheda">Figma<i class="icon figma"></i></a>
-    </p>
+    <h2><?= $t('Ever wanted to recreate the Star Wars opening crawl?') ?></h2>
+    <p><?= $t('Write your own adventure and share it with your friends.') ?></p>
+    <p><a href="<?= htmlspecialchars($p . ($user !== null ? '/opening/create' : '/auth/register')) ?>" class="link">
+        <strong><?= $t($user !== null ? 'Create a new intro' : 'Create an account') ?></strong>
+    </a></p>
+    <h2><?= $t('How does it work?') ?></h2>
+    <p class="justify"><?= $t('Write an episode, a title, and your story. Preview the crawl as you type, then save it and share its link.') ?></p>
+    <p><a class="link" href="<?= htmlspecialchars($p . '/opening/view') ?>?original=<?= Random::int(1, 9) ?>&amp;lang=<?= $locale ?>"><?= $t('Watch an original intro') ?></a></p>
+    <p class="justify"><?= $t('Some headings use Aurebesh. Hover over them to reveal the familiar alphabet.') ?></p>
+    <p class="justify"><?= $t('The yellow text and starry background take their inspiration from the opening titles of Star Wars.') ?></p>
+    <h2><?= $t('About this project') ?></h2>
+    <p class="justify"><?= $t('Created by Riccardo Ciucci for the Web Design exam of the Computer Engineering degree at the University of Pisa, academic year 2023–24.') ?></p>
+    <p><a class="link" href="https://ciucci.dev" target="_blank" rel="noopener">Riccardo Ciucci</a> · <a class="link" href="https://www.unipi.it/">Università di Pisa</a></p>
+    <p class="justify"><?= $t('This is a non-commercial, open-source demo. No copyright infringement is intended.') ?></p>
+    <p><?= $t('Icons from') ?> <a href="https://svgrepo.com" class="link" target="_blank" rel="noopener">SVG Repo<i class="icon svgrepo"></i></a>
+        <?= $t('and created with') ?> <a href="https://www.figma.com/" class="link" target="_blank" rel="noopener">Figma<i class="icon figma"></i></a>.</p>
 </article>

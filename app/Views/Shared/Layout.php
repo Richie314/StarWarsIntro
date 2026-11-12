@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="<?= $locale ?>">
 <?php require __DIR__ . '/head.php'; ?>
-<body data-view-url="<?= htmlspecialchars($p . '/opening/view') ?>">
+<body data-messages="<?= htmlspecialchars(json_encode(\StarWars\Support\I18n::clientMessages(), JSON_THROW_ON_ERROR)) ?>" data-view-url="<?= htmlspecialchars($p . '/opening/view') ?>">
     <?php require __DIR__ . '/nav.php'; ?>
     <main class="<?= htmlspecialchars($mainClass ?? 'body') ?>">
         <p id="action-feedback" role="status" aria-live="polite" hidden></p>

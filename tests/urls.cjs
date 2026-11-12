@@ -10,8 +10,8 @@ function classes(initial = []) {
 
 
 async function checkPages() {
-    for (const prefix of ['', '/demo']) {
-        const dom = new JSDOM(`<body data-view-url="${prefix}/opening/view"><nav></nav>
+    for (const prefix of ['', '/demo']) for (const locale of ['en', 'it']) {
+        const dom = new JSDOM(`<body data-view-url="${prefix}/opening/view"><nav><button id="nav-toggle" aria-expanded="false" data-open-label="Open menu" data-close-label="Close menu"></button><div id="nav-links"></div><form class="language-switch"><input name="return_to"></form></nav>
             <p id="action-feedback" hidden></p><dialog id="accept-cookie"></dialog>
             <form class="intro-form"><input id="episode" name="episode" value="Episode X">
             <input id="title" name="title" value="Test &amp; Friends">
@@ -26,6 +26,12 @@ Second paragraph</textarea></form>
             <article id="row" data-intro-card><button data-delete-url="${prefix}/opening/delete" data-delete-field="id" data-delete-id="42" data-delete-row="row">Delete</button></article>
             </body>`, { url: `http://example.test:8099${prefix}/opening/create?id=42&action=share`, runScripts: 'outside-only' });
         const w = dom.window;
+        const catalogue = JSON.parse(fs.readFileSync(`app/Translations/${locale}.json`, 'utf8'));
+        w.document.body.dataset.messages = JSON.stringify({
+            deleteFailed: catalogue['Could not delete. Please try again.'], saved: catalogue['Changes saved successfully!'],
+            shareTitle: catalogue['Custom Star Wars intro'], shareText: catalogue['Watch my custom Star Wars intro!'],
+            shareFailed: catalogue['Sharing failed. Please try again.']
+        });
         w.HTMLDialogElement.prototype.showModal = function () { this.open = true; };
         w.HTMLDialogElement.prototype.close = function () { this.open = false; };
         let shared;
@@ -37,6 +43,14 @@ Second paragraph</textarea></form>
         const $ = w.jQuery;
         $.fx.off = true;
         assert.ok($('#accept-cookie')[0].open);
+        $('#nav-toggle').trigger('click');
+        assert.equal($('#nav-toggle').attr('aria-expanded'), 'true');
+        assert.ok($('#nav-links').hasClass('is-open'));
+        $(w.document).trigger($.Event('keydown', { key: 'Escape' }));
+        assert.equal($('#nav-toggle').attr('aria-expanded'), 'false');
+        assert.equal($('#nav-links').hasClass('is-open'), false);
+        $('.language-switch').triggerHandler('submit');
+        assert.equal($('.language-switch input').val(), prefix + '/opening/create?id=42');
         const preview = new URL($('#tv').attr('src'), w.location.origin);
         assert.equal(preview.pathname, prefix + '/opening/view');
         assert.equal(preview.searchParams.get('title'), 'Test & Friends');
@@ -48,6 +62,8 @@ Second paragraph</textarea></form>
         assert.equal($('#tv').attr('lang'), 'it');
         $('#share-btn').trigger('click');
         await Promise.resolve();
+        assert.equal(shared.title, catalogue['Custom Star Wars intro']);
+        assert.equal(shared.text, catalogue['Watch my custom Star Wars intro!']);
         assert.equal(shared.url, `http://example.test:8099${prefix}/opening/view?id=42`);
         assert.equal(w.location.search, '?id=42');
         for (const outcome of ['error', 'network', 'ok']) {
@@ -61,6 +77,7 @@ Second paragraph</textarea></form>
             assert.equal($('[data-intro-card]').length, outcome === 'ok' ? 0 : 1);
             if (outcome !== 'ok') {
                 assert.equal($('#action-feedback').prop('hidden'), false);
+                assert.equal($('#action-feedback').text(), catalogue['Could not delete. Please try again.']);
                 assert.equal($('[data-delete-url]').prop('disabled'), false);
             }
         }
@@ -68,7 +85,7 @@ Second paragraph</textarea></form>
         assert.equal($('#intro-empty').prop('hidden'), false);
         dom.window.close();
     }
-    console.log('jQuery preview, dialogs, sharing and deletion checks passed at root and /demo.');
+    console.log('Bilingual navigation, preview, dialogs, sharing and deletion passed at root and /demo.');
 }
 checkPages().catch(error => { console.error(error); process.exitCode = 1; });
 

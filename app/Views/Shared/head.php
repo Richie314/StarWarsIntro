@@ -1,5 +1,8 @@
 <?php
-$description ??= 'Crea le tue intro di Star Wars personalizzate';
+$description ??= \StarWars\Support\I18n::text('Watch a custom Star Wars opening crawl.');
+if ($status_code >= 400) {
+    $title = \StarWars\Support\I18n::text('Error {code}', ['code' => $status_code]);
+}
 $playback ??= false;
 ?>
 <head>

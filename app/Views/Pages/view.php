@@ -39,28 +39,27 @@
     </article>
 
     <!-- Who created the opening -->
-    <article id="credits" class="hidden">
+    <article id="credits" class="hidden" lang="<?= $locale ?>">
         <?php if ($opening->AuthorName !== null && $opening->AuthorName !== '') { ?>
             <h2>
-                Creato da utente <?= htmlspecialchars(string: $opening->AuthorName) ?>
+                <?= $t('Created by {author}', ['author' => $opening->AuthorName]) ?>
             </h2>
         <?php } ?>
 
         <p>
-            La musica &egrave; di propriet&agrave; di LucasFilm e Disney.
+            <?= $t('Music belongs to Lucasfilm and Disney.') ?>
             <br>
-            Questa simulazione &egrave; a solo scopo dimostrativo delle capacit&agrave;
-            del design web; &egrave; pubblica e non pu&ograve; essere utilizzata per fini commerciali.
+            <?= $t('This public demo showcases web design and may not be used for commercial purposes.') ?>
             <br>
-            Per maggiori informazioni vai alla <a href="<?= htmlspecialchars($p . '/') ?>">Pagina principale</a>
+            <?= $t('For more information, visit the') ?> <a href="<?= htmlspecialchars($p . '/') ?>"><?= $t('home page') ?></a>
         </p>
 
         <div class="row">
             <button type="button" id="restart">
-                Riavvia
+                <?= $t('Restart') ?>
             </button>
             <button type="button" id="share">
-                Condividi
+                <?= $t('Share') ?>
             </button>
         </div>
     </article>
@@ -70,25 +69,21 @@
 </main>
 <script type="text/javascript">
     'use strict';
-    // Restart the page (reload) and share
-    const reloadBtn = document.getElementById('restart');
-    if (reloadBtn) {
-        reloadBtn.addEventListener('click', () => window.location.reload());
-    }
-    const shareBtn =document.getElementById('share');
-    if (!navigator.share || !navigator.canShare || !navigator.canShare({
-        title: document.title,
-        text: 'Guarda anche tu la mia intro di Star Wars',
-        url: window.location.href
-    })) {
+    document.getElementById('restart').addEventListener('click', () => location.reload());
+    const shareBtn = document.getElementById('share');
+    const shareUrl = new URL(location.href);
+    shareUrl.searchParams.set('lang', <?= json_encode($opening->Language->value) ?>);
+    const shareData = { title: document.title,
+        text: <?= json_encode(\StarWars\Support\I18n::text('Watch my custom Star Wars intro!'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>,
+        url: shareUrl.href };
+    if (!navigator.share || !navigator.canShare?.(shareData)) {
         shareBtn.classList.add('hidden');
     } else {
-        shareBtn.addEventListener('click', () => {
-            navigator.share({
-                title: document.title,
-                text: 'Guarda anche tu la mia intro di Star Wars',
-                url: window.location.href
-            })
+        shareBtn.addEventListener('click', async () => {
+            try { await navigator.share(shareData); }
+            catch (error) {
+                if (error.name !== 'AbortError') shareBtn.textContent = <?= json_encode(\StarWars\Support\I18n::text('Sharing failed. Please try again.')) ?>;
+            }
         });
     }
 </script>

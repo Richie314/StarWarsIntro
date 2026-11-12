@@ -24,23 +24,9 @@ body {
 /*
     Page elemnts: nav, main(.body) and  footer
 */
-nav {
-    position: fixed;
-    z-index: 100;
-    top: 0;
-    left: 0;
-    background-color: transparent;
-    border-bottom: 1px solid transparent;
-
-    transition: background-color .5s ease-in-out, border-color .75s ease-in-out;
-}
-    nav.bg {
-        background-color: var(--main-bg);
-        border-color: var(--main-cl);
-    }
 .body {
     flex: 1;
-    margin-top: 3em;
+    margin-top: 2rem;
     width: calc(100% - 0.7em);
     max-width: 800px;
     margin-inline: auto;
@@ -56,17 +42,6 @@ footer {
     width: 100%;
     text-align: center;
     font-size: smaller;
-}
-@media only screen and (max-width: 768px) {
-    /*
-        Behaviour on mobile
-    */
-    nav {
-        /* Already the same as nav.bg in desktop */
-        background-color: var(--main-bg);
-        border-color: var(--main-cl);
-    }
-
 }
 /*
     Where the stars must be positioned (fixed or absolute)
@@ -235,145 +210,6 @@ h1, h2, h3, h4, h5, h6 {
                 opacity: 1;
             }
 
-/*
-    Horizontal menu class
-*/
-.h-menu {
-    display: grid;
-    width: 100%;
-    height: 3em;
-    margin: 0;
-    padding: 0;
-    grid-template-rows: 1fr;
-    grid-template-columns: 3fr;
-    user-select: none;
-}
-    .h-menu.items-1 {
-        grid-template-columns: 100%;
-    }
-    .h-menu.items-2 {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .h-menu.items-3 {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    .h-menu.items-4 {
-        grid-template-columns: repeat(4, 1fr);
-    }
-    .h-menu.items-5 {
-        grid-template-columns: repeat(5, 1fr);
-    }
-    .h-menu.items-6 {
-        grid-template-columns: repeat(6, 1fr);
-    }
-    .h-menu.items-7 {
-        grid-template-columns: repeat(7, 1fr);
-    }
-    .h-menu > a {
-        display: block;
-        width: 100%;
-        cursor: pointer;
-        position: relative;
-        height: 100%;
-        overflow: hidden;
-        z-index: 1;
-        color: var(--main-cl);
-        transition: height ease-in-out .3s;
-    }
-        .h-menu > a > div {
-            position: absolute;
-            top: 0;
-            height: 100%;
-            max-height: 100%;
-            overflow: hidden;
-            transition: all .4s ease-in-out; 
-        }
-        .h-menu > a > .icon {
-            left: 35%;
-            width: 30%;
-            z-index: 3;
-            display: block;
-        }
-            .h-menu > a > .icon > img {
-                height: 100%;
-                max-height: 100%;
-                aspect-ratio: 1;
-            }
-            .h-menu > a:hover > .icon {
-                left: 10%;
-            }
-        .h-menu > a > .text {
-            right: 0;
-            width: 100%;
-            opacity: 0; 
-            z-index: 2;
-            display: grid;
-            place-items: center; 
-            text-overflow: ellipsis;
-            word-break: break-all;
-            white-space: nowrap;
-        }
-            .h-menu > a:hover > .text {
-                opacity: 1;
-                width: 50%;
-                right: 10%;
-                font-size: 1.5em;
-            }
-    .h-menu > .hamburger {
-        display: none;
-        width: 100%;
-        height: 3em;
-    }
-        .h-menu > .hamburger > input[type="checkbox"] {  
-            display: none;
-        }
-        .h-menu > .hamburger > label {  
-            height: 3em;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-        }
-            .h-menu > .hamburger > label > img {  
-                height: 100%;
-                max-height: 100%;
-                aspect-ratio: 1;
-                display: none;
-            }
-                .h-menu > .hamburger > input[type="checkbox"]:not(:checked) + label > img.hamburger {  
-                    display: block;
-                }
-                .h-menu > .hamburger > input[type="checkbox"]:checked + label > img.close {  
-                    display: block;
-                }
-@media only screen and (max-width: 768px) {
-    /*
-        Behaviour on mobile: becomes a vertical menu
-    */
-    .h-menu {
-        grid-template-columns: 1fr !important;
-        grid-template-rows: unset;
-        height: auto;
-        max-height: unset;
-    }
-        .h-menu > a {
-            height: 3em;
-        }
-            .h-menu > a > .icon {
-                left: 10%;
-            }
-            .h-menu > a > .text {
-                opacity: 1;
-                right: 10%;
-                width: 50%;
-                font-size: 1.5em;
-            }
-        .h-menu > .hamburger {
-            display: block;
-        }
-            .h-menu > .hamburger:has(input[type="checkbox"]:not(:checked)) ~ a {  
-                height: 0 !important;
-            }
-}
 /*
     Generic grid
 */
@@ -788,3 +624,59 @@ span.aurebesh[data-content] {
 .intro-empty h2 { text-align: center; margin-top: 1rem; }
 .intro-empty p { color: #bdbbb4; }
 .dashboard a:focus-visible, .dashboard button:focus-visible { outline: 2px solid white; outline-offset: 4px; }
+
+/* Navigation keeps text labels and the language choice visible at every size. */
+.site-nav {
+    position: sticky;
+    top: 0;
+    flex-shrink: 0;
+    z-index: 100;
+    background: #141313f5;
+    border-bottom: 1px solid #484338;
+    font-family: var(--main-font);
+}
+.nav-inner {
+    max-width: 1240px;
+    min-height: 4.5rem;
+    margin: auto;
+    padding: 0 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+}
+.nav-brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--main-cl); margin-right: auto; }
+.nav-brand span { font-size: .8rem; letter-spacing: .1em; }
+.nav-brand strong { display: block; letter-spacing: .38em; font-size: .7rem; margin-top: .15rem; }
+.nav-links { display: flex; align-items: center; gap: .25rem; }
+.nav-links a { display: flex; align-items: center; gap: .45rem; color: #d1cfc5; text-decoration: none; padding: .7rem .75rem; border-radius: .4rem; font-size: .85rem; }
+.nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--main-cl); background: #ffe81f12; }
+.nav-links a[aria-current="page"] { box-shadow: inset 0 -2px var(--main-cl); }
+.nav-links img { opacity: .85; }
+.language-switch { display: flex; gap: .15rem; padding: .2rem; border: 1px solid #57513b; border-radius: .5rem; }
+.language-switch button { display: flex; align-items: center; gap: .35rem; border: 1px solid transparent; padding: .45rem; border-radius: .3rem; color: #c9c7be; background: none; font: inherit; font-size: .7rem; cursor: pointer; }
+.language-switch button[aria-pressed="true"] { background: #ffe81f18; border-color: #8d802b; color: var(--main-cl); }
+.language-switch button:hover { background: #ffe81f20; }
+.language-switch img { object-fit: cover; border-radius: 2px; }
+.nav-toggle { display: none; background: none; border: 1px solid #57513b; border-radius: .4rem; padding: .5rem; cursor: pointer; }
+.nav-toggle [data-menu-close], .nav-toggle[aria-expanded="true"] [data-menu-open] { display: none; }
+.nav-toggle[aria-expanded="true"] [data-menu-close] { display: block; }
+.site-nav a:focus-visible, .site-nav button:focus-visible { outline: 2px solid var(--main-cl); outline-offset: 3px; }
+@media (max-width: 950px) {
+    .nav-inner { gap: .6rem; padding: .7rem 1rem; min-height: 3rem; }
+    .language-switch { order: 1; }
+    .nav-toggle { order: 2; }
+    .nav-links { order: 3; width: 100%; flex-wrap: wrap; padding-top: .5rem; border-top: 1px solid #484338; }
+    .nav-links a { flex: 1 0 auto; justify-content: center; }
+    .js .nav-toggle { display: flex; }
+    .js .nav-links:not(.is-open) { display: none; }
+    html:not(.js) .site-nav { position: static; }
+    html:not(.js) .body { margin-top: 1rem; }
+}
+@media (max-width: 380px) {
+    .nav-inner { padding-inline: .6rem; gap: .4rem; }
+    .nav-brand img { width: 30px; height: 30px; }
+    .nav-brand span { font-size: .65rem; }
+    .language-switch button { padding: .4rem .3rem; }
+    .language-switch button span { display: none; }
+}

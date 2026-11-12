@@ -6,13 +6,16 @@ use Richie314\SimpleMvc\Http\Method;
 use Richie314\SimpleMvc\Routers\Router;
 use StarWars\Controllers\{AdminController, AuthController, HomeController, OpeningController};
 use StarWars\Models\Database;
-use StarWars\Support\Authentication;
+use StarWars\Support\{Authentication, I18n};
 
 session_start();
+I18n::initialize();
 $prefix = rtrim(getenv('SITE_PATH_PREFIX') ?: '', '/');
 $secure = ($_SERVER['HTTPS'] ?? '') === 'on' || ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https';
 $viewData = [
     'p' => $prefix,
+    'locale' => I18n::locale(),
+    't' => I18n::html(...),
     'requestPath' => $_SERVER['REQUEST_URI'],
     'requestUrl' => ($secure ? 'https://' : 'http://') . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $_SERVER['REQUEST_URI'],
 ];

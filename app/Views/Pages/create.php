@@ -8,46 +8,46 @@ use StarWars\Models\OpeningLanguage;
     <div class="grid" style="grid-template-columns: 30% 70%">
 
         <label for="episode" class="center">
-            Episodio:
+            <?= $t("Episode:") ?>
         </label>
         <input type="text" id="episode" name="episode" required
-            placeholder="Episodio X"
+            placeholder="<?= $t("Episode X") ?>"
             value="<?= htmlspecialchars($opening->Episode) ?>"
-            spellcheck="true">
+            spellcheck="true" lang="<?= $opening->Language->value ?>">
 
         <label for="title" class="center">
-            Titolo:
+            <?= $t("Title:") ?>
         </label>
         <input type="text" id="title" name="title" required
-            placeholder="Un nuovo titolo"
+            placeholder="<?= $t("A new title") ?>"
             value="<?= htmlspecialchars($opening->Title) ?>"
-            spellcheck="true">
+            spellcheck="true" lang="<?= $opening->Language->value ?>">
 
         <label for="lang" class="center">
-            Lingua:
+            <?= $t("Language:") ?>
         </label>
         <select id="lang" name="lang" required>
             <option value="<?= OpeningLanguage::Italian->value ?>"
                 <?= $opening->Language === OpeningLanguage::Italian ? "selected" : "" ?>>
-                Italiano
+                <?= $t("Italian") ?>
             </option>
             <option value="<?= OpeningLanguage::English->value ?>"
             <?= $opening->Language === OpeningLanguage::English ? "selected" : "" ?>>
-                Inglese
+                <?= $t("English") ?>
             </option>
         </select>
 
         <div class="span-2">
             <br>
             <label for="content" class="center" style="font-size: larger">
-                Testo qui:
+                <?= $t("Your story:") ?>
             </label>
             <br>
             <textarea maxlength="4096"
                 name="content" id="content"
                 cols="30" rows="17"
-                placeholder="Vai a capo due volte per dividere in paragrafi"
-                spellcheck="true" ><?php
+                placeholder="<?= $t("Leave a blank line between paragraphs") ?>"
+                spellcheck="true" lang="<?= $opening->Language->value ?>" ><?php
                     if (trim($opening->Content ?? '') !== '')
                         echo htmlentities($opening->Content);
                 ?></textarea>
@@ -60,76 +60,76 @@ use StarWars\Models\OpeningLanguage;
         </div>
         <div class="span-2">
             <h2>
-                Ecco un'anteprima della intro che stai creando:
+                <?= $t("Preview your intro") ?>
             </h2>
         </div>
         <div class="tv span-2">
             <iframe src="<?= htmlspecialchars($p . '/opening/view') ?>" data-view-url="<?= htmlspecialchars($p . '/opening/view') ?>" allowfullscreen id="tv"
                 width="1600" height="900" scrolling="no"
-                loading="lazy" sandbox="allow-scripts">
+                title="<?= $t('Preview your intro') ?>" loading="lazy" sandbox="allow-scripts">
             </iframe>
-            <button type="button" id="reload-tv" title="Riavvia" class="tv-control">
+            <button type="button" id="reload-tv" title="<?= $t("Restart") ?>" class="tv-control">
 
             </button>
         </div>
         <div class="span-2">
             <p>
-                Vuoi dei suggerimenti?
-                Guarda le <strong><a href="#show-originals-dialog" id="show-originals" class="link">Intro originali</a></strong>
+                <?= $t('Need inspiration?') ?>
+                <?= $t('Watch the') ?> <strong><a href="#show-originals-dialog" id="show-originals" class="link"><?= $t("original intros") ?></a></strong>
             </p>
         </div>
 
         <div class="span-2 grid" style="grid-template-columns: 1fr 1fr">
-            <button type="reset" title="Cancella" id="clear"></button>
+            <button type="reset" title="<?= $t("Reset") ?>" id="clear"></button>
             <button type="submit" id="submit"
-                title="<?= $opening->Id !== 0 ? "Modifica" : "Crea" ?>"></button>
+                title="<?= $t($opening->Id !== 0 ? 'Edit' : 'Create') ?>"></button>
         </div>
     </div>
 </form>
 <dialog id="show-originals-dialog">
     <h3>
-        Scegli l'intro da emulare e guarda nella tv
+        <?= $t("Choose an original intro to preview") ?>
     </h3>
     <select id="dialog-select">
-        <option value="0">Scegli</option>
+        <option value="0"><?= $t("Choose") ?></option>
 
-        <optgroup label="In italiano">
+        <optgroup label="<?= $t("In Italian") ?>">
             <option value="1-it">La minaccia fantasma</option>
             <option value="2-it">L'attacco dei cloni</option>
             <option value="3-it">La vendetta dei Sith</option>
             <option value="4-it">Una nuova Speranza</option>
-            <option value="5-it">L'Impero colspisce ancora</option>
+            <option value="5-it">L'Impero colpisce ancora</option>
             <option value="6-it">Il ritorno dello Jedi</option>
             <option value="7-it">Il risveglio della Forza</option>
             <option value="8-it">Gli ultimi Jedi</option>
             <option value="9-it">L'ascesa di Skywalker</option>
         </optgroup>
 
-        <optgroup label="In inglese">
+        <optgroup label="<?= $t("In English") ?>">
             <option value="1-en">The Phantom Menace</option>
-            <option value="2-en">The Attack of the Clones</option>
+            <option value="2-en">Attack of the Clones</option>
             <option value="3-en">Revenge of the Sith</option>
-            <option value="4-en">A new Hope</option>
-            <option value="5-en">The Empire strikes back</option>
-            <option value="6-en">The return of the Jedi</option>
-            <option value="7-en">The Force awakens</option>
-            <option value="8-en">The last Jedi</option>
-            <option value="9-en">The rise of Skywalker</option>
+            <option value="4-en">A New Hope</option>
+            <option value="5-en">The Empire Strikes Back</option>
+            <option value="6-en">Return of the Jedi</option>
+            <option value="7-en">The Force Awakens</option>
+            <option value="8-en">The Last Jedi</option>
+            <option value="9-en">The Rise of Skywalker</option>
         </optgroup>
     </select>
     <br>
     <button role="button" type="button" id="dialog-close" data-close-dialog>
-        Annulla
+        <?= $t("Cancel") ?>
     </button>
 </dialog>
 <dialog id="share-dialog">
     <h3>
-        Condividi l'intro appena creata!
+        <?= $t("Share your new intro!") ?>
     </h3>
     <button role="button" type="button" id="share-btn">
-        Condividi
+        <?= $t("Share") ?>
     </button>
     <button role="button" type="button" id="share-close-btn" data-close-dialog>
-        Per ora no
+        <?= $t("Not now") ?>
     </button>
 </dialog>

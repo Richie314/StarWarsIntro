@@ -3,16 +3,16 @@
     <?php
     $fields = [];
     if (!($hideUsername ?? false)) {
-        $fields[] = ['username', 'Username', 'text', 'user', 'username', 'username'];
+        $fields[] = ['username', $t('Username'), 'text', 'user', 'username', 'username'];
     }
     if ($showEmail ?? false) {
-        $fields[] = ['email', 'Email', 'email', 'email', 'esempio@mail.com', 'email'];
+        $fields[] = ['email', $t('Email'), 'email', 'email', 'example@mail.com', 'email'];
     }
     if (!($hidePassword ?? false)) {
-        $fields[] = ['password', 'Password', 'password', 'lock', '············', $formAction === '/auth/register' ? 'new-password' : 'current-password'];
+        $fields[] = ['password', $t('Password'), 'password', 'lock', '············', $formAction === '/auth/register' ? 'new-password' : 'current-password'];
     }
     if ($showNewPassword ?? false) {
-        $fields[] = ['new_password', 'Nuova password', 'password', 'lock', '············', 'new-password'];
+        $fields[] = ['new_password', $t('New password'), 'password', 'lock', '············', 'new-password'];
     }
     ?>
     <?php foreach ($fields as [$name, $label, $type, $icon, $placeholder, $autocomplete]) { ?>
@@ -31,7 +31,7 @@
         <p style="max-width: 500px;"><?= nl2br(htmlspecialchars($error)) ?></p>
     <?php } ?>
     <?php if ($showForgotPassword ?? false) { ?>
-        <p>Password dimenticata? <a href="<?= htmlspecialchars($p . '/auth/forgotPassword') ?>" class="link">Clicca qui</a></p>
+        <p><?= $t("Forgot your password?") ?> <a href="<?= htmlspecialchars($p . '/auth/forgotPassword') ?>" class="link"><?= $t("Reset it here") ?></a></p>
     <?php } ?>
     <button type="submit"><?= htmlspecialchars($buttonLabel ?? $title) ?></button>
 </form>

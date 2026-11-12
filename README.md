@@ -10,7 +10,9 @@
 
 A PHP and MySQL application for creating and sharing custom Star Wars opening crawls. Users can register, write their own intros, preview them in a browser, and share a link. The animation uses CSS and JavaScript.
 
-The interface is in Italian. Original movie intros are available in Italian and English.
+The interface defaults to English. Use the SVG flag buttons in the navbar to switch between English and Italian; your choice is remembered for a year. Navigation includes visible labels, active-page highlighting, and a keyboard-accessible mobile menu. Original movie intros are available in both languages.
+
+Interface translations live in `app/Translations/en.json` and `app/Translations/it.json`. PHP templates and browser messages share these catalogues through `StarWars\Support\I18n`. The interface language sets the initial language of a new intro; changing the interface never translates or changes saved intro content.
 
 ## Your intro collection
 
@@ -95,6 +97,8 @@ $router->AddController(AuthController::class, '/auth');
 $router->AddController(OpeningController::class, '/opening');
 $router->AddController(AdminController::class, '/admin');
 ```
+
+Actions declare their accepted named parameters: IDs and status codes are integers, while form fields are strings (nullable when omitted on GET). Only the home landing action accepts additional query parameters. The editor explicitly accepts `action` for its share and save confirmation dialogs.
 
 Each base path maps to the controller's `index()` action. Other public action names are appended verbatim, including capitalization. For example:
 
@@ -191,6 +195,7 @@ JavaScript checks require Node.js 24.15 or newer and npm. The npm dependencies a
 composer validate --strict
 composer dump-autoload --optimize --strict-psr
 find app -name '*.php' -print0 | xargs -0 -n1 php -l
+php tests/i18n.php
 php tests/preload.php
 php tests/random.php
 php tests/bootstrap.php

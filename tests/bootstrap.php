@@ -12,7 +12,7 @@ putenv('MYSQL_HOST=');
 ob_start();
 require dirname(__DIR__) . '/index.php';
 $html = ob_get_clean();
-if (http_response_code() !== 500 || !str_contains($html, 'Errore interno del server.')
+if (http_response_code() !== 500 || !str_contains($html, 'Internal server error.')
     || str_contains($html, 'Database configuration is missing') || str_contains($html, 'Stack trace')) {
     throw new RuntimeException('Authenticated bootstrap failure was not handled by the MVC error view.');
 }

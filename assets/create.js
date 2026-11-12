@@ -1,12 +1,14 @@
 'use strict';
 
 $(() => {
+    const messages = $('body').data('messages');
     const $tv = $('#tv'), $fields = $('#episode, #title, #lang, #content');
     const viewUrl = $tv.data('view-url');
     let timer;
     function preview(query = $fields.serialize(), lang = $('#lang').val()) {
         clearTimeout(timer);
         $tv.attr({ src: viewUrl + '?' + query, lang });
+        $('#episode, #title, #content').attr('lang', lang);
     }
     $fields.on('input change', () => {
         clearTimeout(timer);
@@ -35,17 +37,17 @@ $(() => {
         url.searchParams.delete('action');
         history.replaceState(null, '', url.pathname + url.search + url.hash);
     }
-    if (action === 'edited') $('#action-feedback').text('Modifiche effettuate con successo!').prop('hidden', false);
+    if (action === 'edited') $('#action-feedback').text(messages.saved).prop('hidden', false);
     if (action === 'share' && id && $('body').hasClass('can-share')) {
         $('#share-dialog')[0].showModal();
         $('#share-btn').on('click', async () => {
             try {
-                await navigator.share({ title: 'Intro di Star Wars personalizzata',
-                    text: 'Guarda la mia intro di Star Wars personalizzata!',
+                await navigator.share({ title: messages.shareTitle,
+                    text: messages.shareText,
                     url: new URL(viewUrl + '?' + $.param({ id }), location.origin).href });
                 $('#share-dialog')[0].close();
             } catch (error) {
-                if (error.name !== 'AbortError') $('#action-feedback').text('Condivisione non riuscita. Riprova.').prop('hidden', false);
+                if (error.name !== 'AbortError') $('#action-feedback').text(messages.shareFailed).prop('hidden', false);
             }
         });
     }

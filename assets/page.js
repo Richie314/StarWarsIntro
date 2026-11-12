@@ -1,8 +1,23 @@
 'use strict';
 
 $(() => {
-    const $nav = $('nav');
-    $(document).on('scroll', () => $nav.toggleClass('bg', $(document).scrollTop() > 5));
+    $('html').addClass('js');
+    const $toggle = $('#nav-toggle');
+    function menu(open) {
+        $toggle.attr({ 'aria-expanded': String(open),
+            'aria-label': $toggle.data(open ? 'close-label' : 'open-label') });
+        $('#nav-links').toggleClass('is-open', open);
+    }
+    $toggle.on('click', () => menu($toggle.attr('aria-expanded') !== 'true'));
+    $(document).on('keydown', event => {
+        if (event.key === 'Escape' && $toggle.attr('aria-expanded') === 'true') {
+            menu(false);
+            $toggle.trigger('focus');
+        }
+    });
+    $('.language-switch').on('submit', function () {
+        $(this).find('[name=return_to]').val(location.pathname + location.search + location.hash);
+    });
     $('.no-ctx').on('contextmenu', 'img, svg, picture', event => event.preventDefault());
     const sample = new URL($('body').data('view-url'), location.origin);
     sample.searchParams.set('original', '1');

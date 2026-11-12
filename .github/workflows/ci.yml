@@ -69,6 +69,7 @@ jobs:
 
       - name: Run PHP regression checks
         run: |
+          docker compose exec -T starwars php tests/i18n.php
           docker compose exec -T starwars php tests/preload.php
           docker compose exec -T starwars php tests/random.php
           docker compose exec -T starwars php tests/bootstrap.php

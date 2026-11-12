@@ -1,5 +1,5 @@
 <h1>
-    Login recenti
+    <?= $t("Recent logins") ?>
 </h1>
 <ul id="login-list">
     <?php foreach ($logins as $login) { ?>
@@ -16,12 +16,12 @@
                 <?= htmlspecialchars($login->Ip) ?>
             </a>
             &nbsp;
-            il <?= $login->When->format('d/m/Y H:i:s') ?>
+            <?= $t('on') ?> <?= $login->When->format($locale === 'it' ? 'd/m/Y H:i:s' : 'Y-m-d H:i:s') ?>
         </li>
     <?php } ?>
 </ul>
 <h1>
-    Utenti inattivi
+    <?= $t("Inactive users") ?>
 </h1>
 <ul id="inactive-list">
     <?php foreach ($inactive as $inactiveUser) { ?>
@@ -30,13 +30,13 @@
             <?php if ($inactiveUser->Email !== '') { ?>
                 &rarr;
                 <a href="mailto:<?= htmlspecialchars($inactiveUser->Email) ?>"
-                    class="link" title="Invia un'email">
+                    class="link" title="<?= $t("Send an email") ?>">
                     <?= htmlspecialchars($inactiveUser->Email) ?>
                 </a>
             <?php } ?>
             &rarr;
             <a href="#" data-delete-url="<?= htmlspecialchars($p . '/admin/deleteUser') ?>" data-delete-id="<?= $inactiveUser->Id ?>" data-delete-field="id" data-delete-row="user-<?= $inactiveUser->Id ?>" class="link">
-                Cancella <i class="icon delete"></i>
+                <?= $t("Delete") ?> <i class="icon delete"></i>
             </a>
         </li>
     <?php } ?>

@@ -66,7 +66,7 @@ def page(path, playback=False, status=200):
         assert any(script.get('data-audio-url') == prefix + '/assets/intro.mp3' for script in html.attributes('script')), path
     assert body.lower().count('<!doctype html>') == 1, path
     routes = {'/', '/auth', '/auth/register', '/auth/forgotPassword', '/auth/changePassword', '/auth/logout',
-              '/opening/create', '/opening/view', '/opening', '/admin', '/opening/delete', '/admin/deleteUser', '/acceptCookies', '/error'}
+              '/opening/create', '/opening/view', '/opening', '/admin', '/opening/delete', '/admin/deleteUser', '/acceptCookies', '/language', '/error'}
     for tag, attrs in html.elements:
         for attr in ('href', 'src', 'action', 'data-view-url', 'data-delete-url'):
             target = attrs.get(attr, '')
@@ -100,11 +100,34 @@ for path in ['/RequireLogin', '/auth/RequireLogin', '/opening/RequireLogin', '/a
     _, headers = request(path, status=404)
     assert 'X-Powered-By' not in headers, path
 
-for path in ['/', '/index', '/auth', '/auth/index', '/auth/register', '/auth/forgotPassword']:
+for path in ['/', '/?campaign=example', '/index', '/auth', '/auth/index', '/auth/register', '/auth/forgotPassword']:
     page(path)
 assert 'name="password"' not in page('/auth/forgotPassword')[0]
 assert 'name="email"' in page('/auth/register')[0]
-assert '<title>Login</title>' in page('/auth')[0]
+assert '<title>Log in</title>' in page('/auth')[0]
+# Interface language is independent of an intro's content language.
+assert '<html lang="en">' in page('/')[0]
+request('/language', status=400)
+request('/language', {'locale': 'fr'}, status=400)
+# Type mismatches and unknown named arguments use the library router's error response.
+request('/language', {'locale[]': 'it'}, status=500)
+for locale, heading, login, reset in [('it', 'Creatore Intro di Star Wars', 'Accedi', 'Reimposta password'),
+                                       ('en', 'Star Wars Intro Creator', 'Log in', 'Reset password')]:
+    redirect('/language', {'locale': locale, 'return_to': prefix + '/auth?from=language'}, target='/auth?from=language')
+    home, html = page('/')
+    assert f'<html lang="{locale}">' in home and heading in home
+    assert f'<title>{login}</title>' in page('/auth')[0]
+    assert f'<title>{reset}</title>' in page('/auth/forgotPassword')[0]
+    page('/auth/register')
+    page('/missing', status=404)
+    assert any(button.get('value') == locale and button.get('aria-pressed') == 'true' for button in html.attributes('button'))
+    assert any(cookie.name == 'site-language' and cookie.value == locale and cookie.path == (prefix or '/') and cookie.expires for cookie in jar)
+    assert f'<html lang="{locale}">' in page('/opening/view?original=1', playback=True)[0]
+    assert '<html lang="it">' in page('/opening/view?original=1&lang=it', playback=True)[0]
+for target in ['https://example.invalid/', '//example.invalid/', prefix + '/auth\r\nInjected: bad', prefix + '/auth\\bad']:
+    redirect('/language', {'locale': 'en', 'return_to': target}, target='/')
+if prefix:
+    redirect('/language', {'locale': 'en', 'return_to': '/auth'}, target='/')
 for lang in ['en', 'it']:
     for episode in range(1, 10):
         page(f'/opening/view?original={episode}&lang={lang}', playback=True)
@@ -113,7 +136,9 @@ assert '&lt;script&gt;' in page('/opening/view?title=%3Cscript%3E&content=Test',
 assert '&amp;amp;' not in page('/opening/view?title=A%26B', playback=True)[0]
 page('/missing/deep/path', status=404)
 page('/opening/view?original=99', status=404)
-page('/opening/view?lang[]=it', status=400)
+page('/opening/view?original=0', status=404)
+page('/opening/view?id=0', status=400)
+page('/opening/view?lang[]=it', status=500)
 page('/error?code=499&err=%3Cscript%3E', status=400)
 for path in ['/opening', '/opening/index', '/admin', '/opening/delete', '/admin/deleteUser', '/opening/create']:
     redirect(path, target='/auth', status=302)
@@ -139,7 +164,7 @@ if args.database:
     assert not any('data-intro-card' in attrs for _, attrs in dashboard_html.elements)
     assert 'hidden' not in next(attrs for _, attrs in dashboard_html.elements if attrs.get('id') == 'intro-empty')
     page('/admin', status=401)
-    page('/opening/create?id[]=1', status=400)
+    page('/opening/create?id[]=1', status=500)
     _, html = page('/auth/changePassword')
     fields = {field.get('name') for field in html.attributes('input')}
     assert 'new_password' in fields and 'username' not in fields
@@ -148,6 +173,18 @@ if args.database:
     opening_id = urllib.parse.parse_qs(urllib.parse.urlsplit(location).query)['id'][0]
     assert location == f'/opening/create?id={opening_id}&action=share'
     page(location)
+    for locale in ['it', 'en']:
+        redirect('/language', {'locale': locale, 'return_to': prefix + '/opening/create?id=' + opening_id},
+                 target='/opening/create?id=' + opening_id)
+        editor, editor_html = page('/opening/create?id=' + opening_id)
+        assert f'<html lang="{locale}">' in editor and 'MVC Test &amp; Friends' in editor
+        assert '<html lang="en">' in page('/opening/view?id=' + opening_id, playback=True)[0]
+        selected = next(option for option in editor_html.attributes('option') if 'selected' in option)
+        assert selected['value'] == 'en', 'Interface changes must preserve saved intro language'
+        new_editor, new_html = page('/opening/create')
+        assert next(option for option in new_html.attributes('option') if 'selected' in option)['value'] == locale
+        page('/opening')
+        page('/auth/changePassword')
     dashboard, dashboard_html = page('/opening')
     assert sum('data-intro-card' in attrs for _, attrs in dashboard_html.elements) == 1
     assert 'MVC Test &amp; Friends' in dashboard
@@ -161,7 +198,7 @@ if args.database:
     assert json.loads(request('/opening/delete', dict(id=opening_id))[0])['esit'] == 'ok'
     page('/opening/view?id=' + opening_id, status=404)
     request('/opening/delete', status=400)
-    request('/opening/delete', {'id': 'invalid'}, status=400)
+    request('/opening/delete', {'id': 'invalid'}, status=500)
     redirect('/auth/logout', target='/')
     redirect('/auth', dict(username=username, password='ChangedPassword123'), target='/opening')
     location = redirect('/opening/create', dict(id='0', title='Private owner', episode='Episode X', lang='en', content='Ownership'))
@@ -177,7 +214,10 @@ if args.database:
     if args.admin_username:
         redirect('/auth/logout', target='/')
         redirect('/auth', dict(username=args.admin_username, password=args.admin_password), target='/opening')
-        _, admin_page = page('/admin')
+        for locale, heading in [('it', 'Accessi recenti'), ('en', 'Recent logins')]:
+            redirect('/language', {'locale': locale, 'return_to': prefix + '/admin'}, target='/admin')
+            admin_body, admin_page = page('/admin')
+            assert f'<html lang="{locale}">' in admin_body and heading in admin_body
         page('/admin/index')
         assert json.loads(request('/opening/delete', dict(id=owned_id))[0])['esit'] == 'ok'
         inactive = [attrs for _, attrs in admin_page.elements
@@ -186,6 +226,6 @@ if args.database:
         for account in inactive:
             assert account['data-delete-field'] == 'id' and int(account['data-delete-id']) > 0
             assert json.loads(request('/admin/deleteUser', dict(id=account['data-delete-id']))[0])['esit'] == 'ok'
-        request('/admin/deleteUser', dict(username=username), status=400)
+        request('/admin/deleteUser', dict(username=username), status=500)
 print('All layout, controller route, Nginx asset, cookie, and playback checks passed'
       + ('; database/authentication/ownership checks passed' if args.database else '') + f' ({base})')
