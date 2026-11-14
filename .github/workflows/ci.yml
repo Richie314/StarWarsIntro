@@ -17,6 +17,9 @@ jobs:
     name: Build and test
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    permissions:
+      contents: read
+      packages: write
     env:
       COMPOSE_PROJECT_NAME: starwars-ci
       HTTP_PORT: '8080'
@@ -51,8 +54,10 @@ jobs:
         with:
           context: .
           load: true
-          push: true
           tags: starwars-intro:latest
+          labels: |
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -121,6 +126,22 @@ jobs:
         run: |
           python3 tests/smoke.py "http://127.0.0.1:${HTTP_PORT}/demo" --database \
             --admin-username CiAdmin --admin-password AdminPassword123
+
+      - name: Log in to GitHub Container Registry
+        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish tested image as latest and v2
+        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        run: |
+          docker tag starwars-intro:latest ghcr.io/richie314/starwars-intro:latest
+          docker tag starwars-intro:latest ghcr.io/richie314/starwars-intro:v2
+          docker push ghcr.io/richie314/starwars-intro:latest
+          docker push ghcr.io/richie314/starwars-intro:v2
 
       - name: Show container diagnostics on failure
         if: failure()
