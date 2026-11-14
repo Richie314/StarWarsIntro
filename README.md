@@ -138,6 +138,8 @@ Links use hardcoded paths with the installation prefix: `$p . '/opening/view'` i
 
 The Nginx configuration serves assets directly, including missing-file responses, compression, MIME types, and caching. Other application requests are rewritten to the front controller and sent to PHP-FPM over the local Unix socket. Application source, dependencies, configuration, and preload data cannot be served directly. The library's inherited static `RequireLogin` helper is blocked from HTTP access.
 
+CSS and JavaScript URLs include a content hash so browsers and CDNs request updated assets after deployment. Configure any CDN cache rules to include the `v` query parameter in the cache key. If HTML is cached at the proxy, purge it when deploying so pages reference the current assets.
+
 ### Installation under a URL prefix
 
 Set `SITE_PATH_PREFIX` without a trailing slash. The container supplies the same value to Nginx and PHP-FPM:

@@ -24,11 +24,11 @@ $playback ??= false;
     <meta property="og:type" content="website">
     <meta property="twitter:card" content="summary_large_image">
     <?php if ($playback) { ?>
-        <script src="<?= htmlspecialchars($p) ?>/assets/view/view.js" data-audio-url="<?= htmlspecialchars($p) ?>/assets/intro.mp3"></script>
-        <link rel="stylesheet" href="<?= htmlspecialchars($p) ?>/assets/view/view.css" onload="PageStyleLoaded()">
-        <link rel="stylesheet" href="<?= htmlspecialchars($p) ?>/assets/view/animations.css" onload="PageAnimationsLoaded()">
+        <script src="<?= htmlspecialchars(\StarWars\Support\Asset::url('view/view.js', $p)) ?>" data-audio-url="<?= htmlspecialchars($p) ?>/assets/intro.mp3"></script>
+        <link rel="stylesheet" href="<?= htmlspecialchars(\StarWars\Support\Asset::url('view/view.css', $p)) ?>" onload="PageStyleLoaded()">
+        <link rel="stylesheet" href="<?= htmlspecialchars(\StarWars\Support\Asset::url('view/animations.css', $p)) ?>" onload="PageAnimationsLoaded()">
     <?php } else { ?>
-        <link rel="stylesheet" href="<?= htmlspecialchars($p) ?>/assets/page.css">
-        <link rel="stylesheet" href="<?= htmlspecialchars($p) ?>/assets/font.css">
+        <link rel="stylesheet" href="<?= htmlspecialchars(\StarWars\Support\Asset::url('page.css', $p)) ?>">
+        <link rel="stylesheet" href="<?= htmlspecialchars(\StarWars\Support\Asset::url('font.css', $p)) ?>">
     <?php } ?>
 </head>

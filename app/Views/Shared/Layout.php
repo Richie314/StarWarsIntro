@@ -11,9 +11,9 @@
     <?php require __DIR__ . '/stars.php'; ?>
     <?php require __DIR__ . '/footer.php'; ?>
     <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha384-fgGyf7Mo7DURSOMnOy7ed+dkq5Job205Gnzu6QIg0BOHKaqt4D76Dt8VlDCzcMHV" crossorigin="anonymous" defer></script>
-    <script src="<?= htmlspecialchars($p) ?>/assets/page.js" defer></script>
+    <script src="<?= htmlspecialchars(\StarWars\Support\Asset::url('page.js', $p)) ?>" defer></script>
     <?php foreach ($scripts ?? [] as $script) { ?>
-        <script src="<?= htmlspecialchars($p . '/assets/' . $script) ?>" defer></script>
+        <script src="<?= htmlspecialchars(\StarWars\Support\Asset::url($script, $p)) ?>" defer></script>
     <?php } ?>
 </body>
 </html>

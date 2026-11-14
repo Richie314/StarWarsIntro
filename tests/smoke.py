@@ -60,7 +60,8 @@ def page(path, playback=False, status=200):
     jquery = 'https://code.jquery.com/jquery-4.0.0.min.js'
     assert scripts.count(jquery) == (0 if playback else 1), path
     if not playback:
-        assert scripts.index(jquery) < scripts.index(prefix + '/assets/page.js'), path
+        page_script = next(script for script in scripts if urllib.parse.urlsplit(script).path == prefix + '/assets/page.js')
+        assert scripts.index(jquery) < scripts.index(page_script), path
     if playback:
         assert 'accept-cookie' not in body and '/assets/page.js' not in body, path
         assert any(script.get('data-audio-url') == prefix + '/assets/intro.mp3' for script in html.attributes('script')), path
@@ -77,7 +78,7 @@ def page(path, playback=False, status=200):
             relative = parsed.path[len(prefix):]
             assert relative in routes or relative.startswith('/assets/'), (path, attr, target)
             if relative.startswith('/assets/'):
-                asset, asset_headers = request(relative)
+                asset, asset_headers = request(relative + ('?' + parsed.query if parsed.query else ''))
                 if relative.endswith('.css'):
                     assert asset_headers['Content-Type'].startswith('text/css'), target
                 if relative.endswith('.js'):
