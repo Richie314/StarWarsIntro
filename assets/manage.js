@@ -11,7 +11,13 @@ $(() => {
             $button.removeAttr('aria-disabled').prop('disabled', false);
             $('#action-feedback').text(messages.deleteFailed).prop('hidden', false);
         };
-        $.post(data.deleteUrl, { [data.deleteField]: data.deleteId }, null, 'json')
+        $.ajax({
+            url: data.deleteUrl,
+            method: 'POST',
+            data: { [data.deleteField]: data.deleteId },
+            dataType: 'json',
+            headers: { 'X-CSRF-Token': $('body').data('csrf') }
+        })
             .done(result => {
                 if (result.esit !== 'ok') return failure();
                 $('#action-feedback').prop('hidden', true);

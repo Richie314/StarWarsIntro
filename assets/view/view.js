@@ -14,8 +14,6 @@ function ContentLength() {
     const element = document.getElementById('content');
     const totalHeight = element.getBoundingClientRect().height;
 
-    const range = document.createRange();
-    range.selectNodeContents(element);
     const p = document.createElement("p");
     p.className = 'paragraph';
     p.textContent = "A";
@@ -36,7 +34,8 @@ function ContentLength() {
 const CREDITS_SHOW_DELAY = 105 * 1000;
 
 // When animations start
-var start = 0;
+let start = null;
+let audioTimer;
 
 // Generate the audio as we want it
 function CreateAudio() {
@@ -76,14 +75,14 @@ function StartPage() {
 // Starts the audio.
 // automatically detects offsets
 function StartAudio() {
-    if (!audio.paused)
-        return; // Do nothing if the audio is playing
+    if (start === null || !audioLoaded || !audio.paused) return;
 
     // Time passed since animation start - the offset: put as currentTime of the audio
     const deltaT = Now() - start - AUDIO_START_DELAY;
     if (deltaT < 0) {
         // Schedule the start
-        setTimeout(StartAudio, -deltaT);
+        clearTimeout(audioTimer);
+        audioTimer = setTimeout(StartAudio, -deltaT);
         return;
     }
     // Audio should already been playing. Sync it to the desired currentTime
@@ -110,13 +109,13 @@ var audioLoaded = false;
 var pageStyleLoaded = false;
 var pageAnimationsLoaded = false;
 function CheckLoad() {
-    if (document.readyState === 'loading' || !audioLoaded || !pageStyleLoaded || !pageAnimationsLoaded)
+    if (start !== null || document.readyState === 'loading' || !pageStyleLoaded || !pageAnimationsLoaded)
         return;
     StartPage();
 }
 function AudioLoaded() {
     audioLoaded = true;
-    CheckLoad();
+    StartAudio();
 }
 function PageStyleLoaded() {
     pageStyleLoaded = true;

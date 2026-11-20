@@ -57,7 +57,7 @@
         <p><a href="<?= htmlspecialchars($p . '/credits') ?>"><?= $t('Credits and license') ?></a></p>
 
         <div class="row">
-            <button type="button" id="restart">
+            <button type="button" id="restart" <?= $draft ? 'hidden' : '' ?>>
                 <?= $t('Restart') ?>
             </button>
             <button type="button" id="share">
@@ -78,7 +78,7 @@
     const shareData = { title: document.title,
         text: <?= json_encode(\StarWars\Support\I18n::text('Watch my custom Star Wars intro!'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>,
         url: shareUrl.href };
-    if (!navigator.share || !navigator.canShare?.(shareData)) {
+    if (<?= json_encode($draft) ?> || !navigator.share || !navigator.canShare?.(shareData)) {
         shareBtn.classList.add('hidden');
     } else {
         shareBtn.addEventListener('click', async () => {

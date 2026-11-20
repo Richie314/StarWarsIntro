@@ -40,7 +40,11 @@ class HTML(HTMLParser):
 jar = http.cookiejar.CookieJar()
 client = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(jar), NoRedirect())
 
-def request(path, data=None, status=200):
+def request(path, data=None, status=200, csrf=True):
+    if data is not None and csrf and path != '/opening/view':
+        _, html = page('/')
+        token = html.attributes('body')[0]['data-csrf']
+        data = {**data, 'csrf': token}
     encoded = None if data is None else urllib.parse.urlencode(data).encode()
     try:
         response = client.open(base + path, encoded, timeout=15)
@@ -66,7 +70,7 @@ def page(path, playback=False, status=200):
         assert 'accept-cookie' not in body and '/assets/page.js' not in body, path
         assert any(script.get('data-audio-url') == prefix + '/assets/intro.mp3' for script in html.attributes('script')), path
     assert body.lower().count('<!doctype html>') == 1, path
-    routes = {'/', '/auth', '/auth/register', '/auth/forgotPassword', '/auth/changePassword', '/auth/logout',
+    routes = {'/', '/auth', '/auth/register', '/auth/forgotPassword', '/auth/changePassword', '/auth/logout', '/auth/resetPassword',
               '/opening/create', '/opening/view', '/opening', '/admin', '/opening/delete', '/admin/deleteUser', '/acceptCookies', '/language', '/credits', '/error'}
     for tag, attrs in html.elements:
         for attr in ('href', 'src', 'action', 'data-view-url', 'data-delete-url'):
@@ -99,11 +103,20 @@ for asset in ['/assets/page.css', '/assets/does-not-exist.css']:
 for path in ['/RequireLogin', '/auth/RequireLogin', '/opening/RequireLogin', '/admin/RequireLogin',
              '/app/Models/User.php', '/vendor/autoload.php', '/preload/en/1.json', '/.env']:
     _, headers = request(path, status=404)
-    assert 'X-Powered-By' not in headers, path
+    assert 'X-Powered-By' not in headers and 'Set-Cookie' not in headers, path
+
+for path in ['/.env', '/.env.local', '/.git/config', '/wp-admin', '/wp-admin/install.php', '/wp-login.php',
+             '/wp-content/plugins/example', '/wordpress/wp-includes/version.php', '/wp-json', '/xmlrpc.php', '/phpmyadmin/']:
+    _, headers = request(path, status=404)
+    assert 'X-Powered-By' not in headers and 'Set-Cookie' not in headers, path
 
 for path in ['/', '/?campaign=example', '/index', '/auth', '/auth/index', '/auth/register', '/auth/forgotPassword']:
     page(path)
 assert 'name="password"' not in page('/auth/forgotPassword')[0]
+fake_reset = 'a' * 64
+reset_body, reset_headers = request('/auth/resetPassword?token=' + fake_reset)
+assert reset_headers['Referrer-Policy'] == 'no-referrer'
+assert reset_body.count(fake_reset) == 1 and 'name="new_password"' in reset_body
 assert 'name="email"' in page('/auth/register')[0]
 assert '<title>Log in</title>' in page('/auth')[0]
 # Interface language is independent of an intro's content language.
@@ -168,6 +181,12 @@ if args.database:
     redirect('/auth/register', dict(username=username, password=password, email=username + '@example.test'), target='/opening/create' if prefix else '/opening')
     dashboard, dashboard_html = page('/opening')
     assert username in dashboard
+    request('/auth/logout', status=400)
+    request('/auth/logout', {}, status=403, csrf=False)
+    request('/opening/delete', {'id': '1'}, status=403, csrf=False)
+    draft = 'è' * 2500
+    draft_page, _ = request('/opening/view', {'title': 'Draft', 'content': draft}, csrf=False)
+    assert draft in draft_page
     assert not any('data-intro-card' in attrs for _, attrs in dashboard_html.elements)
     assert 'hidden' not in next(attrs for _, attrs in dashboard_html.elements if attrs.get('id') == 'intro-empty')
     page('/admin', status=401)
@@ -199,19 +218,20 @@ if args.database:
     rendered_intro = page('/opening/view?id=' + opening_id, playback=True)[0]
     assert prefix + '/credits' in rendered_intro
     assert 'MVC Test &amp; Friends' in rendered_intro and username in rendered_intro
-    redirect('/opening/create', dict(id=opening_id, title='Edited Test', episode='Episode X', lang='it', content='Updated'),
+    redirect('/opening/create', dict(id=opening_id, title='Edited Test', episode='Episode X', lang='it', content=draft),
              target=f'/opening/create?id={opening_id}&action=edited')
-    assert 'Edited Test' in page('/opening/view?id=' + opening_id, playback=True)[0]
+    edited = page('/opening/view?id=' + opening_id, playback=True)[0]
+    assert 'Edited Test' in edited and draft in edited
     redirect('/auth/changePassword', dict(password=password, new_password='ChangedPassword123'), target='/opening')
     assert json.loads(request('/opening/delete', dict(id=opening_id))[0])['esit'] == 'ok'
     page('/opening/view?id=' + opening_id, status=404)
     request('/opening/delete', status=400)
     request('/opening/delete', {'id': 'invalid'}, status=500)
-    redirect('/auth/logout', target='/')
+    redirect('/auth/logout', {}, target='/')
     redirect('/auth', dict(username=username, password='ChangedPassword123'), target='/opening')
     location = redirect('/opening/create', dict(id='0', title='Private owner', episode='Episode X', lang='en', content='Ownership'))
     owned_id = urllib.parse.parse_qs(urllib.parse.urlsplit(location).query)['id'][0]
-    redirect('/auth/logout', target='/')
+    redirect('/auth/logout', {}, target='/')
     redirect('/auth/register', dict(username=username + 'b', password=password, email=username + 'b@example.test'), target='/opening')
     assert 'Private owner' not in page('/opening')[0]
     page('/opening/create?id=' + owned_id, status=401)
@@ -220,7 +240,7 @@ if args.database:
     assert 'Private owner' in page('/opening/view?id=' + owned_id, playback=True)[0]
     request('/admin/deleteUser', dict(username=username), status=401)
     if args.admin_username:
-        redirect('/auth/logout', target='/')
+        redirect('/auth/logout', {}, target='/')
         redirect('/auth', dict(username=args.admin_username, password=args.admin_password), target='/opening')
         for locale, heading in [('it', 'Accessi recenti'), ('en', 'Recent logins')]:
             redirect('/language', {'locale': locale, 'return_to': prefix + '/admin'}, target='/admin')

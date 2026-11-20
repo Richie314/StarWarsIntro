@@ -25,6 +25,6 @@ class AdminController extends Controller
         if ($this->RequestMethod !== Method::Post || $id < 1) {
             return $this->Json(['esit' => 'errore'], StatusCode::BadRequest);
         }
-        return $this->Json(['esit' => User::Delete($this->DB, $id) ? 'ok' : 'errore']);
+        return $this->Json(['esit' => User::DeleteInactive($this->DB, $id) ? 'ok' : 'errore']);
     }
 }

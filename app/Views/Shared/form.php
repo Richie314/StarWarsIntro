@@ -1,4 +1,6 @@
 <form class="form" method="post" action="<?= htmlspecialchars($p . $formAction) ?>">
+    <input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf) ?>">
+    <?php if (isset($resetToken)) { ?><input type="hidden" name="token" value="<?= htmlspecialchars($resetToken) ?>"><?php } ?>
     <h2 class="aurebesh" data-content="<?= htmlspecialchars($title) ?>"></h2>
     <?php
     $fields = [];

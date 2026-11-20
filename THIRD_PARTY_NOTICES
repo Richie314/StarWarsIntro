@@ -68,6 +68,8 @@ Software dependencies — independent licenses
   reproduced in licenses/simple-mvc-LICENSE.txt. Review the actual upstream
   distribution and resolve the metadata discrepancy before redistributing
   it under an assumed license. This project's restrictions do not amend it.
+* PHPMailer: https://github.com/PHPMailer/PHPMailer — LGPL 2.1.
+  The Composer distribution includes its upstream license.
 * jQuery 4.0.0: Copyright OpenJS Foundation and other contributors.
   https://jquery.com/ — MIT; text in licenses/jquery-LICENSE.txt.
   Loaded from the jQuery CDN for shared pages and used in development checks.

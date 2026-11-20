@@ -146,5 +146,10 @@
     "Third-party inventory (English)": "Inventario dei materiali di terzi (inglese)",
     "Rights inquiries": "Segnalazioni sui diritti",
     "Contact the author through the project issue tracker to identify material for review or removal. Do not post confidential documents publicly.": "Contatta l’autore tramite le segnalazioni del progetto per identificare materiale da verificare o rimuovere. Non pubblicare documenti riservati.",
-    "This is a noncommercial, source-available educational demo. Third-party rights are separate; see credits and license.": "Questa è una demo didattica non commerciale con codice consultabile. I diritti dei terzi sono separati; consulta crediti e licenza."
+    "This is a noncommercial, source-available educational demo. Third-party rights are separate; see credits and license.": "Questa è una demo didattica non commerciale con codice consultabile. I diritti dei terzi sono separati; consulta crediti e licenza.",
+    "Password recovery is unavailable.": "Il recupero della password non è disponibile.",
+    "If the account matches, you will receive a password reset link.": "Se i dati corrispondono a un account, riceverai un link per reimpostare la password.",
+    "Send reset link": "Invia il link di recupero",
+    "Invalid or expired reset link.": "Link di recupero non valido o scaduto.",
+    "Use the form to log out.": "Usa il modulo per uscire."
 }

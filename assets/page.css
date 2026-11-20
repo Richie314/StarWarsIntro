@@ -903,7 +903,7 @@ h6 {
     gap: .25rem;
 }
 
-    .nav-links a {
+    .nav-links :is(a, button) {
         display: flex;
         align-items: center;
         gap: .45rem;
@@ -914,7 +914,7 @@ h6 {
         font-size: .85rem;
     }
 
-        .nav-links a:hover,
+        .nav-links :is(a, button):hover,
         .nav-links a[aria-current="page"] {
             color: var(--main-cl);
             background: #ffe81f12;
@@ -923,6 +923,13 @@ h6 {
             .nav-links a[aria-current="page"] {
                 box-shadow: inset 0 -2px var(--main-cl);
             }
+
+    .nav-links button {
+        background: transparent;
+        border: 0;
+        font-family: inherit;
+        cursor: pointer;
+    }
 
     .nav-links img {
         opacity: .85;
@@ -1012,7 +1019,7 @@ h6 {
         border-top: 1px solid #484338;
     }
 
-        .nav-links a {
+        .nav-links :is(a, button) {
             flex: 1 0 auto;
             justify-content: center;
         }

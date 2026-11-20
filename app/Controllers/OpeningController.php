@@ -30,9 +30,9 @@ class OpeningController extends Controller
         $error = null;
         if ($this->RequestMethod === Method::Post) {
             $language = $lang === null ? null : OpeningLanguage::tryFrom($lang);
-            if ($title === null || trim($title) === '' || strlen($title) > 128
-                || $episode === null || trim($episode) === '' || strlen($episode) > 64
-                || strlen($content ?? '') > 4096 || $language === null) {
+            if ($title === null || trim($title) === '' || !self::fitsField($title, 128)
+                || $episode === null || trim($episode) === '' || !self::fitsField($episode, 64)
+                || !self::fitsField($content ?? '', 4096) || $language === null) {
                 return $this->BadRequest(I18n::text("Invalid intro details."));
             }
             $opening->Title = $title;
@@ -49,6 +49,13 @@ class OpeningController extends Controller
             'opening' => $opening, 'error' => $error, 'scripts' => ['create.js'],
             'description' => I18n::text("Create or edit an intro."),
         ], title: $id === 0 ? I18n::text("Create intro") : I18n::text("Edit intro"));
+    }
+
+    private static function fitsField(string $value, int $limit): bool
+    {
+        // HTML maxlength counts UTF-16 units, with textarea line endings counted as LF.
+        $value = preg_replace('/[\x{10000}-\x{10FFFF}]/u', 'xx', str_replace("\r\n", "\n", $value));
+        return $value !== null && preg_match_all('/./us', $value) <= $limit;
     }
 
     public function view(?int $id = null, ?int $original = null, ?string $lang = null,
@@ -82,6 +89,7 @@ class OpeningController extends Controller
         return $this->Render('Pages/view', [
             'opening' => $opening, 'language' => $opening->Language->value,
             'description' => I18n::text('Watch a custom Star Wars opening crawl.'),
+            'draft' => $this->RequestMethod === Method::Post,
         ], title: "$opening->Episode - $opening->Title",
             cutomLayout: __DIR__ . '/../Views/Shared/PlaybackLayout.php');
     }

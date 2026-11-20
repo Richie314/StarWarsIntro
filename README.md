@@ -110,9 +110,10 @@ Each base path maps to the controller's `index()` action. Other public action na
 | `/` | Home |
 | `/auth` | Login form and submission |
 | `/auth/register` | Register |
-| `/auth/forgotPassword` | Reset password |
+| `/auth/forgotPassword` | Request a password reset link |
+| `/auth/resetPassword` | Choose a new password using a reset link |
 | `/auth/changePassword` | Change password |
-| `/auth/logout` | End the session |
+| `/auth/logout` | End the session via POST |
 | `/opening` | Current user's intros |
 | `/opening/create` | Create or edit an intro |
 | `/opening/view` | Original intro, saved intro, or preview |
@@ -166,7 +167,9 @@ The installed Simple MVC library defines `Richie314\SimpleMvc\Users\User` with `
 
 ### Initialize or reset the database
 
-The application initializes a fresh database from `db/init.sql`. Previous database versions are not migrated. To discard stored accounts and intros and recreate the current schema:
+The application initializes a fresh database from `db/init.sql` when the database volume is empty.
+
+To discard stored accounts and intros and recreate the current schema:
 
 ```sh
 docker compose down --volumes
@@ -174,6 +177,18 @@ docker compose up --build -d starwars
 ```
 
 This deletes the database volume. The next startup recreates it, imports the current schema, and starts with no user data.
+
+### Email and password recovery
+
+PHPMailer sends welcome emails and password reset links via SMTP. Set these values in your shell or in the Compose `.env` file.
+
+- `SMTP_HOST` and `SMTP_FROM` identify your SMTP relay and verified sender address.
+- `SMTP_USERNAME` and `SMTP_PASSWORD` are required if your relay uses authentication.
+- `SMTP_ENCRYPTION` defaults to `tls` (STARTTLS). Use `ssl` for implicit TLS or `none` for a local relay without authentication.
+- `SMTP_PORT` defaults to 587 for STARTTLS, 465 for implicit TLS, or 25 for an unencrypted local relay.
+- `PASSWORD_RESET_BASE_URL` is the public HTTPS site URL, including any installation prefix (for example, `https://example.com/demo`).
+
+Reset links expire after 30 minutes and are consumed when a new password is saved.
 
 ## Random generation
 
@@ -230,7 +245,7 @@ docker compose exec \
 
 These checks require the test server's root password. They verify the current schema, numeric usernames, foreign keys, password changes, identity inheritance, session invalidation, and live role revocation.
 
-The HTTP suite checks controller routes, layouts, static-file responses, cookies, authentication, intro CRUD, and integer-ID ownership restrictions. Email delivery requires a configured mail transport and is not covered.
+The HTTP suite checks controller routes, layouts, static-file responses, cookies, authentication, intro CRUD, and integer-ID ownership restrictions. The database suite checks that an SMTP connection failure leaves the password valid.
 
 ## License
 

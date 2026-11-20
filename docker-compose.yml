@@ -9,6 +9,13 @@ services:
       MYSQL_USER: starwars
       MYSQL_PASSWORD: starwars
       MYSQL_DATABASE_NAME: starwars
+      PASSWORD_RESET_BASE_URL: "${PASSWORD_RESET_BASE_URL:-}"
+      SMTP_HOST: "${SMTP_HOST:-}"
+      SMTP_PORT: "${SMTP_PORT:-}"
+      SMTP_ENCRYPTION: "${SMTP_ENCRYPTION:-tls}"
+      SMTP_FROM: "${SMTP_FROM:-}"
+      SMTP_USERNAME: "${SMTP_USERNAME:-}"
+      SMTP_PASSWORD: "${SMTP_PASSWORD:-}"
       SITE_PATH_PREFIX: "${SITE_PATH_PREFIX:-}"
       ASSET_CACHE_TTL: 'off'
     extra_hosts:

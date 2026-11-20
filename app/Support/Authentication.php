@@ -28,7 +28,7 @@ final class Authentication
     {
         session_regenerate_id(true);
         $_SESSION['user_id'] = $user->Id;
-        unset($_SESSION['admin']);
+        unset($_SESSION['admin'], $_SESSION['csrf']);
     }
 
     public static function logout(): void
@@ -36,6 +36,7 @@ final class Authentication
         $_SESSION = [];
         session_destroy();
         $cookie = session_get_cookie_params();
-        Cookie::DeleteWithOptions(session_name(), $cookie['path'], $cookie['domain']);
+        Cookie::SetWithOptions(session_name(), '', -3600, path: $cookie['path'], domain: $cookie['domain'],
+            secure: $cookie['secure'], httpOnly: $cookie['httponly'], sameSite: $cookie['samesite']);
     }
 }

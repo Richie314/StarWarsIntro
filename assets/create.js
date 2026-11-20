@@ -4,18 +4,38 @@ $(() => {
     const messages = $('body').data('messages');
     const $tv = $('#tv'), $fields = $('#episode, #title, #lang, #content');
     const viewUrl = $tv.data('view-url');
-    let timer;
-    function preview(query = $fields.serialize(), lang = $('#lang').val()) {
+    let timer, originalQuery;
+    function preview(query, lang = $('#lang').val()) {
         clearTimeout(timer);
-        $tv.attr({ src: viewUrl + '?' + query, lang });
+        originalQuery = query;
+        $tv.attr('lang', lang);
         $('#episode, #title, #content').attr('lang', lang);
+        if (query) {
+            $tv.attr('src', viewUrl + '?' + query);
+            return;
+        }
+        const form = document.createElement('form');
+        form.method = 'post';
+        form.action = viewUrl;
+        form.target = $tv.attr('name');
+        form.hidden = true;
+        for (const { name, value } of $fields.serializeArray()) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = name;
+            input.value = value;
+            form.append(input);
+        }
+        document.body.append(form);
+        form.submit();
+        form.remove();
     }
     $fields.on('input change', () => {
         clearTimeout(timer);
         timer = setTimeout(() => preview(), 120);
     });
     $('.intro-form').on('reset', () => setTimeout(() => preview(), 0));
-    $('#reload-tv').on('click', () => $tv.attr('src', $tv.attr('src')));
+    $('#reload-tv').on('click', () => preview(originalQuery, $tv.attr('lang')));
     $('#show-originals').on('click', event => {
         event.preventDefault();
         clearTimeout(timer);

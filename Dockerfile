@@ -15,7 +15,7 @@ COPY docker/entrypoint.sh /usr/local/bin/starwars-entrypoint
 RUN mkdir -p /run/php && chmod +x /usr/local/bin/starwars-entrypoint
 
 WORKDIR /starwars
-COPY --chown=www-data:www-data composer.json ./
+COPY --chown=www-data:www-data composer.json composer.lock ./
 RUN composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
 COPY --chown=www-data:www-data . .
 

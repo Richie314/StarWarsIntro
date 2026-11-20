@@ -4,7 +4,12 @@ server {
     server_name _;
     absolute_redirect off;
     root /starwars;
-    access_log /dev/stdout;
+    # The incoming reset link carries a one-time credential in its query string.
+    set $log_request 1;
+    if ($request_uri ~ "/auth/resetPassword[?]") {
+        set $log_request 0;
+    }
+    access_log /dev/stdout combined if=$log_request;
     error_log /dev/stderr;
     index index.php;
 
@@ -31,6 +36,13 @@ server {
         return 404;
     }
     location ~ /\. {
+        return 404;
+    }
+
+    location ~* /(?:wp-admin|wp-content|wp-includes|wp-json|phpmyadmin)(?:/|$) {
+        return 404;
+    }
+    location ~* /(?:wp-login|wp-config|wp-cron|wp-signup|xmlrpc)\.php(?:/|$) {
         return 404;
     }
 

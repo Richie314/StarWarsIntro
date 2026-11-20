@@ -11,14 +11,14 @@ function classes(initial = []) {
 
 async function checkPages() {
     for (const prefix of ['', '/demo']) for (const locale of ['en', 'it']) {
-        const dom = new JSDOM(`<body data-view-url="${prefix}/opening/view"><nav><button id="nav-toggle" aria-expanded="false" data-open-label="Open menu" data-close-label="Close menu"></button><div id="nav-links"></div><form class="language-switch"><input name="return_to"></form></nav>
+        const dom = new JSDOM(`<body data-csrf="test-token" data-view-url="${prefix}/opening/view"><nav><button id="nav-toggle" aria-expanded="false" data-open-label="Open menu" data-close-label="Close menu"></button><div id="nav-links"></div><form class="language-switch"><input name="return_to"></form></nav>
             <p id="action-feedback" hidden></p><dialog id="accept-cookie"></dialog>
             <form class="intro-form"><input id="episode" name="episode" value="Episode X">
             <input id="title" name="title" value="Test &amp; Friends">
             <input id="lang" name="lang" value="en"><textarea id="content" name="content">First paragraph
 
 Second paragraph</textarea></form>
-            <iframe id="tv" data-view-url="${prefix}/opening/view"></iframe><button id="reload-tv"></button>
+            <iframe id="tv" name="intro-preview" data-view-url="${prefix}/opening/view"></iframe><button id="reload-tv"></button>
             <a id="show-originals" href="#show-originals-dialog">Originals</a>
             <dialog id="show-originals-dialog"><select id="dialog-select"><option value="0">Choose</option><option value="4-it">IV</option></select></dialog>
             <dialog id="share-dialog"><button id="share-btn"></button><button data-close-dialog></button></dialog>
@@ -34,7 +34,10 @@ Second paragraph</textarea></form>
         });
         w.HTMLDialogElement.prototype.showModal = function () { this.open = true; };
         w.HTMLDialogElement.prototype.close = function () { this.open = false; };
-        let shared;
+        let shared, preview;
+        w.HTMLFormElement.prototype.submit = function () {
+            preview = { method: this.method, target: this.target, action: this.action, fields: new w.FormData(this) };
+        };
         w.navigator.canShare = () => true;
         w.navigator.share = async data => { shared = data; };
         w.eval(fs.readFileSync(require.resolve('jquery'), 'utf8'));
@@ -51,10 +54,11 @@ Second paragraph</textarea></form>
         assert.equal($('#nav-links').hasClass('is-open'), false);
         $('.language-switch').triggerHandler('submit');
         assert.equal($('.language-switch input').val(), prefix + '/opening/create?id=42');
-        const preview = new URL($('#tv').attr('src'), w.location.origin);
-        assert.equal(preview.pathname, prefix + '/opening/view');
-        assert.equal(preview.searchParams.get('title'), 'Test & Friends');
-        assert.equal(preview.searchParams.get('content').replaceAll('\r', ''), 'First paragraph\n\nSecond paragraph');
+        assert.equal(preview.method, 'post');
+        assert.equal(preview.target, 'intro-preview');
+        assert.equal(new URL(preview.action).pathname, prefix + '/opening/view');
+        assert.equal(preview.fields.get('title'), 'Test & Friends');
+        assert.equal(preview.fields.get('content').replaceAll('\r', ''), 'First paragraph\n\nSecond paragraph');
         $('#show-originals').trigger('click');
         assert.ok($('#show-originals-dialog')[0].open);
         $('#dialog-select').val('4-it').trigger('change');
@@ -67,8 +71,10 @@ Second paragraph</textarea></form>
         assert.equal(shared.url, `http://example.test:8099${prefix}/opening/view?id=42`);
         assert.equal(w.location.search, '?id=42');
         for (const outcome of ['error', 'network', 'ok']) {
-            $.post = (url, data) => {
+            $.ajax = ({ url, method, data, headers }) => {
                 assert.equal(url, prefix + '/opening/delete');
+                assert.equal(method, 'POST');
+                assert.equal(headers['X-CSRF-Token'], 'test-token');
                 assert.equal(data.id, 42);
                 const request = $.Deferred();
                 return outcome === 'network' ? request.reject() : request.resolve({ esit: outcome });
@@ -103,11 +109,11 @@ for (const prefix of ['', '/demo']) {
     // Playback is intentionally loaded synchronously in <head>, before document.body exists.
     vm.runInContext(fs.readFileSync('assets/view/view.js', 'utf8'), playback);
     assert.equal(audioUrl, prefix + '/assets/intro.mp3');
-    audioEvents.loadeddata();
     vm.runInContext('PageStyleLoaded(); PageAnimationsLoaded();', playback);
     document.readyState = 'interactive';
     document.body = { classList: classes(['wait']) };
     events.DOMContentLoaded();
-    assert.equal(document.body.classList.contains('wait'), false);
+    assert.equal(document.body.classList.contains('wait'), false, 'Playback must start without audio');
+    audioEvents.loadeddata();
 }
 console.log('Playback resolves audio before the body exists and waits for DOM readiness before starting.');

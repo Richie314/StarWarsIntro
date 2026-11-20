@@ -114,7 +114,7 @@ class Opening
     public static function Delete(mysqli $db, int $id, int $user, bool $is_admin): bool
     {
         $deleted = $db->execute_query('DELETE FROM `openings` WHERE `Id` = ?
-            AND (`AuthorId` IS NULL OR `AuthorId` = ? OR ?)', [$id, $user, (int)$is_admin]);
+            AND (`AuthorId` = ? OR ?)', [$id, $user, (int)$is_admin]);
         return $deleted && $db->affected_rows === 1;
     }
 }

@@ -9,6 +9,7 @@ use Richie314\SimpleMvc\Http\{Method, StatusCode};
 use Richie314\SimpleMvc\Utils\Cookie;
 use StarWars\Models\{Database, User};
 use StarWars\Support\Authentication;
+use mysqli_sql_exception;
 
 class AuthController extends Controller
 {
@@ -47,10 +48,15 @@ class AuthController extends Controller
                 return $this->BadRequest(I18n::text("Invalid registration details."));
             }
             $db = Database::connection();
-            if (User::FindByName($db, $username) !== null) {
-                $error = I18n::text("That username is already taken.");
-            } else {
+            try {
                 $account = User::Create($db, $username, $password, $email);
+            } catch (mysqli_sql_exception $exception) {
+                if ($exception->getCode() !== 1062) {
+                    throw $exception;
+                }
+                $error = I18n::text("That username is already taken.");
+            }
+            if (isset($account)) {
                 $account->SendWelcomeEmail();
                 $account->Log($db);
                 Authentication::login($account);
@@ -70,13 +76,44 @@ class AuthController extends Controller
             if ($username === null || $email === null) {
                 return $this->BadRequest(I18n::text("Username and email are required."));
             }
-            $db = Database::connection();
-            $account = User::FindByName($db, $username);
-            $message = $account !== null && $account->Email === $email && $account->ResetPassword($db)
-                ? I18n::text('Email sent to {email}', ['email' => $email]) : I18n::text("Something went wrong.");
+            $siteUrl = rtrim(getenv('PASSWORD_RESET_BASE_URL') ?: '', '/');
+            if (!filter_var($siteUrl, FILTER_VALIDATE_URL) || !str_starts_with($siteUrl, 'https://')
+                || strpbrk($siteUrl, '?#') !== false || parse_url($siteUrl, PHP_URL_USER) !== null) {
+                $message = I18n::text('Password recovery is unavailable.');
+            } else {
+                $db = Database::connection();
+                $account = User::FindByName($db, $username);
+                if ($account !== null && $account->Email === $email) {
+                    $account->SendPasswordReset($db, $siteUrl . '/auth/resetPassword');
+                }
+                $message = I18n::text('If the account matches, you will receive a password reset link.');
+            }
         }
         return $this->form(I18n::text("Reset password"), '/auth/forgotPassword', [
-            'showEmail' => true, 'hidePassword' => true, 'buttonLabel' => I18n::text('Send me a new password'), 'error' => $message,
+            'showEmail' => true, 'hidePassword' => true, 'buttonLabel' => I18n::text('Send reset link'), 'error' => $message,
+        ]);
+    }
+
+    public function resetPassword(#[\SensitiveParameter] ?string $token = null,
+        #[\SensitiveParameter] ?string $new_password = null): StatusCode
+    {
+        if ($token === null || !preg_match('/\A[0-9a-f]{64}\z/', $token)) {
+            return $this->BadRequest(I18n::text('Invalid or expired reset link.'));
+        }
+        $error = null;
+        if ($this->RequestMethod === Method::Post) {
+            if ($new_password === null || strlen($new_password) < 8 || strlen($new_password) > 24
+                || str_contains($new_password, "\0")) {
+                return $this->BadRequest(I18n::text('Invalid password.'));
+            }
+            if (User::RedeemPasswordReset(Database::connection(), $token, $new_password)) {
+                return $this->RedirectWithStatus($this->PathPrefix . '/auth', StatusCode::SeeOther);
+            }
+            $error = I18n::text('Invalid or expired reset link.');
+        }
+        return $this->form(I18n::text('Reset password'), '/auth/resetPassword', [
+            'hideUsername' => true, 'hidePassword' => true, 'showNewPassword' => true,
+            'resetToken' => $token, 'error' => $error,
         ]);
     }
 
@@ -108,6 +145,9 @@ class AuthController extends Controller
     #[RequireLogin(loginPath: '/auth')]
     public function logout(): StatusCode
     {
+        if ($this->RequestMethod !== Method::Post) {
+            return $this->BadRequest(I18n::text('Use the form to log out.'));
+        }
         Authentication::logout();
         return $this->RedirectWithStatus($this->PathPrefix . '/', StatusCode::SeeOther);
     }

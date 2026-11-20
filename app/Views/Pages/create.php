@@ -3,6 +3,7 @@ use StarWars\Models\OpeningLanguage;
 ?>
 <h1 class="aurebesh" data-content="<?= htmlspecialchars($title) ?>"> </h1>
 <form class="intro-form" method="post" action="<?= htmlspecialchars($p . '/opening/create') ?>">
+    <input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf) ?>">
     <input type="hidden" name="id" value="<?= $opening->Id ?>" required>
 
     <div class="grid" style="grid-template-columns: 30% 70%">
@@ -10,7 +11,7 @@ use StarWars\Models\OpeningLanguage;
         <label for="episode" class="center">
             <?= $t("Episode:") ?>
         </label>
-        <input type="text" id="episode" name="episode" required
+        <input type="text" id="episode" name="episode" maxlength="64" required
             placeholder="<?= $t("Episode X") ?>"
             value="<?= htmlspecialchars($opening->Episode) ?>"
             spellcheck="true" lang="<?= $opening->Language->value ?>">
@@ -18,7 +19,7 @@ use StarWars\Models\OpeningLanguage;
         <label for="title" class="center">
             <?= $t("Title:") ?>
         </label>
-        <input type="text" id="title" name="title" required
+        <input type="text" id="title" name="title" maxlength="128" required
             placeholder="<?= $t("A new title") ?>"
             value="<?= htmlspecialchars($opening->Title) ?>"
             spellcheck="true" lang="<?= $opening->Language->value ?>">
@@ -64,7 +65,7 @@ use StarWars\Models\OpeningLanguage;
             </h2>
         </div>
         <div class="tv span-2">
-            <iframe src="<?= htmlspecialchars($p . '/opening/view') ?>" data-view-url="<?= htmlspecialchars($p . '/opening/view') ?>" allowfullscreen id="tv"
+            <iframe src="<?= htmlspecialchars($p . '/opening/view') ?>" data-view-url="<?= htmlspecialchars($p . '/opening/view') ?>" allowfullscreen id="tv" name="intro-preview"
                 width="1600" height="900" scrolling="no"
                 title="<?= $t('Preview your intro') ?>" loading="lazy" sandbox="allow-scripts">
             </iframe>

@@ -6,11 +6,14 @@ CREATE TABLE `users`
     `Name` VARCHAR(32) NOT NULL,
     `PasswordHash` VARCHAR(255) NOT NULL,
     `Email` VARCHAR(128) DEFAULT NULL,
+    `ResetTokenHash` BINARY(32) DEFAULT NULL,
+    `ResetExpiresAt` DATETIME DEFAULT NULL,
     `Admin` BOOLEAN NOT NULL DEFAULT FALSE,
     CONSTRAINT `UsersNameUnique` UNIQUE (`Name`),
     CONSTRAINT `UsersNameNotBlank` CHECK (CHAR_LENGTH(TRIM(`Name`)) > 0),
     CONSTRAINT `UsersPasswordNotBlank` CHECK (CHAR_LENGTH(`PasswordHash`) > 0),
     CONSTRAINT `UsersAdminBoolean` CHECK (`Admin` IN (0, 1)),
+    UNIQUE KEY `UsersResetTokenUnique` (`ResetTokenHash`),
     INDEX `UsersEmailIndex` (`Email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -66,4 +69,4 @@ WHERE U.`Admin` = FALSE AND NOT EXISTS (
 CREATE EVENT `DeleteOldLoginsEvent`
 ON SCHEDULE EVERY 1 MONTH
 STARTS CURRENT_TIMESTAMP + INTERVAL 1 DAY
-DO DELETE FROM `login` WHERE `When` < CURRENT_TIMESTAMP - INTERVAL 150 DAY;
+DO DELETE FROM `login` WHERE `When` < CURRENT_TIMESTAMP - INTERVAL 366 DAY;

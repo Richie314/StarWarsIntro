@@ -146,5 +146,10 @@
     "Third-party inventory (English)": "Third-party inventory (English)",
     "Rights inquiries": "Rights inquiries",
     "Contact the author through the project issue tracker to identify material for review or removal. Do not post confidential documents publicly.": "Contact the author through the project issue tracker to identify material for review or removal. Do not post confidential documents publicly.",
-    "This is a noncommercial, source-available educational demo. Third-party rights are separate; see credits and license.": "This is a noncommercial, source-available educational demo. Third-party rights are separate; see credits and license."
+    "This is a noncommercial, source-available educational demo. Third-party rights are separate; see credits and license.": "This is a noncommercial, source-available educational demo. Third-party rights are separate; see credits and license.",
+    "Password recovery is unavailable.": "Password recovery is unavailable.",
+    "If the account matches, you will receive a password reset link.": "If the account matches, you will receive a password reset link.",
+    "Send reset link": "Send reset link",
+    "Invalid or expired reset link.": "Invalid or expired reset link.",
+    "Use the form to log out.": "Use the form to log out."
 }

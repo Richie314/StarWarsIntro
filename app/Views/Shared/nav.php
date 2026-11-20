@@ -6,7 +6,6 @@ if ($user !== null) {
     if ($user->Admin) {
         $links[] = ['/admin', 'admin', 'Admin'];
     }
-    $links[] = ['/auth/logout', 'logout', 'Log out'];
 } else {
     $links[] = ['/auth/register', 'signup', 'Sign up'];
     $links[] = ['/auth', 'login', 'Log in'];
@@ -32,8 +31,18 @@ $currentPath = substr(parse_url($requestPath, PHP_URL_PATH), strlen($p));
                     <span><?= $t($label) ?></span>
                 </a>
             <?php } ?>
+            <?php if ($user !== null) { ?>
+                <form method="post" action="<?= htmlspecialchars($p . '/auth/logout') ?>">
+                    <input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf) ?>">
+                    <button type="submit">
+                        <img src="<?= htmlspecialchars($p) ?>/assets/img/logout.svg" width="19" height="19" alt="">
+                        <span><?= $t('Log out') ?></span>
+                    </button>
+                </form>
+            <?php } ?>
         </div>
         <form class="language-switch" method="post" action="<?= htmlspecialchars($p . '/language') ?>" aria-label="<?= $t('Choose language') ?>">
+            <input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf) ?>">
             <input type="hidden" name="return_to" value="<?= htmlspecialchars($requestPath) ?>">
             <?php foreach (['en' => ['united-kingdom', 'English'], 'it' => ['italy', 'Italiano']] as $code => [$flag, $name]) { ?>
                 <button type="submit" name="locale" value="<?= $code ?>" lang="<?= $code ?>"

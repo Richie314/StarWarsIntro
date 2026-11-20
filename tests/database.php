@@ -88,6 +88,33 @@ try {
     foreach (User::InactiveUsers($db) as $inactive) {
         verify($inactive instanceof MvcUser && $inactive->Id > 0 && $inactive->Name !== '', 'Invalid inactive user object.');
     }
+    $numeric->Log($db);
+    $db->execute_query('UPDATE login SET `When` = CURRENT_TIMESTAMP - INTERVAL 200 DAY WHERE UserId = ?', [$numeric->Id]);
+    verify(!User::DeleteInactive($db, $numeric->Id), 'An account active within 366 days was deleted.');
+    $db->execute_query('UPDATE login SET `When` = CURRENT_TIMESTAMP - INTERVAL 370 DAY WHERE UserId = ?', [$numeric->Id]);
+    verify(in_array($numeric->Id, array_column(User::InactiveUsers($db), 'Id'), true), 'Stale account was missing.');
+    $numeric->Log($db);
+    verify(!User::DeleteInactive($db, $numeric->Id), 'A fresh login did not stop deletion.');
+    verify(!User::DeleteInactive($db, $leia->Id), 'Inactive-account deletion removed an admin.');
+    putenv('SMTP_HOST=127.0.0.1');
+    putenv('SMTP_PORT=1');
+    putenv('SMTP_ENCRYPTION=none');
+    putenv('SMTP_FROM=no-reply@example.test');
+    putenv('SMTP_USERNAME=');
+    verify(!$numeric->SendPasswordReset($db, 'https://example.test/auth/resetPassword'), 'Failed SMTP reported success.');
+    verify(User::Load($db, $numeric->Id)->checkPassword('NumericPassword123'), 'Failed SMTP changed the password.');
+    $failedHash = $db->execute_query('SELECT ResetTokenHash FROM users WHERE Id = ?', [$numeric->Id])->fetch_column();
+    verify($failedHash === null, 'Failed SMTP left a live reset token.');
+    $resetToken = bin2hex(random_bytes(32));
+    $resetHash = hash('sha256', $resetToken, true);
+    $db->execute_query('UPDATE users SET ResetTokenHash = ?, ResetExpiresAt = CURRENT_TIMESTAMP - INTERVAL 1 MINUTE WHERE Id = ?',
+        [$resetHash, $numeric->Id]);
+    verify(!User::RedeemPasswordReset($db, $resetToken, 'ResetPassword123'), 'An expired reset token worked.');
+    verify(User::Load($db, $numeric->Id)->checkPassword('NumericPassword123'), 'An expired link changed the password.');
+    $db->execute_query('UPDATE users SET ResetExpiresAt = CURRENT_TIMESTAMP + INTERVAL 1 MINUTE WHERE Id = ?', [$numeric->Id]);
+    verify(User::RedeemPasswordReset($db, $resetToken, 'ResetPassword123'), 'A fresh reset token failed.');
+    verify(!User::RedeemPasswordReset($db, $resetToken, 'ReplayPassword123'), 'Reset token was reusable.');
+    verify(User::Load($db, $numeric->Id)->checkPassword('ResetPassword123'), 'Password reset did not persist.');
     // Use the isolated schema for the session checks as well.
     putenv('MYSQL_DATABASE_NAME=' . $databaseName);
     putenv('MYSQL_USER=root');
@@ -103,6 +130,8 @@ try {
     verify(Authentication::currentUser() === null, 'Deleted user remained authenticated.');
     User::Delete($db, $luke->Id);
     verify(Opening::Load($db, $openingId)->AuthorId === null && Opening::Load($db, $openingId)->AuthorName === null, 'Author deletion did not clear ownership.');
+    verify(!Opening::Delete($db, $openingId, $numeric->Id, false), 'A regular user deleted a preserved intro.');
+    verify(Opening::Delete($db, $openingId, $numeric->Id, true), 'An admin could not delete a preserved intro.');
     verify((int)$db->execute_query('SELECT COUNT(*) FROM login WHERE UserId = ?', [$luke->Id])->fetch_row()[0] === 0,
         'User login records did not cascade on deletion.');
     // Reject invalid references and non-boolean role values at the schema boundary.
